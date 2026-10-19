@@ -1,0 +1,1722 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#08130f">
+    <title>PaddyVision AI — Rice Intelligence</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #08130f;
+        --panel: #101d17;
+        --panel2: #14231b;
+        --line: #263a2e;
+        --green: #a7e36b;
+        --green2: #d0f5a4;
+        --text: #f1f5ed;
+        --muted: #9aa99d;
+        --orange: #f2b568;
+        --red: #ff7b73;
+        --radius: 20px;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif
+      }
+
+      * {
+        box-sizing: border-box
+      }
+
+      body {
+        margin: 0;
+        background: radial-gradient(ellipse at 12% -10%, #1b3724 0, transparent 40%), radial-gradient(ellipse at 90% 10%, #142a20 0, transparent 32%), var(--bg);
+        color: var(--text);
+        min-height: 100vh
+      }
+
+      button,
+      input,
+      select {
+        font: inherit
+      }
+
+      button {
+        cursor: pointer
+      }
+
+      .wrap {
+        width: min(1280px, calc(100% - 40px));
+        margin: auto
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 24px 0;
+        border-bottom: 1px solid #ffffff12
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 750;
+        letter-spacing: -.03em
+      }
+
+      .brandmark {
+        width: 40px;
+        height: 40px;
+        display: grid;
+        place-items: center;
+        border-radius: 13px;
+        background: #b4ed7920;
+        color: var(--green);
+        font-size: 22px
+      }
+
+      .live {
+        font-size: 12px;
+        color: var(--green);
+        display: flex;
+        align-items: center;
+        gap: 8px
+      }
+
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--green);
+        box-shadow: 0 0 14px #a7e36b
+      }
+
+      .hero {
+        padding: 54px 0 38px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 30px
+      }
+
+      .eyebrow {
+        color: var(--green);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: .18em;
+        font-weight: 750
+      }
+
+      .hero h1 {
+        font-size: clamp(40px, 6vw, 70px);
+        letter-spacing: -.065em;
+        line-height: .98;
+        margin: 13px 0 15px
+      }
+
+      .hero h1 span {
+        color: var(--green)
+      }
+
+      .hero p {
+        max-width: 640px;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.7;
+        margin: 0
+      }
+
+      .chips {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 22px
+      }
+
+      .chip {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 8px 12px;
+        color: #c4d1c6;
+        background: #ffffff06;
+        font-size: 11px;
+        font-weight: 600
+      }
+
+      .hero-stat {
+        border: 1px solid var(--line);
+        background: #ffffff05;
+        border-radius: 18px;
+        padding: 18px 20px;
+        min-width: 180px
+      }
+
+      .hero-stat small {
+        color: var(--muted);
+        display: block;
+        font-size: 11px
+      }
+
+      .hero-stat strong {
+        display: block;
+        color: var(--green2);
+        font-size: 25px;
+        margin-top: 7px;
+        letter-spacing: -.04em
+      }
+
+      .section-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 14px 0 16px
+      }
+
+      .section-head h2 {
+        font-size: 17px;
+        letter-spacing: -.02em;
+        margin: 0
+      }
+
+      .section-head p {
+        font-size: 12px;
+        color: var(--muted);
+        margin: 5px 0 0
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+        padding-bottom: 44px
+      }
+
+      .card {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: linear-gradient(155deg, #14231b, #0e1914 70%);
+        padding: 22px;
+        min-width: 0;
+        box-shadow: 0 12px 34px #0002
+      }
+
+      .card-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 19px
+      }
+
+      .icon {
+        width: 43px;
+        height: 43px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        background: #a7e36b17;
+        color: var(--green);
+        font-size: 20px
+      }
+
+      .badge {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: .1em;
+        color: var(--green);
+        border: 1px solid #a7e36b3b;
+        border-radius: 999px;
+        padding: 7px 9px
+      }
+
+      .card h3 {
+        font-size: 18px;
+        margin: 0 0 7px;
+        letter-spacing: -.03em
+      }
+
+      .desc {
+        font-size: 12px;
+        line-height: 1.6;
+        color: var(--muted);
+        margin: 0 0 19px;
+        min-height: 38px
+      }
+
+      .drop {
+        border: 1px dashed #49604e;
+        border-radius: 14px;
+        background: #07100c75;
+        padding: 16px;
+        text-align: center;
+        transition: .2s
+      }
+
+      .drop.drag {
+        border-color: var(--green);
+        background: #a7e36b12
+      }
+
+      .drop input[type=file] {
+        display: none
+      }
+
+      .pick {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 9px 12px;
+        border-radius: 9px;
+        background: #a7e36b;
+        color: #13200f;
+        font-size: 12px;
+        font-weight: 750;
+        border: 0
+      }
+
+      .file-name {
+        display: block;
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 9px;
+        overflow-wrap: anywhere
+      }
+
+      .preview {
+        display: none;
+        max-width: 100%;
+        max-height: 190px;
+        object-fit: contain;
+        border-radius: 10px;
+        margin: 12px auto 0
+      }
+
+      .band-list {
+        display: grid;
+        gap: 9px;
+        margin-bottom: 12px
+      }
+
+      .band {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid #ffffff10;
+        border-radius: 11px;
+        padding: 9px 10px;
+        background: #ffffff04
+      }
+
+      .band label {
+        font-size: 11px;
+        color: #d7e0d7
+      }
+
+      .band label span {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        margin-top: 2px
+      }
+
+      .band input {
+        max-width: 140px;
+        font-size: 10px;
+        color: var(--muted)
+      }
+
+      .field {
+        display: grid;
+        gap: 6px
+      }
+
+      .field label {
+        font-size: 10px;
+        color: #bdc9bf;
+        font-weight: 650
+      }
+
+      .field input,
+      .field select {
+        width: 100%;
+        min-height: 39px;
+        border-radius: 10px;
+        border: 1px solid #304436;
+        background: #09140f;
+        color: var(--text);
+        padding: 9px 10px;
+        outline: none
+      }
+
+      .field input:focus,
+      .field select:focus {
+        border-color: var(--green)
+      }
+
+      .field input::placeholder {
+        color: #65746a
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px
+      }
+
+      .geo-row {
+        display: flex;
+        gap: 8px;
+        margin: 12px 0
+      }
+
+      .geo-row button {
+        flex: 0 0 auto
+      }
+
+      .weather-note {
+        border-left: 2px solid var(--orange);
+        padding: 8px 10px;
+        background: #f2b5680b;
+        color: #c7b697;
+        font-size: 10px;
+        line-height: 1.5;
+        margin: 12px 0
+      }
+
+      .weather-note strong {
+        color: var(--orange)
+      }
+
+      .action {
+        width: 100%;
+        border: 0;
+        border-radius: 11px;
+        background: var(--green);
+        color: #101a0d;
+        font-weight: 800;
+        font-size: 12px;
+        padding: 12px 14px;
+        margin-top: 14px;
+        transition: .15s
+      }
+
+      .action:hover {
+        background: var(--green2);
+        transform: translateY(-1px)
+      }
+
+      .action:disabled {
+        opacity: .55;
+        cursor: wait;
+        transform: none
+      }
+
+      .secondary {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: #ffffff08;
+        color: #cbd6cc;
+        padding: 9px 11px;
+        font-size: 11px
+      }
+
+      .result {
+        display: none;
+        border: 1px solid #a7e36b35;
+        background: #a7e36b0c;
+        border-radius: 12px;
+        padding: 13px;
+        margin-top: 13px;
+        font-size: 12px
+      }
+
+      .result.show {
+        display: block
+      }
+
+      .result.error {
+        border-color: #ff7b7355;
+        background: #ff7b730c;
+        color: #ffd1cc
+      }
+
+      .result strong {
+        color: var(--green2);
+        display: block;
+        margin-bottom: 5px
+      }
+
+      .result pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        color: #c2d0c5;
+        margin: 8px 0 0;
+        font-size: 10px
+      }
+
+      .mask-wrap {
+        display: block;
+        margin-top: 12px;
+        padding: 12px;
+        text-align: center;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #07100c75
+      }
+
+      .mask-wrap.show {
+        display: block
+      }
+
+      .mask-wrap img {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        max-height: 240px;
+        object-fit: contain;
+        border-radius: 10px;
+        border: 1px solid var(--line);
+        margin: 0 auto
+      }
+
+      .mask-wrap img[hidden]{display:none}
+      .mask-placeholder{color:var(--muted);font-size:11px;line-height:1.5;padding:12px 4px}
+      .mask-placeholder[hidden]{display:none}
+
+      .mask-wrap span {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        margin: 6px
+      }
+
+      .foot {
+        border-top: 1px solid #ffffff12;
+        padding: 18px 0 28px;
+        display: flex;
+        justify-content: space-between;
+        gap: 14px;
+        color: #75847a;
+        font-size: 10px
+      }
+
+      .foot code {
+        color: #a6bbab
+      }
+
+      .advanced {
+        margin-top: 12px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 11px 12px;
+        background: #ffffff03
+      }
+
+      .advanced summary {
+        cursor: pointer;
+        color: #d7e0d7;
+        font-size: 11px;
+        font-weight: 700
+      }
+
+      .advanced-help {
+        color: var(--muted);
+        font-size: 10px;
+        line-height: 1.5;
+        margin: 10px 0
+      }
+
+      .scale-note {
+        font-size: 10px;
+        line-height: 1.5;
+        color: #a9b8ad;
+        margin: 10px 0 0
+      }
+
+      .digital-twin-section {
+        padding-bottom: 50px
+      }
+
+      .digital-twin-section .section-head {
+        margin-top: 10px
+      }
+
+      #digital-twin-container {
+        position: relative;
+        width: 100%;
+        height: 650px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        overflow: hidden;
+        background: radial-gradient(ellipse at center, #183326 0%, #09140f 70%);
+        box-shadow: 0 20px 60px #0005
+      }
+
+      #digital-twin-container canvas {
+        display: block;
+        width: 100%;
+        height: 100%
+      }
+
+      .digital-twin-loading {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        color: var(--muted);
+        font-size: 13px;
+        pointer-events: none
+      }
+
+      @media(max-width:980px) {
+        .cards {
+          grid-template-columns: 1fr 1fr
+        }
+
+        .card:last-child {
+          grid-column: 1/-1
+        }
+
+        .hero {
+          align-items: flex-start
+        }
+
+        .hero-stat {
+          margin-top: 15px
+        }
+      }
+
+      @media(max-width:640px) {
+        #digital-twin-container {
+          height: 480px
+        }
+
+        .wrap {
+          width: min(100% - 24px, 520px)
+        }
+
+        .topbar {
+          padding: 17px 0
+        }
+
+        .hero {
+          display: block;
+          padding: 38px 0 28px
+        }
+
+        .hero-stat {
+          margin-top: 22px;
+          display: inline-block
+        }
+
+        .cards {
+          grid-template-columns: 1fr
+        }
+
+        .card:last-child {
+          grid-column: auto
+        }
+
+        .card {
+          padding: 18px
+        }
+
+        .section-head {
+          align-items: flex-start
+        }
+
+        .foot {
+          flex-direction: column
+        }
+      }
+
+      .twin-dashboard{display:grid;grid-template-columns:minmax(190px,.78fr) minmax(380px,2.2fr) minmax(220px,.9fr);gap:14px;align-items:stretch;margin-bottom:30px}
+      .twin-panel,.digital-twin-section{min-width:0;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(155deg,#14231b,#0e1914 70%);padding:18px;box-shadow:0 12px 34px #0002}
+      .twin-panel h3{margin:0 0 14px;font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+      .twin-panel p,.field-facts{color:var(--muted);font-size:12px;line-height:1.65}
+      .twin-panel select{width:100%;margin-bottom:12px}
+      .field-facts{display:grid;gap:7px;margin:0}
+      .field-facts div{display:flex;justify-content:space-between;gap:8px}
+      .field-facts dt{color:var(--muted)}
+      .field-facts dd{color:var(--text);margin:0;text-align:right;overflow-wrap:anywhere}
+      .source-note{border-top:1px solid var(--line);padding-top:12px;margin-top:14px}
+      .model-output{border-top:1px solid var(--line);padding:12px 0}
+      .model-output:first-of-type{border-top:0;padding-top:0}
+      .model-output strong{display:block;color:var(--green2);font-size:12px;margin-bottom:5px}
+      .model-output span{color:var(--muted);font-size:11px;line-height:1.5;overflow-wrap:anywhere}
+      .health-demo{margin:8px 0 12px;padding:12px;border:1px solid #54704b;border-radius:11px;background:linear-gradient(145deg,#17281d,#101b15)}
+      .health-demo h4{margin:0;color:var(--green2);font-size:12px}
+      .health-demo-intro,.health-demo-disclaimer{margin:5px 0 9px!important;font-size:10px!important;line-height:1.45;color:var(--muted)}
+      .health-demo-disclaimer{padding:8px;border-radius:8px;background:#080f0bb3;border:1px solid #ffffff12}
+      .health-demo-zones{display:grid;gap:6px}
+      .health-demo-zone{width:100%;display:flex;align-items:center;gap:8px;text-align:left;padding:8px 9px;border:1px solid #ffffff18;border-radius:8px;background:#ffffff06;color:var(--text);font:inherit;font-size:10px;cursor:pointer}
+      .health-demo-zone:hover{background:#ffffff0d}
+      .health-demo-zone[aria-pressed="true"]{background:#ffffff10;font-weight:650}
+      .health-demo-dot{width:10px;height:10px;flex:none;border-radius:50%;box-shadow:0 0 10px currentColor}
+      .health-demo-zone[data-health-zone="healthy"] .health-demo-dot{color:#147a43;background:#147a43}
+      .health-demo-zone[data-health-zone="disease"] .health-demo-dot{color:#9f2623;background:#9f2623}
+      .health-demo-zone[data-health-zone="warning"] .health-demo-dot{color:#a67513;background:#a67513}
+      .health-demo-zone[aria-pressed="true"][data-health-zone="healthy"]{border-color:#258858;box-shadow:inset 0 0 0 1px #258858}
+      .health-demo-zone[aria-pressed="true"][data-health-zone="disease"]{border-color:#a63834;box-shadow:inset 0 0 0 1px #a63834}
+      .health-demo-zone[aria-pressed="true"][data-health-zone="warning"]{border-color:#a67513;box-shadow:inset 0 0 0 1px #a67513}
+      #health-demo-focus{min-height:24px;margin:8px 0 0!important;color:#d3e6d4;font-size:10px!important}
+      .twin-visual .section-head{margin-top:0}
+      .twin-visual .growth-controls{margin-bottom:10px}
+      .twin-visual #digital-twin-container{height:520px}
+      @media(max-width:1000px){.twin-dashboard{grid-template-columns:1fr 1fr}.twin-visual{grid-column:1/-1;grid-row:1}}
+      @media(max-width:640px){.twin-dashboard{grid-template-columns:1fr}.twin-visual{grid-column:auto}.twin-visual #digital-twin-container{height:440px}}
+      .data-label{display:block;color:var(--muted);font-size:10px;margin:-6px 0 6px}
+      #weather-date{width:100%;margin-bottom:10px;color:var(--text);background:#09140f;border:1px solid var(--line);border-radius:8px;padding:7px}
+      .weather-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .weather-grid div{border:1px solid var(--line);border-radius:10px;background:#ffffff04;padding:9px;display:grid;grid-template-columns:22px 1fr;align-items:center;column-gap:5px}
+      .weather-grid div>span{grid-row:span 2;font-size:15px}
+      .weather-grid small{color:var(--muted);font-size:9px}
+      .weather-grid strong{font-size:12px;color:var(--text)}
+      #twin-mask-preview[hidden]{display:none}
+      #twin-mask-preview{display:block;width:100%;max-height:100px;object-fit:contain;background:#09140f;border:1px solid var(--line);border-radius:8px;margin-top:8px}
+      .water-label{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:11px;margin:10px 0 4px}
+      .water-label span{color:var(--green2)}
+      #water-coverage{width:100%;accent-color:#42bbd0}
+      .history-chart{height:112px;display:flex;align-items:end;gap:5px;border-bottom:1px solid var(--line);padding:8px 0 0}
+      .history-bar{flex:1;min-width:0;height:100%;display:flex;flex-direction:column;justify-content:end;align-items:center;gap:4px}
+      .history-bar i{display:block;width:100%;max-width:18px;min-height:3px;border-radius:4px 4px 0 0;background:linear-gradient(0deg,#20b878,#8ee58a)}
+      .history-bar small{font-size:9px;color:var(--muted)}
+      .history-caption{font-size:10px!important;margin:8px 0 0}
+      .dataset-model-panels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:0 0 30px}
+      .dataset-model-panel{min-width:0;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(155deg,#14231b,#0e1914 70%);padding:16px;box-shadow:0 12px 34px #0002}
+      .dataset-model-panel h3{margin:0 0 4px;font-size:14px;color:var(--green2)}
+      .dataset-model-panel p{margin:0 0 10px;color:var(--muted);font-size:11px;line-height:1.5}
+      .raster-pair{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+      .raster-pair figure{margin:0;min-width:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#09140f}
+      .raster-pair img{display:block;width:100%;height:150px;object-fit:cover;image-rendering:auto}
+      .raster-pair figcaption{padding:7px 8px;color:var(--muted);font-size:10px;line-height:1.35}
+      .dataset-model-status{min-height:34px;margin-top:10px!important;color:#d1ddd3!important}
+      .dataset-model-actions{display:flex;gap:8px;flex-wrap:wrap}
+      .dataset-model-actions button{font:inherit;font-size:11px}
+      .station-profile{border:1px solid var(--line);border-radius:10px;background:#09140f;padding:12px}
+      .station-profile-head{display:flex;justify-content:space-between;gap:8px;align-items:baseline;margin-bottom:10px;color:var(--text);font-size:12px}
+      .station-profile-head span{color:var(--green2);font-weight:700}
+      .weather-feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px 14px}
+      .weather-feature{min-width:0}
+      .weather-feature-label{display:flex;justify-content:space-between;gap:6px;color:var(--muted);font-size:9px;margin-bottom:4px}
+      .weather-feature-label b{color:var(--text);font-weight:600;font-variant-numeric:tabular-nums}
+      .weather-feature-track{height:6px;border-radius:99px;background:#20372a;overflow:hidden}
+      .weather-feature-track i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#23a977,#a7e36b)}
+      .station-target{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:10px;color:var(--muted)}
+      .station-target strong{color:var(--text)}
+      .site-weather-context{margin:12px 0;padding:12px;border:1px solid #42bbd044;border-radius:10px;background:linear-gradient(145deg,#10251b,#0b1915)}
+      .site-weather-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:5px}
+      .site-weather-head strong{color:var(--green2);font-size:11px}
+      .site-weather-head span{color:var(--muted);font-size:10px;white-space:nowrap}
+      .site-weather-context>p{margin:5px 0 0;font-size:10px;color:var(--muted);line-height:1.45}
+      @media(max-width:640px){.dataset-model-panels{grid-template-columns:1fr}.raster-pair img{height:130px}}
+      .wind-control{display:flex;justify-content:flex-end;margin:0 0 8px}
+      .wind-control label{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:11px}
+      .wind-control input{accent-color:var(--green)}
+      .camera-reset{margin-top:8px}
+      .growth-controls {
+        padding: 16px 20px;
+        margin-bottom: 12px;
+        background: #10251b;
+        border: 1px solid #31553d;
+        border-radius: 12px;
+      }
+
+      .growth-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+        color: #e7f3e8;
+        font-weight: 600;
+      }
+
+      #growth-stage-label {
+        color: #a9d879;
+      }
+
+      #growth-slider {
+        width: 100%;
+        accent-color: #8cc65b;
+        cursor: pointer;
+      }
+
+      .growth-labels {
+        display: grid;
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        gap: 4px;
+        color: #b7c9b9;
+        font-size: 10px;
+        text-align: center;
+      }
+
+      .growth-note {
+        margin: 10px 0 0;
+        color: #8fa695;
+        font-size: 11px;
+      }
+
+      .dataset-view-switcher{grid-column:1/-1;padding:16px 18px;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(155deg,#14231b,#0e1914 70%);box-shadow:0 12px 34px #0002}
+      .dataset-view-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:12px}
+      .dataset-view-head h2{font-size:16px;margin:0 0 5px}
+      .dataset-view-head p{font-size:11px;color:var(--muted);margin:0;line-height:1.5}
+      .dataset-view-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+      .dataset-view-tab{border:1px solid var(--line);border-radius:11px;background:#08140f;color:#cbd6cc;padding:10px 12px;text-align:left;font-size:11px;line-height:1.4}
+      .dataset-view-tab strong{display:block;color:var(--text);font-size:12px;margin-bottom:3px}
+      .dataset-view-tab[aria-selected="true"]{border-color:var(--green);background:#a7e36b12;box-shadow:inset 0 0 0 1px #a7e36b35}
+      .dataset-view-tab[aria-selected="true"] strong{color:var(--green2)}
+      .dataset-view-summary{display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:14px;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+      .dataset-view-summary strong{display:block;color:var(--green2);font-size:12px;margin-bottom:4px}
+      .dataset-view-summary p{margin:0;color:var(--muted);font-size:11px;line-height:1.55}
+      .dataset-preview-pair{display:grid;grid-template-columns:1fr 1fr;gap:7px;min-width:0}
+      .dataset-preview-pair figure{margin:0;min-width:0}
+      .dataset-preview-pair img{display:block;width:100%;height:82px;object-fit:contain;border:1px solid var(--line);border-radius:8px;background:#08140f}
+      .dataset-preview-pair figcaption{margin-top:4px;color:var(--muted);font-size:9px;line-height:1.3}
+      .dataset-preview-empty{color:var(--muted);font-size:10px;line-height:1.5;border:1px dashed var(--line);border-radius:9px;padding:10px}
+      .dataset-preview-pair[hidden],.dataset-preview-empty[hidden]{display:none}
+      .model-output.is-selected{border-radius:10px;border:1px solid #a7e36b55;background:#a7e36b0b;padding-left:10px;padding-right:10px}
+      .field-view-caveat{font-size:10px!important;color:#c7b697!important;margin-top:8px!important}
+      @media(max-width:640px){.dataset-view-tabs{grid-template-columns:1fr}.dataset-view-summary{grid-template-columns:1fr}.dataset-preview-pair img{height:120px}}
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brandmark">⌁</div><span>PaddyVision <span
+              style="color:var(--green)">AI</span></span>
+        </div>
+        <div class="live"><span class="dot"></span> FIELD INTELLIGENCE</div>
+      </header>
+      <section class="hero">
+        <div>
+          <div class="eyebrow">Precision agriculture · rice analytics</div>
+          <h1>See your fields<br><span>more clearly.</span></h1>
+          <p>Turn satellite imagery and field conditions into practical crop insights. Upload
+            imagery, estimate yield, and explore your agricultural data in one place.</p>
+          <div class="chips"><span class="chip">U-Net Segmentation</span><span
+              class="chip">Multispectral CNN</span><span class="chip">Random Forest</span><span
+              class="chip">PostgreSQL</span><span class="chip">FastAPI</span></div>
+        </div>
+        <div class="hero-stat"><small>ANALYTICS WORKSPACE</small><strong>Rice · Aman</strong></div>
+      </section>
+      <div class="twin-dashboard">
+        <section class="dataset-view-switcher" aria-labelledby="dataset-view-heading">
+          <div class="dataset-view-head"><div><h2 id="dataset-view-heading">Dataset-specific field views</h2><p>Select a source to inspect its matching model and data context. These datasets describe different plots/locations.</p></div><span class="badge">3 DATA VIEWS</span></div>
+          <div class="dataset-view-tabs" role="tablist" aria-label="Choose a model data view">
+            <button class="dataset-view-tab" type="button" role="tab" aria-selected="true" data-twin-view="unet"><strong>01 · WeedyRice UAV</strong>U-Net · RGB mask</button>
+            <button class="dataset-view-tab" type="button" role="tab" aria-selected="false" data-twin-view="cnn"><strong>02 · RiceUAS plot</strong>Multispectral CNN · yield</button>
+            <button class="dataset-view-tab" type="button" role="tab" aria-selected="false" data-twin-view="rf"><strong>03 · Weather station</strong>Random Forest · Aman yield</button>
+          </div>
+          <div class="dataset-view-summary" aria-live="polite">
+            <div><strong id="dataset-view-title">WeedyRice UAV image sample · U-Net</strong><p id="dataset-view-description">Ground-truth annotation preview from the matching RGB/mask dataset. The U-Net prediction appears only after a successful API run. This image is a local patch, not a full-field orthomosaic.</p><p class="field-view-caveat" id="dataset-view-caveat">The 3D crop scene below is illustrative and is not georeferenced to this image.</p></div>
+            <div class="dataset-preview-pair" id="dataset-preview-pair" aria-label="WeedyRice input and ground-truth annotation">
+              <figure><img src="../data/raw/weedy-rice/RGB/DJI_DateTime_2025_01_15_15_22_0203_lat_10.3637984_lon_105.4192671_alt_20.403m.JPG" alt="Raw RGB input image, WeedyRice sample 0203"><figcaption>RGB input · sample 0203</figcaption></figure>
+              <figure><img src="../data/raw/weedy-rice/Masks/DJI_DateTime_2025_01_15_15_22_0203_lat_10.3637984_lon_105.4192671_alt_20.403m.png" alt="Dataset ground-truth binary annotation mask for sample 0203"><figcaption>Ground-truth mask · train label</figcaption></figure>
+            </div>
+            <div class="dataset-preview-empty" id="dataset-preview-empty" hidden></div>
+          </div>
+        </section>
+        <aside class="twin-panel">
+          <h3>Field information</h3>
+          <select id="twin-field-select" aria-label="Choose a database field"><option value="">Loading field records…</option></select>
+          <dl class="field-facts">
+            <div><dt>Crop</dt><dd id="field-crop">Not recorded</dd></div>
+            <div><dt>Season</dt><dd id="field-season">Not recorded</dd></div>
+            <div><dt>Area</dt><dd id="field-area">Not recorded</dd></div>
+            <div><dt>Coordinates</dt><dd id="field-location">Not recorded</dd></div>
+          </dl>
+          <p class="source-note" id="field-source-status" role="status">Loading saved field records from FastAPI…</p>
+          <h3>Weather archive</h3>
+          <label for="weather-date" class="data-label">RiceUAS research-site archive · historical only · synced with the CNN sample date</label>
+          <input id="weather-date" type="date" aria-label="Choose historical weather observation">
+          <div class="weather-grid" aria-live="polite">
+            <div><span aria-hidden="true">🌡️</span><small>Air temperature</small><strong id="weather-temp">—</strong></div>
+            <div><span aria-hidden="true">🌧️</span><small>Daily rainfall</small><strong id="weather-rain">—</strong></div>
+            <div><span aria-hidden="true">💧</span><small>Relative humidity</small><strong id="weather-humidity">—</strong></div>
+            <div><span aria-hidden="true">🌬️</span><small>Wind speed</small><strong id="weather-wind">—</strong></div>
+          </div>
+          <p class="source-note" id="weather-source-status">Loading the 2021–2022 weather archive. These observations are not live readings from the selected database field.</p>
+          <div class="model-output"><strong>Historical Aman target</strong><div id="historical-yield-chart" class="history-chart" role="img" aria-label="Historical normalized Aman model target by year">Dataset loading…</div><p class="history-caption">Normalized training target · selected weather station · not tonnes per hectare</p></div>
+        </aside>
+        <section class="digital-twin-section twin-visual">
+          <div class="section-head"><div><h2>Digital Twin</h2><p>Interactive 3D paddy field visualization</p></div><span class="badge">THREE.JS FIELD VIEW</span></div>
+          <div class="growth-controls">
+            <div class="growth-heading"><label for="growth-slider">Crop Growth Stage</label><span id="growth-stage-label">Mature crop</span></div>
+            <input type="range" id="growth-slider" min="1" max="7" step="1" value="7" list="growth-stage-ticks">
+            <datalist id="growth-stage-ticks"><option value="1"></option><option value="2"></option><option value="3"></option><option value="4"></option><option value="5"></option><option value="6"></option><option value="7"></option></datalist>
+            <div class="growth-labels"><span>Seedling</span><span>Early veg.</span><span>Tillering</span><span>Stem elong.</span><span>Booting</span><span>Heading</span><span>Mature</span></div>
+            <p class="growth-note">Illustrative growth simulation · Not calibrated to actual crop measurements</p>
+            <p class="growth-note" id="segmentation-scene-status" role="status">Illustrative full-field default · run U-Net to update crop positions from its mask.</p>
+            <div class="wind-control"><label><input id="wind-toggle" type="checkbox" checked> Wind animation</label></div>
+            <button class="secondary camera-reset" id="reset-camera" type="button">Reset camera view</button>
+          </div>
+          <div id="digital-twin-container"><div class="digital-twin-loading">Initializing Digital Twin…</div></div>
+        </section>
+        <aside class="twin-panel">
+          <h3>Model results</h3>
+          <div class="model-output is-selected" data-result-card="unet"><strong>U-Net · weedy-rice mask</strong><span data-model-output="segmentation">No prediction run yet.</span><img id="twin-mask-preview" alt="U-Net prediction mask returned by the API" hidden></div>
+          <section class="health-demo" aria-labelledby="health-demo-title">
+            <h4 id="health-demo-title">Field health overlay · demo</h4>
+            <p class="health-demo-intro">Click a zone to highlight its example area in the 3D field.</p>
+            <p class="health-demo-disclaimer"><strong>Illustrative only:</strong> these manually placed example zones stay the same across data views. They are not U-Net results, sensor readings, or a disease diagnosis.</p>
+            <div class="health-demo-zones" role="group" aria-label="Illustrative field health zones">
+              <button class="health-demo-zone" type="button" data-health-zone="healthy" aria-pressed="false"><i class="health-demo-dot" aria-hidden="true"></i><span>Healthy zone · example</span></button>
+              <button class="health-demo-zone" type="button" data-health-zone="disease" aria-pressed="false"><i class="health-demo-dot" aria-hidden="true"></i><span>Disease zone · example only</span></button>
+              <button class="health-demo-zone" type="button" data-health-zone="warning" aria-pressed="false"><i class="health-demo-dot" aria-hidden="true"></i><span>Inspect this area · unconfirmed</span></button>
+            </div>
+            <p id="health-demo-focus" aria-live="polite">Example zones are visible in the field; choose a label to emphasize its area.</p>
+          </section>
+          <div class="model-output" data-result-card="cnn"><strong>Multispectral CNN · plot-level</strong><span data-model-output="image-yield">No prediction run yet.</span></div>
+          <div class="model-output" data-result-card="rf"><strong>Agricultural Random Forest · station/year-level</strong><span data-model-output="agricultural-yield">No prediction run yet.</span></div>
+          <p class="source-note">AI outputs appear only after a successful trained-model API response. The health overlay is a separate manual demo, not model output.</p>
+        </aside>
+      </div>
+
+      <section class="dataset-model-panels" aria-label="Dataset-specific model views">
+        <article class="dataset-model-panel">
+          <h3>RiceUAS plot imagery · Multispectral CNN</h3>
+          <p>Actual held-out test-split sample, 27 May 2022 · plot 31760. RGB and false-color previews are derived from this plot’s TIFF bands. The CNN returns one plot-level estimate in t/ha, not a pixel map; its recorded 2022 test R² is −0.004, so interpret estimates cautiously.</p>
+          <div class="raster-pair">
+            <figure><img src="assets/riceuas_test_rgb.png" alt="True-color preview made from RiceUAS test plot 31760 red, green and blue TIFF bands"><figcaption>True color · Red / Green / Blue</figcaption></figure>
+            <figure><img src="assets/riceuas_test_nir.png" alt="False-color preview made from RiceUAS test plot 31760 near-infrared, red-edge and green TIFF bands"><figcaption>False color · NIR / Red Edge / Green</figcaption></figure>
+          </div>
+          <div class="site-weather-context" aria-live="polite">
+            <div class="site-weather-head"><strong>RiceUAS site weather at image date</strong><span id="riceuas-weather-date-label">—</span></div>
+            <p id="riceuas-weather-day">Loading matching historical observation…</p>
+            <p id="riceuas-weather-window">The seven-day context will appear when archive data is loaded.</p>
+            <p>Historical site context only; weather is not an input to the multispectral CNN.</p>
+          </div>
+          <p class="dataset-model-status" data-model-output="image-yield">No CNN prediction run yet. Load this matching five-band sample or choose your own TIFFs below.</p>
+          <p id="riceuas-sample-status" class="source-note" role="status">Fixed reference preview from the included 38 × 22 pixel test-split plot; stretched for display only. Choosing other files does not update this preview.</p>
+          <div class="dataset-model-actions"><button class="secondary" type="button" id="loadRiceuasSample">Load this five-band test sample</button><button class="secondary" type="button" data-scroll-to="multiCard">Open CNN inputs</button></div>
+        </article>
+        <article class="dataset-model-panel">
+          <h3>Station-year weather profile · Random Forest</h3>
+          <p>Selected row from the Bangladesh historical dataset. Bars show the model’s normalized input features (0–1); they are not live sensor readings.</p>
+          <div class="station-profile" aria-live="polite">
+            <div class="station-profile-head"><strong id="station-profile-name">Loading station…</strong><span id="station-profile-year">—</span></div>
+            <div class="weather-feature-grid" id="weather-feature-grid"><span class="source-note">Loading the selected station/year row…</span></div>
+            <div class="station-target">Dataset Aman target for this row: <strong id="station-target-value">—</strong> <span>(normalized; not the model’s prediction)</span></div>
+          </div>
+          <p class="dataset-model-status" data-model-output="agricultural-yield">No Random Forest prediction run yet. Choose a station and year below.</p>
+          <div class="dataset-model-actions"><button class="secondary" type="button" data-scroll-to="agriCard">Open station/year inputs</button></div>
+        </article>
+      </section>
+
+      <div class="section-head">
+        <div>
+          <h2>Prediction workspace</h2>
+          <p>Run a model with your own field data</p>
+        </div><button class="secondary" id="resetAll">Reset all</button>
+      </div>
+      <main class="cards">
+        <section class="card" id="segCard">
+          <div class="card-head">
+            <div class="icon">▧</div><span class="badge">U-Net · RGB</span>
+          </div>
+          <h3>Crop Segmentation</h3>
+          <p class="desc">Upload an RGB field image to generate a predicted crop mask.</p>
+          <div class="drop" data-drop="rgb"><label class="pick" for="rgbFile">＋ Choose RGB
+              image</label><input id="rgbFile" type="file" accept="image/*,.tif,.tiff"><span
+              class="file-name" id="rgbName">PNG, JPG or TIFF image</span><img class="preview"
+              id="rgbPreview" alt="RGB image preview"></div><button class="action"
+            id="segRun">Generate segmentation mask</button>
+          <div class="mask-wrap" id="maskWrap"><strong>U-Net prediction mask</strong><div class="mask-placeholder" id="maskPlaceholder">Prediction will appear here after you choose an RGB image and run segmentation.</div><img id="maskImage"
+              alt="Predicted segmentation mask" hidden><span id="maskOutputCaption">Model output · not run yet</span></div>
+          <div class="result" id="segResult" role="status"></div>
+        </section>
+        <section class="card" id="multiCard">
+          <div class="card-head">
+            <div class="icon">▦</div><span class="badge">CNN · 5 bands</span>
+          </div>
+          <h3>Multispectral Yield</h3>
+          <p class="desc">Select one TIFF file for each band. All five bands are required.</p>
+          <div class="band-list">
+            <div class="band"><label for="blue">Blue <span>blue.tif</span></label><input id="blue"
+                type="file" accept=".tif,.tiff,image/tiff"></div>
+            <div class="band"><label for="green">Green <span>green.tif</span></label><input
+                id="green" type="file" accept=".tif,.tiff,image/tiff"></div>
+            <div class="band"><label for="red">Red <span>red.tif</span></label><input id="red"
+                type="file" accept=".tif,.tiff,image/tiff"></div>
+            <div class="band"><label for="red_edge">Red edge <span>red_edge.tif</span></label><input
+                id="red_edge" type="file" accept=".tif,.tiff,image/tiff"></div>
+            <div class="band"><label for="nir">NIR <span>nir.tif</span></label><input id="nir"
+                type="file" accept=".tif,.tiff,image/tiff"></div>
+          </div><button class="action" id="multiRun">Predict multispectral yield</button>
+          <div class="result" id="multiResult" role="status"></div>
+        </section>
+        <section class="card" id="agriCard">
+          <div class="card-head">
+            <div class="icon">⌂</div><span class="badge">Random Forest</span>
+          </div>
+          <h3>Agricultural Yield Intelligence</h3>
+          <p class="desc">Choose a year and weather station. The matching dataset row fills the
+            model inputs for you.</p>
+          <form id="agriForm">
+            <div class="form-grid">
+              <div class="field"><label for="YEAR">Year</label><select id="YEAR" name="YEAR"
+                  required></select></div>
+              <div class="field"><label for="Station">Weather station</label><select id="Station"
+                  name="Station" required></select></div>
+            </div>
+            <p class="weather-note"><strong>Dataset profile loaded:</strong> station coordinates and
+              weather values come from the selected training-data row. The numeric features are
+              already normalized for this model. Change individual values below only if you want to
+              demonstrate a custom scenario.</p>
+            <details class="advanced">
+              <summary>Edit model inputs (optional)</summary>
+              <p class="advanced-help">All values start prefilled from the selected Year and
+                Station. Keep them unchanged for a dataset-based example.</p>
+              <div class="form-grid" id="agriAdvanced"></div>
+            </details>
+            <button class="action" id="agriRun" type="submit">Predict Aman yield</button>
+            <p class="scale-note">The trained target is normalized from 0 to 1. Results are shown as
+              a model score, not tonnes or kg.</p>
+          </form>
+          <div class="result" id="agriResult" role="status"></div>
+        </section>
+      </main>
+      <!-- =====================================================
+     DIGITAL TWIN
+====================================================== -->
+
+
+
+      <footer class="foot"><span>PaddyVision AI · Model predictions depend on input
+          quality.</span><span>API endpoint: <code id="apiDisplay"></code></span></footer>
+    </div>
+    <script>
+      // Set this to your FastAPI origin, e.g. "http://localhost:8000".
+      const API_BASE_URL = window.PADDYVISION_API_BASE_URL ?? "http://localhost:8000";
+      const API = {
+        segmentation: "/predict/segmentation",
+        imageYield: "/predict/image-yield",
+        agriculturalYield: "/predict/agricultural-yield"
+      };
+      const $ = (id) => document.getElementById(id);
+      const updateTwinMaskProjection = (source) => {
+        if (typeof window.applyPaddyMaskProjection === "function") {
+          return window.applyPaddyMaskProjection(source);
+        }
+        document.dispatchEvent(new CustomEvent("paddy-mask-projection", { detail: { source } }));
+      };
+      const base = API_BASE_URL.replace(/\/$/, "");
+      $("apiDisplay").textContent = base || "same origin";
+
+      const twinViewDetails = {
+        unet: {
+          title: "WeedyRice UAV image sample · U-Net",
+          description: "January 2025 RGB patch from the WeedyRice dataset. The image shown is the dataset's polygon annotation overlay (0203, training split), not the U-Net's prediction. Upload an RGB image below to run the model; its predicted binary mask will appear in Model results.",
+          caveat: "Location: 10.3637984, 105.4192671 · An Giang, Vietnam. No full-field boundary/orthomosaic is available; the 3D crop scene is illustrative, not georeferenced to this patch.",
+          image: "../data/raw/weedy-rice/Overlay/DJI_DateTime_2025_01_15_15_22_0203_lat_10.3637984_lon_105.4192671_alt_20.403m.JPG",
+          model: "unet"
+        },
+        cnn: {
+          title: "RiceUAS research plot · multispectral CNN",
+          description: "Separate RiceUAS dataset from Stuttgart, Arkansas. The CNN uses five plot/date TIFF bands (Blue, Green, Red, Red Edge, NIR) and returns one plot-level yield estimate in t/ha, not a pixel-wise yield map. Its recorded 2022 test R² is −0.004, so interpret demo predictions cautiously.",
+          caveat: "Dataset sample unit: research plot/date. The current 3D scene is illustrative and is not the RiceUAS plot geometry.",
+          image: "",
+          model: "cnn"
+        },
+        rf: {
+          title: "Bangladesh weather station record · Random Forest",
+          description: "Historical annual station/weather dataset (15 stations, 1970–2013). The model returns a normalized Aman yield score. It is not a drone-derived field measurement and the API does not convert the score to t/ha.",
+          caveat: "Spatial unit: weather station/year, not an individual paddy plot. The 3D crop scene is illustrative and is not georeferenced to the selected station.",
+          image: "",
+          model: "rf"
+        }
+      };
+
+      function selectTwinDataView(viewKey) {
+        const view = twinViewDetails[viewKey];
+        if (!view) return;
+        document.querySelectorAll("[data-twin-view]").forEach(button => {
+          const selected = button.dataset.twinView === viewKey;
+          button.setAttribute("aria-selected", String(selected));
+          button.tabIndex = selected ? 0 : -1;
+        });
+        $("dataset-view-title").textContent = view.title;
+        $("dataset-view-description").textContent = view.description;
+        $("dataset-view-caveat").textContent = view.caveat;
+        $("dataset-preview-pair").hidden = viewKey !== "unet";
+        $("dataset-preview-empty").hidden = viewKey === "unet";
+        $("dataset-preview-empty").textContent = viewKey === "cnn"
+          ? "RiceUAS true-color and false-color test-split images, plus the five-band sample loader, are shown in the CNN panel below."
+          : "The selected station/year weather profile and historical Aman target chart are shown in the Random Forest panel below.";
+        document.querySelectorAll("[data-result-card]").forEach(card => {
+          card.classList.toggle("is-selected", card.dataset.resultCard === view.model);
+        });
+      }
+      document.querySelectorAll("[data-twin-view]").forEach(button => {
+        button.addEventListener("click", () => selectTwinDataView(button.dataset.twinView));
+      });
+      document.querySelectorAll("[data-health-zone]").forEach(button => {
+        button.addEventListener("click", () => {
+          const zone = button.dataset.healthZone;
+          const labels = {
+            healthy: "Example healthy zone highlighted · illustrative only.",
+            disease: "Example disease zone highlighted · manually placed demo, not a diagnosis.",
+            warning: "Example inspection area highlighted · condition unconfirmed."
+          };
+          document.querySelectorAll("[data-health-zone]").forEach(item => {
+            item.setAttribute("aria-pressed", String(item === button));
+          });
+          $("health-demo-focus").textContent = labels[zone];
+          window.paddyHealthDemoZone = zone;
+          document.dispatchEvent(new CustomEvent("paddy-health-demo-focus", { detail: { zone } }));
+        });
+      });
+      document.querySelector(".dataset-view-tabs")?.addEventListener("keydown", event => {
+        if (!["ArrowLeft", "ArrowRight"].includes(event.key)) return;
+        const tabs = [...document.querySelectorAll("[data-twin-view]")];
+        const current = tabs.indexOf(document.activeElement);
+        const next = (current + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
+        event.preventDefault();
+        tabs[next].focus();
+        tabs[next].click();
+      });
+      selectTwinDataView("unet");
+
+      const fieldSelect = $("twin-field-select");
+      async function loadTwinFields() {
+        try {
+          const response = await fetch(base + "/digital-twin/fields");
+          if (!response.ok) throw new Error("Field service returned " + response.status + ".");
+          const fields = await response.json();
+          fieldSelect.replaceChildren();
+          if (!Array.isArray(fields) || fields.length === 0) {
+            fieldSelect.add(new Option("No saved fields", ""));
+            $("field-source-status").textContent = "No field records were returned by the database.";
+            return;
+          }
+          fields.forEach((field, index) => fieldSelect.add(new Option(field.field_name || ("Field " + field.field_id), String(index))));
+          const showField = () => {
+            const field = fields[Number(fieldSelect.value)];
+            if (!field) return;
+            $("field-crop").textContent = field.crop || "Not recorded";
+            $("field-season").textContent = field.season || "Not recorded";
+            $("field-area").textContent = field.area == null ? "Not recorded" : field.area + " ha";
+            $("field-location").textContent = field.latitude == null || field.longitude == null ? "Not recorded" : field.latitude + ", " + field.longitude;
+            $("field-source-status").textContent = "Field details loaded from PostgreSQL through FastAPI.";
+          };
+          fieldSelect.addEventListener("change", showField);
+          fieldSelect.value = "0";
+          showField();
+        } catch (error) {
+          fieldSelect.replaceChildren(new Option("Field service unavailable", ""));
+          $("field-source-status").textContent = error.message;
+        }
+      }
+      loadTwinFields();
+
+      async function loadWeatherArchive() {
+        const picker = $("weather-date");
+        try {
+          const response = await fetch("../data/processed/uav_weather_daily.csv");
+          if (!response.ok) throw new Error("Weather archive request returned " + response.status + ".");
+          const lines = (await response.text()).trim().split(/\r?\n/);
+          const records = new Map();
+          for (const line of lines.slice(3)) {
+            const row = line.split(",");
+            if (row.length > 10 && row[0] && Number.isFinite(Number(row[5]))) records.set(row[0].slice(0, 10), row);
+          }
+          const dates = [...records.keys()].sort();
+          if (!dates.length) throw new Error("No complete daily observations were found.");
+          picker.min = dates[0];
+          picker.max = dates[dates.length - 1];
+          const riceuasSampleDate = "2022-05-27";
+          picker.value = records.has(riceuasSampleDate) ? riceuasSampleDate : dates[dates.length - 1];
+          const numberAt = (row, index) => {
+            const raw = row?.[index]?.trim();
+            return raw ? Number(raw) : NaN;
+          };
+          const renderWeatherContext = date => {
+            $("riceuas-weather-date-label").textContent = date || "—";
+            const row = records.get(date);
+            if (row) {
+              const temp = numberAt(row, 5);
+              const rain = numberAt(row, 2);
+              const humidityMin = numberAt(row, 6);
+              const humidityMax = numberAt(row, 7);
+              const wind = numberAt(row, 10);
+              const values = [];
+              if (Number.isFinite(temp)) values.push(`air ${((temp - 32) * 5 / 9).toFixed(1)} °C`);
+              if (Number.isFinite(rain)) values.push(`rain ${(rain * 25.4).toFixed(1)} mm`);
+              if (Number.isFinite(humidityMin) && Number.isFinite(humidityMax)) values.push(`humidity ${humidityMin.toFixed(0)}–${humidityMax.toFixed(0)}%`);
+              if (Number.isFinite(wind)) values.push(`wind ${(wind * 1.60934).toFixed(1)} km/h`);
+              $("riceuas-weather-day").textContent = values.length
+                ? `Observed that day: ${values.join(" · ")}.`
+                : "No complete measurements are available for this date.";
+            } else {
+              $("riceuas-weather-day").textContent = "No archive observation for this date; no weather values are estimated.";
+            }
+
+            if (!date) {
+              $("riceuas-weather-window").textContent = "Choose a date to see its seven-day historical context.";
+              return;
+            }
+            const end = new Date(`${date}T00:00:00Z`);
+            const temperatures = [];
+            let rainfallInches = 0;
+            let rainDays = 0;
+            for (let daysBack = 6; daysBack >= 0; daysBack--) {
+              const day = new Date(end);
+              day.setUTCDate(day.getUTCDate() - daysBack);
+              const daily = records.get(day.toISOString().slice(0, 10));
+              const dailyTemp = numberAt(daily, 5);
+              const dailyRain = numberAt(daily, 2);
+              if (Number.isFinite(dailyTemp)) temperatures.push(dailyTemp);
+              if (Number.isFinite(dailyRain)) {
+                rainfallInches += dailyRain;
+                rainDays++;
+              }
+            }
+            const coverage = Math.min(temperatures.length, rainDays);
+            if (!coverage) {
+              $("riceuas-weather-window").textContent = "No preceding daily records are available for a seven-day summary.";
+              return;
+            }
+            const meanTempC = temperatures.length
+              ? ((temperatures.reduce((sum, value) => sum + value, 0) / temperatures.length - 32) * 5 / 9).toFixed(1)
+              : "—";
+            $("riceuas-weather-window").textContent = `7-day context through ${date} (${coverage}/7 daily records): rainfall ${(rainfallInches * 25.4).toFixed(1)} mm total · average air temperature ${meanTempC} °C.`;
+          };
+          const renderWeather = () => {
+            const row = records.get(picker.value);
+            if (!row) {
+              $("weather-temp").textContent = "No record";
+              $("weather-rain").textContent = "No record";
+              $("weather-humidity").textContent = "No record";
+              $("weather-wind").textContent = "No record";
+              renderWeatherContext(picker.value);
+              return;
+            }
+            $("weather-temp").textContent = (((Number(row[5]) - 32) * 5) / 9).toFixed(1) + " °C";
+            $("weather-rain").textContent = (Number(row[2]) * 25.4).toFixed(1) + " mm";
+            $("weather-humidity").textContent = Number.isFinite(Number(row[6])) && Number.isFinite(Number(row[7]))
+              ? Number(row[6]).toFixed(0) + "–" + Number(row[7]).toFixed(0) + "%" : "No record";
+            $("weather-wind").textContent = Number.isFinite(Number(row[10]))
+              ? (Number(row[10]) * 1.60934).toFixed(1) + " km/h" : "No record";
+            renderWeatherContext(picker.value);
+          };
+          picker.addEventListener("change", renderWeather);
+          renderWeather();
+          $("weather-source-status").textContent = "RiceUAS site weather archive · 2021–2022 daily observations · historical site context; synced to the included CNN sample date.";
+        } catch (error) {
+          picker.disabled = true;
+          $("weather-source-status").textContent = error.message;
+        }
+      }
+      loadWeatherArchive();
+
+      const agriFeatures = ["LATITUDE", "LONGITUDE", "ALT", "Avg_Max_Temp", "Avg_Min_Temp",
+        "Avg_Rainfall", "Avg_Relative_Humidity", "Avg_Windspeed", "Avg_Cloud_Coverage",
+        "Avg_Bright_Sunshine"
+      ];
+      const yearSelect = $("YEAR"),
+        stationSelect = $("Station"),
+        advancedFields = $("agriAdvanced");
+      let agriRows = [];
+      agriFeatures.forEach(name => {
+        const field = document.createElement("div");
+        field.className = "field";
+        const label = document.createElement("label");
+        label.htmlFor = `feature_${name}`;
+        label.textContent = name;
+        const input = document.createElement("input");
+        input.type = "number";
+        input.step = "any";
+        input.id = `feature_${name}`;
+        input.dataset.feature = name;
+        input.required = true;
+        field.append(label, input);
+        advancedFields.append(field);
+      });
+
+      function parseCsvLine(line) {
+        const out = [];
+        let value = "",
+          quoted = false;
+        for (let i = 0; i < line.length; i++) {
+          const ch = line[i];
+          if (ch === '"') {
+            if (quoted && line[i + 1] === '"') {
+              value += '"';
+              i++;
+            } else quoted = !quoted;
+          } else if (ch === "," && !quoted) {
+            out.push(value);
+            value = "";
+          } else value += ch;
+        }
+        out.push(value);
+        return out;
+      }
+
+      function renderHistoricalYield() {
+        const chart = $("historical-yield-chart");
+        const rows = agriRows.filter(row => row.Station === stationSelect.value && Number.isFinite(row.Aman_Yield))
+          .sort((a, b) => a.YEAR - b.YEAR).slice(-12);
+        chart.replaceChildren();
+        if (!rows.length) {
+          chart.textContent = "No historical Aman target rows for this station.";
+          return;
+        }
+        const maxValue = Math.max(...rows.map(row => row.Aman_Yield)) || 1;
+        for (const row of rows) {
+          const column = document.createElement("span");
+          column.className = "history-bar";
+          const bar = document.createElement("i");
+          bar.style.height = Math.max(4, row.Aman_Yield / maxValue * 100) + "%";
+          bar.title = row.YEAR + ": " + row.Aman_Yield.toFixed(3) + " (normalized target)";
+          const year = document.createElement("small");
+          year.textContent = String(row.YEAR).slice(-2);
+          column.append(bar, year);
+          chart.append(column);
+        }
+      }
+
+      function loadAgriProfile() {
+        const row = agriRows.find(r => r.YEAR === Number(yearSelect.value) && r.Station ===
+          stationSelect.value);
+        if (!row) {
+          $("agriRun").disabled = true;
+          $("station-profile-name").textContent = "No matching station/year row";
+          $("weather-feature-grid").replaceChildren();
+          $("station-target-value").textContent = "—";
+          return;
+        }
+        for (const name of agriFeatures) advancedFields.querySelector(`[data-feature="${name}"]`)
+          .value = row[name];
+        renderStationProfile(row);
+        document.querySelectorAll('[data-model-output="agricultural-yield"]').forEach(output => {
+          output.textContent = "Station/year inputs changed. Run the model again for this selection.";
+        });
+        $("agriRun").disabled = false;
+        $("agriResult").className = "result";
+      }
+
+      const stationWeatherFeatures = [
+        ["Avg_Max_Temp", "Average maximum temperature"],
+        ["Avg_Min_Temp", "Average minimum temperature"],
+        ["Avg_Rainfall", "Average rainfall"],
+        ["Avg_Relative_Humidity", "Relative humidity"],
+        ["Avg_Windspeed", "Wind speed"],
+        ["Avg_Cloud_Coverage", "Cloud coverage"],
+        ["Avg_Bright_Sunshine", "Bright sunshine"]
+      ];
+
+      function renderStationProfile(row) {
+        $("station-profile-name").textContent = row.Station;
+        $("station-profile-year").textContent = String(row.YEAR);
+        const grid = $("weather-feature-grid");
+        grid.replaceChildren();
+        for (const [key, label] of stationWeatherFeatures) {
+          const feature = document.createElement("div");
+          feature.className = "weather-feature";
+          const heading = document.createElement("div");
+          heading.className = "weather-feature-label";
+          const name = document.createElement("span");
+          name.textContent = label;
+          const value = Number(row[key]);
+          const number = document.createElement("b");
+          number.textContent = value.toFixed(3);
+          heading.append(name, number);
+          const track = document.createElement("div");
+          track.className = "weather-feature-track";
+          const bar = document.createElement("i");
+          bar.style.width = `${Math.max(0, Math.min(1, value)) * 100}%`;
+          track.append(bar);
+          feature.append(heading, track);
+          grid.append(feature);
+        }
+        $("station-target-value").textContent = Number.isFinite(row.Aman_Yield)
+          ? row.Aman_Yield.toFixed(3) : "No target recorded";
+      }
+
+      async function initAgriDataset() {
+        try {
+          const response = await fetch("../data/raw/Weather_Factors_And_Yield_Dataset.csv");
+          if (!response.ok) throw new Error(
+            `Dataset request failed (${response.status}). Open this page with Live Server from the PaddyVision-AI project.`
+            );
+          const lines = (await response.text()).trim().split(/\r?\n/);
+          const headers = parseCsvLine(lines.shift());
+          agriRows = lines.filter(Boolean).map(line => {
+            const cells = parseCsvLine(line),
+              row = {};
+            headers.forEach((key, i) => row[key] = key === "Station" ? cells[i] : Number(
+              cells[i]));
+            return row;
+          }).filter(row => Number.isFinite(row.YEAR) && row.Station && agriFeatures.every(key =>
+            Number.isFinite(row[key])));
+          if (!agriRows.length) throw new Error(
+            "No complete agricultural training rows were found in the CSV.");
+          [...new Set(agriRows.map(row => row.YEAR))].sort((a, b) => a - b).forEach(year => {
+            const option = document.createElement("option");
+            option.value = year;
+            option.textContent = year;
+            yearSelect.append(option);
+          });
+          [...new Set(agriRows.map(row => row.Station))].sort().forEach(station => {
+            const option = document.createElement("option");
+            option.value = station;
+            option.textContent = station;
+            stationSelect.append(option);
+          });
+          yearSelect.value = agriRows.some(r => r.YEAR === 2013) ? "2013" : String(Math.max(...
+            agriRows.map(r => r.YEAR)));
+          stationSelect.value = agriRows.some(r => r.YEAR === Number(yearSelect.value) && r
+            .Station === "Dhaka") ? "Dhaka" : agriRows.find(r => r.YEAR === Number(yearSelect
+            .value)).Station;
+          loadAgriProfile();
+          renderHistoricalYield();
+        } catch (error) {
+          showResult($("agriResult"), error.message, true);
+          $("agriRun").disabled = true;
+        }
+      }
+      yearSelect.addEventListener("change", loadAgriProfile);
+      stationSelect.addEventListener("change", () => {
+        loadAgriProfile();
+        renderHistoricalYield();
+      });
+      initAgriDataset();
+
+      $("loadRiceuasSample").addEventListener("click", async event => {
+        const button = event.currentTarget;
+        const status = $("riceuas-sample-status");
+        const bands = ["blue", "green", "red", "red_edge", "nir"];
+        const sampleRoot = "../data/raw/rice-uav/riceUAS/riceUAS/Images/Test/05-27-2022/31760/";
+        setBusy(button, true, "Loading five TIFF bands…");
+        try {
+          const files = await Promise.all(bands.map(async band => {
+            const response = await fetch(sampleRoot + band + ".tiff");
+            if (!response.ok) throw new Error(`Could not load ${band}.tiff (${response.status}).`);
+            return new File([await response.blob()], band + ".tiff", { type: "image/tiff" });
+          }));
+          bands.forEach((band, index) => {
+            const transfer = new DataTransfer();
+            transfer.items.add(files[index]);
+            const input = $(band);
+            input.files = transfer.files;
+            input.dispatchEvent(new Event("change", { bubbles: true }));
+          });
+          const weatherPicker = $("weather-date");
+          const sampleDate = "2022-05-27";
+          if (weatherPicker && weatherPicker.min <= sampleDate && weatherPicker.max >= sampleDate) {
+            weatherPicker.value = sampleDate;
+            weatherPicker.dispatchEvent(new Event("change", { bubbles: true }));
+          }
+          status.textContent = "Loaded matching test-split bands: 27 May 2022 · plot 31760. Click Predict multispectral yield below to run the trained CNN.";
+          $("multiCard").scrollIntoView({ behavior: "smooth", block: "center" });
+        } catch (error) {
+          status.textContent = "Sample could not be loaded: " + error.message;
+        } finally {
+          setBusy(button, false);
+        }
+      });
+      ["blue", "green", "red", "red_edge", "nir"].forEach(id => $(id).addEventListener("change", () => {
+        const allBandsSelected = ["blue", "green", "red", "red_edge", "nir"].every(name => $(name).files.length);
+        $("riceuas-sample-status").textContent = allBandsSelected
+          ? "Five TIFF inputs are selected. Confirm they all belong to the same plot/date. The previews above remain the packaged test sample."
+          : "A TIFF input changed. The previews above remain the packaged test sample; select all five bands from one plot/date.";
+        document.querySelectorAll('[data-model-output="image-yield"]').forEach(output => {
+          output.textContent = "CNN inputs changed. Run the model again for this plot/date.";
+        });
+        $("multiResult").className = "result";
+      }));
+
+      function setBusy(button, busy, label) {
+        button.disabled = busy;
+        button.dataset.original ??= button.textContent;
+        button.textContent = busy ? label : button.dataset.original;
+      }
+
+      function showResult(el, message, error = false, data = null) {
+        el.className = `result show${error ? " error" : ""}`;
+        el.replaceChildren();
+        const strong = document.createElement("strong");
+        strong.textContent = error ? "Request could not be completed" : "Prediction ready";
+        el.append(strong, document.createTextNode(message));
+        const outputKey = { segResult: "segmentation", multiResult: "image-yield", agriResult: "agricultural-yield" }[el.id];
+        const outputs = outputKey && document.querySelectorAll('[data-model-output="' + outputKey + '"]');
+        outputs?.forEach(output => output.textContent = (error ? "Unavailable: " : "") + message);
+        if (data) {
+          const pre = document.createElement("pre");
+          pre.textContent = JSON.stringify(data, null, 2);
+          el.append(pre);
+        }
+      }
+      async function readResponse(response) {
+        const type = response.headers.get("content-type") || "";
+        if (!response.ok) {
+          let detail = `${response.status} ${response.statusText}`;
+          try {
+            const body = await response.json();
+            detail = body.detail || body.message || JSON.stringify(body);
+          } catch {}
+          throw new Error(detail);
+        }
+        return type.includes("json") ? response.json() : response;
+      }
+
+      function predictionSummary(data) {
+        if (data == null) return "The API returned an empty response.";
+        if (typeof data !== "object") return String(data);
+        const id = data.prediction_id ?? data.id;
+        const keys = ["predicted_yield", "yield", "prediction", "aman_yield",
+          "predicted_aman_yield"];
+        const key = keys.find(k => data[k] !== undefined);
+        return `${id ? `Prediction ID: ${id} · ` : ""}${key ? `${key.replaceAll("_", " ")}: ${data[key]}` : "Prediction received from API."}`;
+      }
+      $("rgbFile").addEventListener("change", e => {
+        const file = e.target.files[0];
+        $("rgbName").textContent = file?.name || "PNG, JPG or TIFF image";
+        const img = $("rgbPreview");
+        if (img.dataset.url) URL.revokeObjectURL(img.dataset.url);
+        if (file) {
+          img.dataset.url = URL.createObjectURL(file);
+          img.src = img.dataset.url;
+          img.style.display = "block";
+        } else img.style.display = "none";
+      });
+      const drop = document.querySelector('[data-drop="rgb"]');
+      drop.addEventListener("dragover", e => {
+        e.preventDefault();
+        drop.classList.add("drag");
+      });
+      drop.addEventListener("dragleave", () => drop.classList.remove("drag"));
+      drop.addEventListener("drop", e => {
+        e.preventDefault();
+        drop.classList.remove("drag");
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith("image/")) {
+          const input = $("rgbFile");
+          const dt = new DataTransfer();
+          dt.items.add(file);
+          input.files = dt.files;
+          input.dispatchEvent(new Event("change"));
+        }
+      });
+      async function getMaskCoveragePercent(blob) {
+        const image = new Image();
+        const url = URL.createObjectURL(blob);
+        try {
+          image.src = url;
+          await image.decode();
+          const canvas = document.createElement("canvas");
+          canvas.width = image.naturalWidth;
+          canvas.height = image.naturalHeight;
+          const context = canvas.getContext("2d", { willReadFrequently: true });
+          context.drawImage(image, 0, 0);
+          const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
+          let positive = 0;
+          for (let i = 0; i < pixels.length; i += 4) if (pixels[i] >= 128) positive++;
+          return positive / (pixels.length / 4) * 100;
+        } finally {
+          URL.revokeObjectURL(url);
+        }
+      }
+
+      $("segRun").addEventListener("click", async e => {
+        const button = e.currentTarget,
+          file = $("rgbFile").files[0],
+          result = $("segResult");
+        if (!file) return showResult(result, "Choose an RGB image first.", true);
+        setBusy(button, true, "Generating mask…");
+        result.className = "result";
+        $("maskWrap").classList.remove("show");
+        $("maskImage").hidden = true;
+        $("maskPlaceholder").hidden = false;
+        $("maskPlaceholder").textContent = "Running the trained U-Net model…";
+        $("maskOutputCaption").textContent = "Waiting for a successful model response";
+        $("twin-mask-preview").hidden = true;
+        try {
+          const body = new FormData();
+          body.append("image", file);
+          const response = await fetch(base + API.segmentation, {
+            method: "POST",
+            body
+          });
+          const type = response.headers.get("content-type") || "";
+          if (!response.ok) await readResponse(response);
+          if (type.includes("image/png") || type.startsWith("image/")) {
+            const blob = await response.blob();
+            const url = URL.createObjectURL(blob);
+            const img = $("maskImage");
+            if (img.dataset.url) URL.revokeObjectURL(img.dataset.url);
+            img.dataset.url = url;
+            img.src = url;
+            img.hidden = false;
+            $("maskPlaceholder").hidden = true;
+            $("maskOutputCaption").textContent = "Predicted binary mask · returned by FastAPI U-Net";
+            const twinMask = $("twin-mask-preview");
+            if (twinMask.dataset.url) URL.revokeObjectURL(twinMask.dataset.url);
+            twinMask.dataset.url = url;
+            twinMask.src = url;
+            twinMask.hidden = false;
+            $("maskWrap").classList.add("show");
+            await updateTwinMaskProjection(url);
+            const coverage = await getMaskCoveragePercent(blob);
+            showResult(result, "Weedy-rice mask: " + coverage.toFixed(1) + "% of pixels marked in the model output. This is image-mask coverage, not disease status or field-area percentage.");
+          } else {
+            const data = type.includes("json") ? await response.json() : {
+              response: await response.text()
+            };
+            const image = data.mask ?? data.mask_url ?? data.image;
+            if (image) {
+              const maskSource = image.startsWith("data:") || image.startsWith("http") ?
+                image : `data:image/png;base64,${image}`;
+              $("maskImage").src = maskSource;
+              $("maskImage").hidden = false;
+              $("maskPlaceholder").hidden = true;
+              $("maskOutputCaption").textContent = "Predicted binary mask · returned by FastAPI U-Net";
+              const twinMask = $("twin-mask-preview");
+              twinMask.src = maskSource;
+              twinMask.hidden = false;
+              $("maskWrap").classList.add("show");
+              await updateTwinMaskProjection(maskSource);
+            }
+            showResult(result, predictionSummary(data), false, data);
+          }
+        } catch (err) {
+          showResult(result, err.message, true);
+        } finally {
+          setBusy(button, false);
+        }
+      });
+      $("rgbFile").addEventListener("change", () => {
+        updateTwinMaskProjection(null);
+        $("maskImage").hidden = true;
+        $("twin-mask-preview").hidden = true;
+        $("maskPlaceholder").hidden = false;
+        $("maskPlaceholder").textContent = "New RGB selected. Run segmentation to show its prediction here.";
+        $("maskOutputCaption").textContent = "Waiting for a successful model response";
+      });
+      $("multiRun").addEventListener("click", async e => {
+        const button = e.currentTarget,
+          result = $("multiResult"),
+          names = ["blue", "green", "red", "red_edge", "nir"],
+          files = names.map(n => $(n).files[0]);
+        if (files.some(f => !f)) return showResult(result,
+          "Please select all five TIFF band files.", true);
+        setBusy(button, true, "Running CNN…");
+        result.className = "result";
+        try {
+          const body = new FormData();
+          names.forEach(n => body.append(n, $(n).files[0]));
+          const data = await readResponse(await fetch(base + API.imageYield, {
+            method: "POST",
+            body
+          }));
+          const cnnValue = data && data.predicted_yield;
+          const summary = cnnValue === undefined
+            ? predictionSummary(data)
+            : "Predicted plot yield: " + Number(cnnValue).toFixed(3) + " t/ha";
+          showResult(result, summary, false, data);
+        } catch (err) {
+          showResult(result, err.message, true);
+        } finally {
+          setBusy(button, false);
+        }
+      });
+      $("agriForm").addEventListener("submit", async e => {
+        e.preventDefault();
+        const button = $("agriRun"),
+          result = $("agriResult");
+        setBusy(button, true, "Estimating Aman yield…");
+        result.className = "result";
+        try {
+          const payload = {
+            YEAR: Number(yearSelect.value),
+            Station: stationSelect.value
+          };
+          for (const input of advancedFields.querySelectorAll("input[data-feature]")) payload[
+            input.dataset.feature] = Number(input.value);
+          const data = await readResponse(await fetch(base + API.agriculturalYield, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+          }));
+          const score = data.predicted_aman_yield;
+          const message = score === undefined ? predictionSummary(data) :
+            `Aman yield model score: ${Number(score).toFixed(4)} (normalized 0–1) · Prediction ID: ${data.prediction_id}`;
+          showResult(result, message, false, data);
+        } catch (err) {
+          showResult(result, err.message, true);
+        } finally {
+          setBusy(button, false);
+        }
+      });
+      $("resetAll").addEventListener("click", () => {
+        document.querySelectorAll('input[type="file"]').forEach(i => i.value = "");
+        $("rgbName").textContent = "PNG, JPG or TIFF image";
+        $("rgbPreview").style.display = "none";
+        $("maskWrap").classList.remove("show");
+        $("maskImage").hidden = true;
+        $("maskPlaceholder").hidden = false;
+        $("maskPlaceholder").textContent = "Prediction will appear here after you choose an RGB image and run segmentation.";
+        $("maskOutputCaption").textContent = "Model output · not run yet";
+        updateTwinMaskProjection(null);
+        ["segResult", "multiResult", "agriResult"].forEach(id => $(id).className = "result");
+        document.querySelectorAll("[data-model-output]").forEach(el => el.textContent = "No prediction run yet.");
+        $("twin-mask-preview").hidden = true;
+        $("riceuas-sample-status").textContent = "Fixed reference preview from the included 38 × 22 pixel test-split plot; stretched for display only. Choosing other files does not update this preview.";
+        $("wind-toggle").checked = true;
+        $("growth-slider").value = "7";
+        $("growth-slider").dispatchEvent(new Event("input"));
+        yearSelect.value = "2013";
+        stationSelect.value = "Dhaka";
+        loadAgriProfile();
+        document.querySelector(".advanced").open = false;
+      });
+      document.querySelectorAll("[data-scroll-to]").forEach(button => button.addEventListener("click", () => {
+        $(button.dataset.scrollTo)?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }));
+    </script>
+    <!-- Three.js -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+        }
+      }
+    </script>
+    <script>
+      (() => {
+        const container = document.getElementById("digital-twin-container");
+        const moduleScript = document.querySelector('script[type="module"][src^="script.js"]');
+        if (!container || !moduleScript) return;
+
+        const showStartupError = (message) => {
+          if (container.querySelector("canvas")) return;
+          const status = container.querySelector(".digital-twin-loading") || document.createElement("div");
+          status.className = "digital-twin-loading";
+          status.setAttribute("role", "alert");
+          status.textContent = message;
+          if (!status.isConnected) container.append(status);
+        };
+
+        window.addEventListener("error", (event) => {
+          const failedModule = event.target === moduleScript || (event.filename || "").includes("script.js");
+          if (failedModule) {
+            showStartupError("Digital Twin could not load. Check the browser console and network connection for Three.js errors.");
+          }
+        }, true);
+
+        window.setTimeout(() => {
+          if (!container.querySelector("canvas")) {
+            showStartupError("Digital Twin did not start. Check the browser console for a Three.js import or WebGL/GPU error.");
+          }
+        }, 10000);
+      })();
+    </script>
+    <script type="module" src="script.js?v=mask-projection-3"></script>
+  </body>
+</html>
+
