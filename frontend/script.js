@@ -3,110 +3,31 @@ import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.160.0/exampl
 
 const container = document.getElementById("digital-twin-container");
 const plants = [];
-let paddyPlantsReady = false;
-let latestPaddyMaskSource = null;
-const healthDemoMeshes = [];
-let activeHealthDemoZone = window.paddyHealthDemoZone ?? null;
-
-function focusHealthDemoZone(zone) {
-    activeHealthDemoZone = zone;
-    for (const patch of healthDemoMeshes) {
-        const selected = patch.zone === activeHealthDemoZone;
-        if (patch.isFieldBase) {
-            patch.fill.material.opacity = selected ? 0.32 : 0.12;
-        } else {
-            patch.fill.material.opacity = selected ? 0.72 : 0.38;
-            patch.ring.material.opacity = selected ? 1 : 0.58;
-            patch.ring.scale.set(
-                patch.radiusX * (selected ? 1.12 : 1.02),
-                patch.radiusZ * (selected ? 1.12 : 1.02),
-                1
-            );
-        }
-    }
-}
-
-document.addEventListener("paddy-health-demo-focus", event => {
-    focusHealthDemoZone(event.detail?.zone ?? null);
-});
 
 if (!container) {
     throw new Error("Digital Twin container nahi mila. index.html check karo.");
 }
 
-// Register the prediction bridge before building the Three.js scene. This
-// keeps an early U-Net result from being lost while the crop meshes initialize.
-async function setPaddyMaskProjection(maskSource) {
-    latestPaddyMaskSource = maskSource ?? null;
-    const status = document.getElementById("segmentation-scene-status");
-
-    if (!paddyPlantsReady) {
-        if (status) status.textContent = maskSource
-            ? "U-Net mask received · preparing the 3D crop projection…"
-            : "Illustrative full-field default · run U-Net to update crop positions from its mask.";
-        return true;
-    }
-
-    if (!maskSource) {
-        for (const plant of plants) plant.visible = true;
-        if (status) status.textContent = "Illustrative full-field default · run U-Net to update crop positions from its mask.";
-        return true;
-    }
-
-    try {
-        const maskImage = new Image();
-        maskImage.src = maskSource;
-        await maskImage.decode();
-
-        const maskCanvas = document.createElement("canvas");
-        maskCanvas.width = maskImage.naturalWidth;
-        maskCanvas.height = maskImage.naturalHeight;
-        const maskContext = maskCanvas.getContext("2d", { willReadFrequently: true });
-        if (!maskContext || !maskCanvas.width || !maskCanvas.height) throw new Error("Empty mask image");
-        maskContext.drawImage(maskImage, 0, 0);
-        const pixels = maskContext.getImageData(0, 0, maskCanvas.width, maskCanvas.height).data;
-
-        let visiblePlants = 0;
-        for (const plant of plants) {
-            const { u, v } = plant.userData.maskUv;
-            const px = Math.min(maskCanvas.width - 1, Math.floor(u * maskCanvas.width));
-            const py = Math.min(maskCanvas.height - 1, Math.floor(v * maskCanvas.height));
-            const pixelIndex = (py * maskCanvas.width + px) * 4;
-            plant.visible = pixels[pixelIndex] >= 128;
-            if (plant.visible) visiblePlants++;
-        }
-
-        if (status) status.textContent = `U-Net mask applied · ${visiblePlants} of ${plants.length} rice positions shown. Illustrative mapping, not georeferenced.`;
-        return true;
-    } catch (error) {
-        console.warn("Could not project U-Net mask onto the Three.js field:", error);
-        if (status) status.textContent = "Prediction mask is available below the button, but could not be applied to the 3D field.";
-        return false;
-    }
-}
-
-document.addEventListener("paddy-mask-projection", event => {
-    setPaddyMaskProjection(event.detail?.source ?? null);
-});
-window.applyPaddyMaskProjection = setPaddyMaskProjection;
-
 // Scene
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x0a1711);
-scene.fog = new THREE.Fog(0x0a1711, 38, 100);
+const fieldRoot = new THREE.Group();
+fieldRoot.rotation.y = -2.55; // Approximate major-axis orientation until the AOI geometry is returned.
+scene.add(fieldRoot);
+scene.background = new THREE.Color(0x718276);
+scene.fog = new THREE.Fog(0x718276, 48, 112);
 
 // Camera
 const camera = new THREE.PerspectiveCamera(
-    48,
+    43,
     container.clientWidth / container.clientHeight,
     0.1,
     200
 );
-camera.position.set(20.5, 17.5, 25);
+camera.position.set(-20, 36, -27);
 
 // Renderer
-const renderer = new THREE.WebGLRenderer({ antialias: false });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1));
+const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.2));
 renderer.setSize(container.clientWidth, container.clientHeight);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -127,10 +48,10 @@ controls.maxDistance = 55;
 controls.maxPolarAngle = Math.PI * 0.48;
 
 // Lighting
-scene.add(new THREE.HemisphereLight(0xdcebd5, 0x344027, 1.4));
+scene.add(new THREE.HemisphereLight(0xe6eee2, 0x25372b, 1.65));
 
-const sun = new THREE.DirectionalLight(0xffe5b0, 3.7);
-sun.position.set(-12, 25, 14);
+const sun = new THREE.DirectionalLight(0xffedcf, 3.1);
+sun.position.set(-18, 30, 12);
 sun.castShadow = true;
 sun.shadow.mapSize.set(1536, 1536);
 sun.shadow.camera.left = -35;
@@ -149,10 +70,10 @@ function createGroundTexture() {
     canvas.height = size;
     const context = canvas.getContext("2d");
 
-    context.fillStyle = "#526047";
+    context.fillStyle = "#39473a";
     context.fillRect(0, 0, size, size);
 
-    const earthColors = ["#625640", "#71644a", "#46543b", "#68704d", "#596443"];
+    const earthColors = ["#625c46", "#71684f", "#3e5140", "#59624a", "#4c5942"];
 
     for (let i = 0; i < 2400; i++) {
         const x = Math.random() * size;
@@ -182,7 +103,7 @@ function createGroundTexture() {
     texture.colorSpace = THREE.SRGBColorSpace;
     texture.wrapS = THREE.RepeatWrapping;
     texture.wrapT = THREE.RepeatWrapping;
-    texture.repeat.set(7, 7);
+    texture.repeat.set(35, 35);
     texture.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 8);
 
     return texture;
@@ -190,9 +111,9 @@ function createGroundTexture() {
 
 // Surrounding ground
 const ground = new THREE.Mesh(
-    new THREE.PlaneGeometry(100, 100),
+    new THREE.PlaneGeometry(500, 500),
     new THREE.MeshStandardMaterial({
-        color: 0x9aa17a,
+        color: 0x737c69,
         map: createGroundTexture(),
         roughness: 1
     })
@@ -203,8 +124,8 @@ ground.receiveShadow = true;
 scene.add(ground);
 
 // Paddy field dimensions
-const FIELD_WIDTH = 32;
-const FIELD_DEPTH = 22;
+const FIELD_WIDTH = 50;
+const FIELD_DEPTH = 13.2;
 
 function createSoilTexture() {
     const size = 512;
@@ -212,10 +133,10 @@ function createSoilTexture() {
     canvas.width = size;
     canvas.height = size;
     const context = canvas.getContext("2d");
-    context.fillStyle = "#705137";
+    context.fillStyle = "#554632";
     context.fillRect(0, 0, size, size);
 
-    const soilColors = ["#4e3928", "#896a45", "#60452f", "#9a7950", "#756044"];
+    const soilColors = ["#3d382b", "#776044", "#514330", "#88704d", "#68583e"];
     for (let i = 0; i < 4200; i++) {
         const x = Math.random() * size;
         const y = Math.random() * size;
@@ -232,299 +153,325 @@ function createSoilTexture() {
     texture.colorSpace = THREE.SRGBColorSpace;
     texture.wrapS = THREE.RepeatWrapping;
     texture.wrapT = THREE.RepeatWrapping;
-    texture.repeat.set(2, 2);
+    texture.repeat.set(3, 1.4);
     texture.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 8);
     return texture;
 }
 
 const soilTexture = createSoilTexture();
 
+// Actual Sekinchan satellite observations are rendered as a bounded surface
+// overlay. Crop meshes and the hand-placed health zones remain illustrative.
+let satelliteLayerMesh = null;
+let currentSatelliteLayer = null;
+let soilLayerMesh = null;
+let currentSoilLayer = null;
+const satellite3dToggle = document.getElementById("satellite-3d-toggle");
+const satellite3dStatus = document.getElementById("satellite-3d-status");
+const soil3dToggle = document.getElementById("soil-3d-toggle");
+const soil3dStatus = document.getElementById("soil-3d-status");
+const twinLayerPill = document.getElementById("twin-layer-pill");
+
+function setTwinLayerPill(text) {
+    if (twinLayerPill) twinLayerPill.textContent = text;
+}
+
+const twinLayerLegend = document.getElementById("twin-layer-legend");
+const twinOverlayOpacity = document.getElementById("twin-overlay-opacity");
+const twinOverlayOpacityValue = document.getElementById("twin-overlay-opacity-value");
+const SATELLITE_COLOR_SCALES = {
+    NDVI: { min: -0.2, max: 0.9, unit: "unitless", colors: [[117, 70, 56], [198, 139, 76], [226, 208, 107], [141, 208, 104], [24, 119, 68]] },
+    NDMI: { min: -1, max: 1, unit: "unitless", colors: [[157, 85, 71], [225, 199, 116], [103, 167, 196], [53, 111, 161]] },
+    NDWI: { min: -1, max: 1, unit: "unitless", colors: [[157, 85, 71], [225, 199, 116], [103, 167, 196], [53, 111, 161]] },
+    S1_VV: { min: -30, max: 0, unit: "dB", colors: [[57, 45, 105], [65, 125, 165], [120, 200, 181], [230, 216, 118]] },
+    S1_VH: { min: -35, max: -5, unit: "dB", colors: [[57, 45, 105], [65, 125, 165], [120, 200, 181], [230, 216, 118]] }
+};
+const SOIL_COLOR_SCALE = [[64, 93, 122], [199, 181, 121], [112, 151, 91]];
+
+function setTwinLayerLegend(title, kind, min, max, unit, colors, detail) {
+    if (!twinLayerLegend) return;
+    const active = Boolean(title);
+    twinLayerLegend.hidden = !active;
+    if (!active) return;
+    document.getElementById("twin-legend-title").textContent = title;
+    document.getElementById("twin-legend-kind").textContent = kind;
+    document.getElementById("twin-legend-gradient").style.background = "linear-gradient(90deg, " + colors.map(color => "rgb(" + color.join(",") + ")").join(", ") + ")";
+    document.getElementById("twin-legend-min").textContent = Number(min).toFixed(2) + " " + unit;
+    document.getElementById("twin-legend-max").textContent = Number(max).toFixed(2) + " " + unit;
+    document.getElementById("twin-legend-detail").textContent = detail;
+}
+
+function renderTwinSatelliteLegend(data) {
+    if (!data || !satellite3dToggle?.checked) return;
+    const scale = SATELLITE_COLOR_SCALES[data.metric] || SATELLITE_COLOR_SCALES.NDVI;
+    const observedMin = data.summary?.min ?? scale.min;
+    const observedMax = data.summary?.max ?? scale.max;
+    const count = data.points?.length ?? 0;
+    setTwinLayerLegend(data.metric + " satellite layer", "SATELLITE · " + scale.unit, scale.min, scale.max, scale.unit, scale.colors,
+        "Observed " + Number(observedMin).toFixed(3) + " to " + Number(observedMax).toFixed(3) + "; " + count + " valid cells, " + data.window_start + " to " + data.window_end + ". Colors use the fixed display scale.");
+}
+
+function renderTwinSoilLegend(data) {
+    if (!data || !soil3dToggle?.checked) return;
+    const property = data.property.replaceAll("_", " ");
+    const min = Number(data.min ?? 0);
+    const max = Number(data.max ?? 1);
+    setTwinLayerLegend(property + " · " + data.depth_cm + " cm", "SOIL REFERENCE · " + data.unit, min, max, data.unit, SOIL_COLOR_SCALE,
+        Number(data.pixel_count ?? 0) + " coarse cells · approx. " + data.resolution_m_approx + " m · " + data.source + ". Reference estimate, not a local soil test.");
+}
+
+function applyTwinOverlayOpacity(value) {
+    const opacity = Number(value) / 100;
+    if (satelliteLayerMesh) satelliteLayerMesh.material.opacity = opacity;
+    if (soilLayerMesh) soilLayerMesh.material.opacity = opacity;
+    if (twinOverlayOpacityValue) twinOverlayOpacityValue.textContent = Math.round(Number(value)) + "%";
+}
+
+twinOverlayOpacity?.addEventListener("input", () => applyTwinOverlayOpacity(twinOverlayOpacity.value));
+applyTwinOverlayOpacity(twinOverlayOpacity?.value ?? 82);
+
+function satelliteRamp(value, metric) {
+    const scale = SATELLITE_COLOR_SCALES[metric] || SATELLITE_COLOR_SCALES.NDVI;
+    const t = THREE.MathUtils.clamp((value - scale.min) / (scale.max - scale.min), 0, 1);
+    const position = t * (scale.colors.length - 1);
+    const index = Math.min(scale.colors.length - 2, Math.floor(position));
+    const mix = position - index;
+    return scale.colors[index].map((channel, i) => Math.round(channel + (scale.colors[index + 1][i] - channel) * mix));
+}
+
+function soilRamp(value, data) {
+    const min = Number(data.min);
+    const max = Number(data.max);
+    const t = THREE.MathUtils.clamp((value - min) / (max - min || 1), 0, 1);
+    const colors = SOIL_COLOR_SCALE;
+    const position = t * (colors.length - 1);
+    const index = Math.min(colors.length - 2, Math.floor(position));
+    const mix = position - index;
+    return colors[index].map((channel, i) => Math.round(channel + (colors[index + 1][i] - channel) * mix));
+}
+
+function makeSatelliteTexture(data) {
+    const size = 1024;
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext("2d");
+    const ring = data?.boundary?.coordinates?.[0];
+    if (!ctx || !ring?.length || ring.length < 4) return null;
+
+    const vertices = ring.slice(0, -1);
+    const meanLat = vertices.reduce((sum, point) => sum + point[1], 0) / vertices.length;
+    const centerLon = vertices.reduce((sum, point) => sum + point[0], 0) / vertices.length;
+    const centerLat = meanLat;
+    const project = ([lon, lat]) => [
+        (lon - centerLon) * 111320 * Math.cos(meanLat * Math.PI / 180),
+        (lat - centerLat) * 110574
+    ];
+    const projected = vertices.map(project);
+    let major = null;
+    for (let i = 0; i < projected.length; i++) {
+        const a = projected[i];
+        const b = projected[(i + 1) % projected.length];
+        const dx = b[0] - a[0], dy = b[1] - a[1];
+        const length = Math.hypot(dx, dy);
+        if (!major || length > major.length) major = { dx, dy, length };
+    }
+    if (!major?.length) return null;
+    const ux = major.dx / major.length;
+    const uy = major.dy / major.length;
+    const angle = Math.atan2(uy, ux);
+    const local = ([lon, lat]) => {
+        const [east, north] = project([lon, lat]);
+        return [east * ux + north * uy, -east * uy + north * ux];
+    };
+    const boundaryLocal = ring.map(local);
+    const minX = Math.min(...boundaryLocal.map(point => point[0]));
+    const maxX = Math.max(...boundaryLocal.map(point => point[0]));
+    const minY = Math.min(...boundaryLocal.map(point => point[1]));
+    const maxY = Math.max(...boundaryLocal.map(point => point[1]));
+    const spanX = maxX - minX, spanY = maxY - minY;
+    if (!(spanX > 0 && spanY > 0)) return null;
+    const padding = 8;
+    const px = point => {
+        const [x, y] = local(point);
+        return [padding + (x - minX) / spanX * (size - 2 * padding),
+            size - padding - (y - minY) / spanY * (size - 2 * padding)];
+    };
+
+    ctx.clearRect(0, 0, size, size);
+    ctx.beginPath();
+    ring.forEach((point, index) => {
+        const [x, y] = px(point);
+        if (index === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    });
+    ctx.closePath();
+    ctx.save();
+    ctx.clip();
+    ctx.fillStyle = "#173b2a";
+    ctx.fillRect(0, 0, size, size);
+    const cellWidth = Math.max(1, (data.cell_size_m?.width ?? 9.7) / spanX * (size - 2 * padding));
+    const cellHeight = Math.max(1, (data.cell_size_m?.height ?? 9.7) / spanY * (size - 2 * padding));
+    for (const point of data.points ?? []) {
+        const [x, y] = px([point.longitude, point.latitude]);
+        const [r, g, b] = data.layer_kind === "soil_reference"
+            ? soilRamp(point.value, data)
+            : satelliteRamp(point.value, data.metric);
+        ctx.fillStyle = `rgb(${r},${g},${b})`;
+        ctx.fillRect(x - cellWidth / 2, y - cellHeight / 2, cellWidth + 0.5, cellHeight + 0.5);
+    }
+    ctx.restore();
+    ctx.beginPath();
+    ring.forEach((point, index) => {
+        const [x, y] = px(point);
+        if (index === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    });
+    ctx.closePath();
+    ctx.strokeStyle = "#fff3b0";
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 8);
+    return { texture, angle };
+}
+
+function updateSatelliteLayer(data) {
+    currentSatelliteLayer = data;
+    if (satelliteLayerMesh) {
+        fieldRoot.remove(satelliteLayerMesh);
+        satelliteLayerMesh.geometry.dispose();
+        satelliteLayerMesh.material.map?.dispose();
+        satelliteLayerMesh.material.dispose();
+        satelliteLayerMesh = null;
+    }
+    if (!data?.boundary?.coordinates?.[0]) {
+        if (satellite3dStatus) satellite3dStatus.textContent = "Sekinchan satellite data unavailable; the AOI-shaped field remains visible.";
+        if (!soil3dToggle?.checked) setTwinLayerLegend("", "", 0, 0, "", [], "");
+        return;
+    }
+    if (soilLayerMesh && soil3dToggle?.checked) {
+        soil3dToggle.checked = false;
+        soilLayerMesh.visible = false;
+    }
+    if (satellite3dToggle) satellite3dToggle.checked = true;
+    const result = makeSatelliteTexture(data);
+    if (!result) return;
+    fieldRoot.rotation.y = result.angle;
+    satelliteLayerMesh = new THREE.Mesh(
+        new THREE.PlaneGeometry(FIELD_WIDTH - 0.12, FIELD_DEPTH - 0.12),
+        new THREE.MeshBasicMaterial({ map: result.texture, transparent: true, opacity: Number(twinOverlayOpacity?.value ?? 82) / 100, depthWrite: false, side: THREE.DoubleSide })
+    );
+    satelliteLayerMesh.rotation.x = -Math.PI / 2;
+    satelliteLayerMesh.position.y = 0.235;
+    satelliteLayerMesh.renderOrder = 5;
+    satelliteLayerMesh.visible = satellite3dToggle?.checked ?? true;
+    fieldRoot.add(satelliteLayerMesh);
+    const label = `${data.metric} · ${data.window_start} to ${data.window_end} · ${data.points?.length ?? 0} valid pixels`;
+    if (satellite3dStatus) satellite3dStatus.textContent = `${label} · boundary shape and satellite grid aligned to the same AOI frame; crop growth is illustrative.`;
+    setTwinLayerPill(`SATELLITE · ${data.metric} · ${data.window_start} — ${data.window_end} · ${data.points?.length ?? 0} pixels`);
+    if (satellite3dToggle?.checked) renderTwinSatelliteLegend(data);
+}
+
+function updateSoilLayer(data) {
+    currentSoilLayer = data;
+    if (soilLayerMesh) {
+        fieldRoot.remove(soilLayerMesh);
+        soilLayerMesh.geometry.dispose();
+        soilLayerMesh.material.map?.dispose();
+        soilLayerMesh.material.dispose();
+        soilLayerMesh = null;
+    }
+    if (!data?.points?.length || !currentSatelliteLayer?.boundary?.coordinates?.[0]) {
+        if (soil3dStatus) soil3dStatus.textContent = "Soil reference raster cells are unavailable for this AOI.";
+        return;
+    }
+    const result = makeSatelliteTexture({ ...data, boundary: currentSatelliteLayer.boundary });
+    if (!result) return;
+    fieldRoot.rotation.y = result.angle;
+    soilLayerMesh = new THREE.Mesh(
+        new THREE.PlaneGeometry(FIELD_WIDTH - 0.12, FIELD_DEPTH - 0.12),
+        new THREE.MeshBasicMaterial({ map: result.texture, transparent: true, opacity: Number(twinOverlayOpacity?.value ?? 82) / 100, depthWrite: false, side: THREE.DoubleSide })
+    );
+    soilLayerMesh.rotation.x = -Math.PI / 2;
+    soilLayerMesh.position.y = 0.236;
+    soilLayerMesh.renderOrder = 6;
+    soilLayerMesh.visible = soil3dToggle?.checked ?? false;
+    fieldRoot.add(soilLayerMesh);
+    const range = data.min == null || data.max == null ? "range unavailable" : `${Number(data.min).toFixed(2)}–${Number(data.max).toFixed(2)} ${data.unit}`;
+    if (soil3dStatus) soil3dStatus.textContent = `${data.property.replaceAll("_", " ")} · ${data.depth_cm} cm · ${range} · ${data.pixel_count} coarse cells · ${data.resolution_m_approx} m · ${data.source} · reference only.`;
+    setTwinLayerPill(`SOIL REFERENCE · ${data.property.replaceAll("_", " ")} · ${data.depth_cm} cm · ${range}`);
+    if (soil3dToggle?.checked) renderTwinSoilLegend(data);
+}
+
+document.addEventListener("paddy-satellite-layer", event => updateSatelliteLayer(event.detail));
+document.addEventListener("paddy-soil-layer", event => updateSoilLayer(event.detail));
+satellite3dToggle?.addEventListener("change", () => {
+    if (satellite3dToggle.checked && soilLayerMesh) {
+        if (soil3dToggle) soil3dToggle.checked = false;
+        soilLayerMesh.visible = false;
+    }
+    if (satelliteLayerMesh) satelliteLayerMesh.visible = satellite3dToggle.checked;
+    if (satellite3dToggle.checked && currentSatelliteLayer) renderTwinSatelliteLegend(currentSatelliteLayer);
+    else if (!soil3dToggle?.checked) setTwinLayerLegend("", "", 0, 0, "", [], "");
+    if (satellite3dStatus && currentSatelliteLayer) {
+        satellite3dStatus.textContent = satellite3dToggle.checked
+            ? `${currentSatelliteLayer.metric} · ${currentSatelliteLayer.window_start} to ${currentSatelliteLayer.window_end} · satellite layer shown on AOI; crop geometry remains illustrative.`
+            : "Satellite layer hidden · illustrative 3D crop scene shown.";
+    }
+    if (!satellite3dToggle.checked && !soil3dToggle?.checked) setTwinLayerPill("NO DATA OVERLAY · illustrative 3D field only");
+    else if (satellite3dToggle.checked && currentSatelliteLayer) setTwinLayerPill(`SATELLITE · ${currentSatelliteLayer.metric} · ${currentSatelliteLayer.window_start} — ${currentSatelliteLayer.window_end} · ${currentSatelliteLayer.points?.length ?? 0} pixels`);
+});
+soil3dToggle?.addEventListener("change", () => {
+    if (soil3dToggle.checked) {
+        if (satellite3dToggle) satellite3dToggle.checked = false;
+        if (satelliteLayerMesh) satelliteLayerMesh.visible = false;
+        if (soilLayerMesh) soilLayerMesh.visible = true;
+        if (satellite3dStatus) satellite3dStatus.textContent = "Satellite overlay hidden while the coarse soil reference layer is selected.";
+        if (currentSoilLayer) renderTwinSoilLegend(currentSoilLayer);
+    } else if (soilLayerMesh) {
+        soilLayerMesh.visible = false;
+        if (!satellite3dToggle?.checked) setTwinLayerLegend("", "", 0, 0, "", [], "");
+    }
+    if (!soil3dToggle.checked && !satellite3dToggle?.checked) setTwinLayerPill("NO DATA OVERLAY · illustrative 3D field only");
+    else if (!soil3dToggle.checked && satellite3dToggle?.checked && currentSatelliteLayer) setTwinLayerPill(`SATELLITE · ${currentSatelliteLayer.metric} · ${currentSatelliteLayer.window_start} — ${currentSatelliteLayer.window_end} · ${currentSatelliteLayer.points?.length ?? 0} pixels`);
+});
+
 // Soil
 const soil = new THREE.Mesh(
-    new THREE.BoxGeometry(FIELD_WIDTH, 0.42, FIELD_DEPTH),
+    new THREE.BoxGeometry(FIELD_WIDTH, 0.26, FIELD_DEPTH),
     new THREE.MeshStandardMaterial({
         color: 0xffffff,
         map: soilTexture,
         roughness: 0.96
     })
 );
-soil.position.y = -0.02;
+soil.position.y = 0.06;
 soil.receiveShadow = true;
 soil.castShadow = true;
-scene.add(soil);
+fieldRoot.add(soil);
 
-// Static, manually placed example zones for the clearly labeled UI demo.
-// This green base plus red/amber patches are independent of U-Net masks and
-// are not crop health results.
-const healthFieldBase = new THREE.Mesh(
-    new THREE.PlaneGeometry(FIELD_WIDTH - 0.55, FIELD_DEPTH - 0.55),
-    new THREE.MeshBasicMaterial({
-        color: 0x137a43,
+// A restrained shallow-water sheen gives the paddy a wet, planted surface
+// while keeping the soil texture visible through it.
+const fieldWater = new THREE.Mesh(
+    new THREE.PlaneGeometry(FIELD_WIDTH - 0.9, FIELD_DEPTH - 0.9),
+    new THREE.MeshPhysicalMaterial({
+        color: 0x87917a,
+        roughness: 0.34,
+        metalness: 0.04,
+        clearcoat: 0.38,
+        clearcoatRoughness: 0.32,
         transparent: true,
-        opacity: 0.12,
-        depthWrite: false,
-        side: THREE.DoubleSide
+        opacity: 0.22,
+        depthWrite: false
     })
 );
-healthFieldBase.rotation.x = -Math.PI / 2;
-healthFieldBase.position.y = 0.197;
-healthFieldBase.renderOrder = 1;
-scene.add(healthFieldBase);
-healthDemoMeshes.push({ zone: "healthy", fill: healthFieldBase, isFieldBase: true });
+fieldWater.rotation.x = -Math.PI / 2;
+fieldWater.position.y = 0.196;
+fieldWater.renderOrder = 1;
+fieldRoot.add(fieldWater);
 
-const healthZoneDefinitions = [
-    { zone: "disease", x: 2.5, z: -1.5, radiusX: 2.05, radiusZ: 1.48, color: 0x9f2623 },
-    { zone: "warning", x: -3.5, z: 5.2, radiusX: 1.65, radiusZ: 1.2, color: 0xa67513 },
-    { zone: "warning", x: 5.5, z: -6.2, radiusX: 1.5, radiusZ: 1.05, color: 0xa67513 }
-];
-
-for (const definition of healthZoneDefinitions) {
-    const fill = new THREE.Mesh(
-        new THREE.CircleGeometry(1, 36),
-        new THREE.MeshBasicMaterial({
-            color: definition.color,
-            transparent: true,
-            opacity: 0.38,
-            depthWrite: false,
-            side: THREE.DoubleSide
-        })
-    );
-    fill.rotation.x = -Math.PI / 2;
-    fill.position.set(definition.x, 0.218, definition.z);
-    fill.scale.set(definition.radiusX, definition.radiusZ, 1);
-    fill.renderOrder = 2;
-    scene.add(fill);
-
-    const ring = new THREE.Mesh(
-        new THREE.TorusGeometry(1, 0.028, 4, 36),
-        new THREE.MeshBasicMaterial({
-            color: definition.color,
-            transparent: true,
-            opacity: 0.58,
-            depthWrite: false
-        })
-    );
-    ring.rotation.x = -Math.PI / 2;
-    ring.position.set(definition.x, 0.224, definition.z);
-    ring.scale.set(definition.radiusX * 1.02, definition.radiusZ * 1.02, 1);
-    ring.renderOrder = 3;
-    scene.add(ring);
-
-    healthDemoMeshes.push({
-        zone: definition.zone,
-        fill,
-        ring,
-        radiusX: definition.radiusX,
-        radiusZ: definition.radiusZ
-    });
-}
-if (activeHealthDemoZone) focusHealthDemoZone(activeHealthDemoZone);
-
-// Low-poly trees around the field
-const treeSites = [
-    [-29, -20], [-21, -23], [-11, -24], [1, -24], [14, -23], [25, -21],
-    [-28, -11], [-29, 1], [-28, 13], [28, -12], [29, 0], [28, 12],
-    [-25, 21], [-17, 24], [-7, 25], [5, 25], [17, 24], [26, 21]
-];
-
-function createBarkTexture() {
-    const canvas = document.createElement("canvas");
-    canvas.width = 128;
-    canvas.height = 256;
-    const context = canvas.getContext("2d");
-    context.fillStyle = "#62452e";
-    context.fillRect(0, 0, canvas.width, canvas.height);
-
-    for (let i = 0; i < 90; i++) {
-        context.globalAlpha = 0.12 + Math.random() * 0.25;
-        context.strokeStyle = i % 2 ? "#b18a59" : "#30251d";
-        context.lineWidth = 1 + Math.random() * 3;
-        const x = Math.random() * canvas.width;
-        context.beginPath();
-        context.moveTo(x, 0);
-        context.lineTo(x + (Math.random() - 0.5) * 10, canvas.height);
-        context.stroke();
-    }
-
-    context.globalAlpha = 1;
-    const texture = new THREE.CanvasTexture(canvas);
-    texture.colorSpace = THREE.SRGBColorSpace;
-    texture.wrapS = THREE.RepeatWrapping;
-    texture.wrapT = THREE.RepeatWrapping;
-    return texture;
-}
-
-function createFoliageTexture() {
-    const size = 256;
-    const canvas = document.createElement("canvas");
-    canvas.width = size;
-    canvas.height = size;
-    const context = canvas.getContext("2d");
-    context.fillStyle = "#466c38";
-    context.fillRect(0, 0, size, size);
-    const leafColors = ["#315b30", "#3e6934", "#5b7b3d", "#708344", "#426633"];
-
-    for (let i = 0; i < 1800; i++) {
-        const x = Math.random() * size;
-        const y = Math.random() * size;
-        const length = 2 + Math.random() * 8;
-        context.globalAlpha = 0.28 + Math.random() * 0.5;
-        context.strokeStyle = leafColors[Math.floor(Math.random() * leafColors.length)];
-        context.lineWidth = 1 + Math.random() * 2;
-        context.beginPath();
-        context.moveTo(x, y);
-        context.quadraticCurveTo(x + length, y - length, x + length * 1.4, y + length * 0.3);
-        context.stroke();
-    }
-
-    context.globalAlpha = 1;
-    const texture = new THREE.CanvasTexture(canvas);
-    texture.colorSpace = THREE.SRGBColorSpace;
-    texture.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 8);
-    return texture;
-}
-
-const treeTrunkMaterial = new THREE.MeshStandardMaterial({
-    color: 0xffffff,
-    map: createBarkTexture(),
-    roughness: 0.96
-});
-const treeCanopyMaterial = new THREE.MeshStandardMaterial({
-    color: 0xffffff,
-    map: createFoliageTexture(),
-    roughness: 0.9
-});
-const trunkGeometry = new THREE.CylinderGeometry(0.15, 0.26, 2, 9, 3);
-const branchGeometry = new THREE.CylinderGeometry(0.045, 0.09, 1.25, 6);
-const treeTrunks = new THREE.InstancedMesh(trunkGeometry, treeTrunkMaterial, treeSites.length);
-const treeBranches = new THREE.InstancedMesh(
-    branchGeometry,
-    treeTrunkMaterial,
-    treeSites.length * 2
-);
-const canopyLayout = [
-    [0, 2.15, 0, 1.02],
-    [0.62, 1.75, 0, 0.84],
-    [0.2, 1.72, 0.58, 0.86],
-    [-0.48, 1.76, 0.43, 0.84],
-    [-0.61, 1.72, -0.1, 0.86],
-    [-0.1, 1.75, -0.61, 0.84],
-    [0.42, 1.48, 0.36, 0.72]
-];
-const treeCanopies = new THREE.InstancedMesh(
-    new THREE.SphereGeometry(0.82, 14, 10),
-    treeCanopyMaterial,
-    treeSites.length * canopyLayout.length
-);
-const treeTransform = new THREE.Object3D();
-const treeColors = [0x93a979, 0x809969, 0xa1ad7e, 0x718c60];
-const up = new THREE.Vector3(0, 1, 0);
-
-treeSites.forEach(([x, z], index) => {
-    const scale = 1.15 + Math.random() * 0.55;
-    const baseY = -0.24;
-    treeTransform.position.set(x, baseY + scale, z);
-    treeTransform.rotation.y = Math.random() * Math.PI;
-    treeTransform.scale.set(scale, scale, scale);
-    treeTransform.updateMatrix();
-    treeTrunks.setMatrixAt(index, treeTransform.matrix);
-
-    for (let sideIndex = 0; sideIndex < 2; sideIndex++) {
-        const side = sideIndex === 0 ? -1 : 1;
-        const direction = new THREE.Vector3(side * 0.62, 0.78, side * 0.16).normalize();
-        treeTransform.position.set(
-            x + direction.x * 0.58 * scale,
-            baseY + (0.62 + direction.y * 0.58) * scale,
-            z + direction.z * 0.58 * scale
-        );
-        treeTransform.quaternion.setFromUnitVectors(up, direction);
-        treeTransform.scale.setScalar(scale);
-        treeTransform.updateMatrix();
-        treeBranches.setMatrixAt(index * 2 + sideIndex, treeTransform.matrix);
-    }
-
-    canopyLayout.forEach(([offsetX, height, offsetZ, crownScale], cluster) => {
-        treeTransform.position.set(
-            x + offsetX * scale,
-            baseY + height * scale,
-            z + offsetZ * scale
-        );
-        treeTransform.rotation.set(
-            (Math.random() - 0.5) * 0.18,
-            Math.random() * Math.PI * 2,
-            (Math.random() - 0.5) * 0.18
-        );
-        treeTransform.scale.set(
-            crownScale * scale,
-            crownScale * (0.84 + Math.random() * 0.2) * scale,
-            crownScale * scale
-        );
-        treeTransform.updateMatrix();
-        const instanceIndex = index * canopyLayout.length + cluster;
-        treeCanopies.setMatrixAt(instanceIndex, treeTransform.matrix);
-        treeCanopies.setColorAt(
-            instanceIndex,
-            new THREE.Color(treeColors[Math.floor(Math.random() * treeColors.length)])
-        );
-    });
-});
-
-for (const treeMesh of [treeTrunks, treeBranches, treeCanopies]) {
-    treeMesh.instanceMatrix.needsUpdate = true;
-    treeMesh.castShadow = true;
-    treeMesh.receiveShadow = true;
-}
-if (treeCanopies.instanceColor) treeCanopies.instanceColor.needsUpdate = true;
-scene.add(treeTrunks, treeBranches, treeCanopies);
-
-// Instanced grass adds sparse detail to dry ground without thousands of draw calls.
-const grassVertices = new Float32Array([
-    -0.035, 0, 0,  0.035, 0, 0,  0.012, 0.58, 0,
-    -0.035, 0, 0,  0.012, 0.58, 0, -0.012, 0.38, 0,
-    0, 0, -0.035,  0, 0, 0.035,  0, 0.58, 0.012,
-    0, 0, -0.035,  0, 0.58, 0.012,  0, 0.38, -0.012
-]);
-const grassGeometry = new THREE.BufferGeometry();
-grassGeometry.setAttribute("position", new THREE.BufferAttribute(grassVertices, 3));
-grassGeometry.computeVertexNormals();
-const grassMaterial = new THREE.MeshStandardMaterial({
-    color: 0xffffff,
-    side: THREE.DoubleSide,
-    roughness: 0.92
-});
-const grassCount = 4200;
-const grass = new THREE.InstancedMesh(grassGeometry, grassMaterial, grassCount);
-const grassTransform = new THREE.Object3D();
-const grassColors = [0x71834b, 0x89965a, 0x596d3e, 0x9a955e, 0x596141];
-let grassIndex = 0;
-
-while (grassIndex < grassCount) {
-    const x = (Math.random() - 0.5) * 88;
-    const z = (Math.random() - 0.5) * 88;
-    const absX = Math.abs(x);
-    const absZ = Math.abs(z);
-    const insidePaddy = absX < FIELD_WIDTH / 2 + 0.7
-        && absZ < FIELD_DEPTH / 2 + 0.7;
-    if (insidePaddy) continue;
-
-    const scale = 0.45 + Math.random() * 1.05;
-    grassTransform.position.set(x, -0.235, z);
-    grassTransform.rotation.y = Math.random() * Math.PI * 2;
-    grassTransform.scale.set(scale, scale, scale);
-    grassTransform.updateMatrix();
-    grass.setMatrixAt(grassIndex, grassTransform.matrix);
-    grass.setColorAt(
-        grassIndex,
-        new THREE.Color(grassColors[Math.floor(Math.random() * grassColors.length)])
-    );
-    grassIndex++;
-}
-
-grass.instanceMatrix.needsUpdate = true;
-if (grass.instanceColor) grass.instanceColor.needsUpdate = true;
-grass.castShadow = false;
-grass.receiveShadow = false;
-scene.add(grass);
+// Keep the selected study field as the only raised plot in the scene. The
+// softly lit ground and fog give it depth without adding unrelated demo plots.
 
 // Field bunds
 const bundMaterial = new THREE.MeshStandardMaterial({
@@ -535,112 +482,111 @@ const bundMaterial = new THREE.MeshStandardMaterial({
 
 const bunds = [
     new THREE.Mesh(
-        new THREE.BoxGeometry(FIELD_WIDTH, 0.16, 0.42),
+        new THREE.BoxGeometry(FIELD_WIDTH, 0.12, 0.28),
         bundMaterial
     ),
     new THREE.Mesh(
-        new THREE.BoxGeometry(FIELD_WIDTH, 0.16, 0.42),
+        new THREE.BoxGeometry(FIELD_WIDTH, 0.12, 0.28),
         bundMaterial
     ),
     new THREE.Mesh(
-        new THREE.BoxGeometry(0.42, 0.16, FIELD_DEPTH),
+        new THREE.BoxGeometry(0.28, 0.12, FIELD_DEPTH),
         bundMaterial
     ),
     new THREE.Mesh(
-        new THREE.BoxGeometry(0.42, 0.16, FIELD_DEPTH),
+        new THREE.BoxGeometry(0.28, 0.12, FIELD_DEPTH),
         bundMaterial
     )
 ];
 
-bunds[0].position.set(0, 0.27, -FIELD_DEPTH / 2 + 0.21);
-bunds[1].position.set(0, 0.27, FIELD_DEPTH / 2 - 0.21);
-bunds[2].position.set(-FIELD_WIDTH / 2 + 0.21, 0.27, 0);
-bunds[3].position.set(FIELD_WIDTH / 2 - 0.21, 0.27, 0);
+bunds[0].position.set(0, 0.25, -FIELD_DEPTH / 2 + 0.14);
+bunds[1].position.set(0, 0.25, FIELD_DEPTH / 2 - 0.14);
+bunds[2].position.set(-FIELD_WIDTH / 2 + 0.14, 0.25, 0);
+bunds[3].position.set(FIELD_WIDTH / 2 - 0.14, 0.25, 0);
 
 for (const bund of bunds) {
     bund.castShadow = true;
     bund.receiveShadow = true;
-    scene.add(bund);
+    fieldRoot.add(bund);
 }
-// Field border
-const border = new THREE.LineSegments(
-    new THREE.EdgesGeometry(
-        new THREE.BoxGeometry(FIELD_WIDTH, 0.42, FIELD_DEPTH)
-    ),
-    new THREE.LineBasicMaterial({ color: 0x9ab778 })
-);
-border.position.y = -0.02;
-scene.add(border);
-
 // Soil furrows between rice rows
 const furrowMaterial = new THREE.MeshStandardMaterial({
     color: 0x302318,
     roughness: 1
 });
 
-for (let z = -9.5; z <= 9.5; z += 1.15) {
+for (let z = -FIELD_DEPTH / 2 + 0.8; z <= FIELD_DEPTH / 2 - 0.8; z += 1.35) {
     const furrow = new THREE.Mesh(
         new THREE.BoxGeometry(FIELD_WIDTH - 1.8, 0.008, 0.08),
         furrowMaterial
     );
     furrow.position.set(0, 0.191, z);
-    scene.add(furrow);
+    fieldRoot.add(furrow);
 }
 
 // Rice plant materials
 const stemMaterial = new THREE.MeshStandardMaterial({
-    color: 0x719345,
+    color: 0x657b3d,
     roughness: 0.85
 });
 
 const leafMaterials = [
     new THREE.MeshStandardMaterial({
-        color: 0x4f8039,
+        color: 0x416b37,
         side: THREE.DoubleSide,
         roughness: 0.8
     }),
     new THREE.MeshStandardMaterial({
-        color: 0x78a94b,
+        color: 0x638a41,
         side: THREE.DoubleSide,
         roughness: 0.8
     }),
     new THREE.MeshStandardMaterial({
-        color: 0x376b32,
+        color: 0x315b30,
         side: THREE.DoubleSide,
         roughness: 0.8
     })
 ];
 
-// Curved rice leaves
+// Narrow, tapered leaves with a gentle 3D curl; broad flat blades made the crop
+// read as a decorative low-poly model instead of a rice canopy.
 function createLeafGeometry(length, width) {
-    const shape = new THREE.Shape();
-
-    shape.moveTo(0, 0);
-    shape.quadraticCurveTo(
-        width * 0.85, length * 0.28,
-        width * 0.65, length * 0.58
-    );
-    shape.quadraticCurveTo(
-        width * 0.4, length * 0.84,
-        0, length
-    );
-    shape.quadraticCurveTo(
-        -width * 0.22, length * 0.7,
-        -width * 0.25, length * 0.42
-    );
-    shape.quadraticCurveTo(
-        -width * 0.2, length * 0.15,
-        0, 0
-    );
-
-    return new THREE.ShapeGeometry(shape, 8);
+    const segments = 10;
+    const vertices = [];
+    const indices = [];
+    for (let row = 0; row <= segments; row++) {
+        const t = row / segments;
+        const taper = Math.pow(Math.sin(Math.PI * t), 0.72);
+        const halfWidth = Math.max(0.002, width * 0.5 * taper);
+        const sweep = width * 0.55 * t * t;
+        for (const side of [-1, 0, 1]) {
+            vertices.push(
+                sweep + side * halfWidth,
+                length * t,
+                (1 - Math.abs(side)) * width * 0.11 * Math.sin(Math.PI * t)
+            );
+        }
+    }
+    for (let row = 0; row < segments; row++) {
+        const current = row * 3;
+        const next = current + 3;
+        for (let col = 0; col < 2; col++) {
+            const a = current + col, b = a + 1, c = next + col, d = c + 1;
+            indices.push(a, c, b, b, c, d);
+        }
+    }
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute("position", new THREE.Float32BufferAttribute(vertices, 3));
+    geometry.setIndex(indices);
+    geometry.computeVertexNormals();
+    return geometry;
 }
 
 const leafGeometries = [
-    createLeafGeometry(0.55, 0.13),
-    createLeafGeometry(0.75, 0.15),
-    createLeafGeometry(0.90, 0.17),
-    createLeafGeometry(0.65, 0.11)
+    createLeafGeometry(0.78, 0.09),
+    createLeafGeometry(0.96, 0.105),
+    createLeafGeometry(1.12, 0.115),
+    createLeafGeometry(0.88, 0.082)
 ];
 
 // Mature rice grain heads
@@ -656,29 +602,27 @@ const panicleMaterial = new THREE.MeshStandardMaterial({
 
 // Rice plants
 const plantGroup = new THREE.Group();
-scene.add(plantGroup);
+fieldRoot.add(plantGroup);
 
 function createRicePlant(x, z) {
     const plant = new THREE.Group();
     plant.position.set(x, 0.22, z);
-    // The uploaded mask is sampled in image space across this illustrative plot.
-    // This is a visual projection only; the UAV patch has no field boundary tie.
-    plant.userData.maskUv = {
-        u: THREE.MathUtils.clamp((x + FIELD_WIDTH / 2) / FIELD_WIDTH, 0, 1),
-        v: THREE.MathUtils.clamp(1 - (z + FIELD_DEPTH / 2) / FIELD_DEPTH, 0, 1)
-    };
-
     const height = 0.88 + Math.random() * 0.45;
 
-    const stem = new THREE.Mesh(
-        new THREE.CylinderGeometry(0.018, 0.04, height, 6),
-        stemMaterial
-    );
-    stem.position.y = height / 2;
-    stem.castShadow = false;
-    plant.add(stem);
+    // Rice grows as a small clump of tillers rather than a single upright stalk.
+    const culmOffsets = [[-0.045, -0.02], [0, 0], [0.045, 0.025]];
+    const culmHeights = [height * 0.78, height, height * 0.88];
+    for (let culmIndex = 0; culmIndex < culmOffsets.length; culmIndex++) {
+        const culm = new THREE.Mesh(
+            new THREE.CylinderGeometry(0.012, 0.026, culmHeights[culmIndex], 5),
+            stemMaterial
+        );
+        culm.position.set(culmOffsets[culmIndex][0], culmHeights[culmIndex] / 2, culmOffsets[culmIndex][1]);
+        culm.castShadow = false;
+        plant.add(culm);
+    }
 
-    const leafCount = 6 + Math.floor(Math.random() * 3);
+    const leafCount = 10 + Math.floor(Math.random() * 3);
 
     for (let i = 0; i < leafCount; i++) {
         const leaf = new THREE.Mesh(
@@ -688,16 +632,19 @@ function createRicePlant(x, z) {
 
         const angle = (i / leafCount) * Math.PI * 2
             + (Math.random() - 0.5) * 0.45;
-        const leafHeight = height * (0.12 + Math.random() * 0.38);
+        const culmIndex = i % culmOffsets.length;
+        const culmHeight = culmHeights[culmIndex];
+        const leafHeight = culmHeight * (0.1 + Math.random() * 0.45);
+        const offset = culmOffsets[culmIndex];
 
         leaf.position.set(
-            Math.cos(angle) * 0.035,
+            offset[0] + Math.cos(angle) * 0.035,
             leafHeight,
-            Math.sin(angle) * 0.035
+            offset[1] + Math.sin(angle) * 0.035
         );
         leaf.rotation.y = -angle;
-        leaf.rotation.z = -0.25 + Math.random() * 0.5;
-        leaf.rotation.x = -0.2 + Math.random() * 0.4;
+        leaf.rotation.z = -0.66 + Math.random() * 1.32;
+        leaf.rotation.x = -0.66 + Math.random() * 1.32;
         leaf.castShadow = false;
         plant.add(leaf);
     }
@@ -769,10 +716,10 @@ function createRicePlant(x, z) {
 }
 
 // Arrange rice plants in rows
-const rowCount = 15;
-const plantsPerRow = 24;
-const rowSpacing = 1.15;
-const plantSpacing = 1.15;
+const rowCount = 16;
+const plantsPerRow = 52;
+const rowSpacing = (FIELD_DEPTH - 2) / (rowCount - 1);
+const plantSpacing = (FIELD_WIDTH - 3) / (plantsPerRow - 1);
 
 for (let row = 0; row < rowCount; row++) {
     const z = (row - (rowCount - 1) / 2) * rowSpacing;
@@ -786,10 +733,6 @@ for (let row = 0; row < rowCount; row++) {
         );
     }
 }
-
-// Apply any output received before crop initialization finished.
-paddyPlantsReady = true;
-if (latestPaddyMaskSource) setPaddyMaskProjection(latestPaddyMaskSource);
 
 // Growth and wind controls
 const growthSlider = document.getElementById("growth-slider");
@@ -808,7 +751,8 @@ const growthStages = {
     4: { name: "Stem elongation", scale: 0.72, panicleScale: 0 },
     5: { name: "Booting", scale: 0.84, panicleScale: 0 },
     6: { name: "Heading & grain fill", scale: 0.94, panicleScale: 0.72 },
-    7: { name: "Mature crop", scale: 1.08, panicleScale: 1 }
+    7: { name: "Ripening & mature crop", scale: 1.08, panicleScale: 1 },
+    8: { name: "Harvested field · stubble", scale: 0.22, panicleScale: 0 }
 };
 
 function applyGrowthStage(stageValue) {
@@ -822,7 +766,12 @@ function applyGrowthStage(stageValue) {
     }
 
     growthLabel.textContent = stage.name;
-    grainMaterial.color.setHex(Number(stageValue) >= 7 ? 0xd8bd68 : 0x9aaa55);
+    const harvested = Number(stageValue) === 8;
+    const baseLeafColors = [0x4f8039, 0x78a94b, 0x376b32];
+    const harvestLeafColors = [0x9b8844, 0xb09a53, 0x88763c];
+    leafMaterials.forEach((material, index) => material.color.setHex(harvested ? harvestLeafColors[index] : baseLeafColors[index]));
+    stemMaterial.color.setHex(harvested ? 0x88763c : 0x719345);
+    grainMaterial.color.setHex(Number(stageValue) >= 7 && !harvested ? 0xd8bd68 : 0x9aaa55);
 }
 
 if (growthSlider && growthLabel) {
@@ -870,6 +819,10 @@ renderer.setAnimationLoop(() => {
     controls.update();
     renderer.render(scene, camera);
 });
+
+if (window.latestSekinchanSatelliteLayer) updateSatelliteLayer(window.latestSekinchanSatelliteLayer);
+
+
 
 console.log("PaddyVision Digital Twin initialized.");
 console.log(`Rice plants rendered: ${plants.length}`);

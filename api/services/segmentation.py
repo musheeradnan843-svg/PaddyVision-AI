@@ -6,7 +6,7 @@ from io import BytesIO
 from uuid import uuid4
 from api.runtime_paths import get_runtime_data_dir
 
-from api.model_loader import model, device
+from api.unet_model import model, device
 
 
 IMAGE_SIZE = (320, 240)

@@ -630,50 +630,16 @@
         }
       }
 
-      .twin-dashboard{display:grid;grid-template-columns:minmax(190px,.78fr) minmax(380px,2.2fr) minmax(220px,.9fr);gap:14px;align-items:stretch;margin-bottom:30px}
-      .twin-panel,.digital-twin-section{min-width:0;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(155deg,#14231b,#0e1914 70%);padding:18px;box-shadow:0 12px 34px #0002}
-      .twin-panel h3{margin:0 0 14px;font-size:13px;letter-spacing:.04em;text-transform:uppercase}
-      .twin-panel p,.field-facts{color:var(--muted);font-size:12px;line-height:1.65}
-      .twin-panel select{width:100%;margin-bottom:12px}
-      .field-facts{display:grid;gap:7px;margin:0}
-      .field-facts div{display:flex;justify-content:space-between;gap:8px}
-      .field-facts dt{color:var(--muted)}
-      .field-facts dd{color:var(--text);margin:0;text-align:right;overflow-wrap:anywhere}
+      .twin-dashboard{display:block;margin:0 0 30px}
+      .digital-twin-section{min-width:0;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(155deg,#14231b,#0e1914 70%);padding:18px;box-shadow:0 12px 34px #0002}
       .source-note{border-top:1px solid var(--line);padding-top:12px;margin-top:14px}
-      .model-output{border-top:1px solid var(--line);padding:12px 0}
-      .model-output:first-of-type{border-top:0;padding-top:0}
-      .model-output strong{display:block;color:var(--green2);font-size:12px;margin-bottom:5px}
-      .model-output span{color:var(--muted);font-size:11px;line-height:1.5;overflow-wrap:anywhere}
-      .health-demo{margin:8px 0 12px;padding:12px;border:1px solid #54704b;border-radius:11px;background:linear-gradient(145deg,#17281d,#101b15)}
-      .health-demo h4{margin:0;color:var(--green2);font-size:12px}
-      .health-demo-intro,.health-demo-disclaimer{margin:5px 0 9px!important;font-size:10px!important;line-height:1.45;color:var(--muted)}
-      .health-demo-disclaimer{padding:8px;border-radius:8px;background:#080f0bb3;border:1px solid #ffffff12}
-      .health-demo-zones{display:grid;gap:6px}
-      .health-demo-zone{width:100%;display:flex;align-items:center;gap:8px;text-align:left;padding:8px 9px;border:1px solid #ffffff18;border-radius:8px;background:#ffffff06;color:var(--text);font:inherit;font-size:10px;cursor:pointer}
-      .health-demo-zone:hover{background:#ffffff0d}
-      .health-demo-zone[aria-pressed="true"]{background:#ffffff10;font-weight:650}
-      .health-demo-dot{width:10px;height:10px;flex:none;border-radius:50%;box-shadow:0 0 10px currentColor}
-      .health-demo-zone[data-health-zone="healthy"] .health-demo-dot{color:#147a43;background:#147a43}
-      .health-demo-zone[data-health-zone="disease"] .health-demo-dot{color:#9f2623;background:#9f2623}
-      .health-demo-zone[data-health-zone="warning"] .health-demo-dot{color:#a67513;background:#a67513}
-      .health-demo-zone[aria-pressed="true"][data-health-zone="healthy"]{border-color:#258858;box-shadow:inset 0 0 0 1px #258858}
-      .health-demo-zone[aria-pressed="true"][data-health-zone="disease"]{border-color:#a63834;box-shadow:inset 0 0 0 1px #a63834}
-      .health-demo-zone[aria-pressed="true"][data-health-zone="warning"]{border-color:#a67513;box-shadow:inset 0 0 0 1px #a67513}
-      #health-demo-focus{min-height:24px;margin:8px 0 0!important;color:#d3e6d4;font-size:10px!important}
       .twin-visual .section-head{margin-top:0}
       .twin-visual .growth-controls{margin-bottom:10px}
-      .twin-visual #digital-twin-container{height:520px}
+      .twin-visual #digital-twin-container{height:610px}
       @media(max-width:1000px){.twin-dashboard{grid-template-columns:1fr 1fr}.twin-visual{grid-column:1/-1;grid-row:1}}
-      @media(max-width:640px){.twin-dashboard{grid-template-columns:1fr}.twin-visual{grid-column:auto}.twin-visual #digital-twin-container{height:440px}}
+      @media(max-width:640px){.twin-dashboard{grid-template-columns:1fr}.twin-visual{grid-column:auto}.twin-visual #digital-twin-container{height:500px}}
+      .yield-readiness{border:1px solid #5b6743;border-radius:var(--radius);background:linear-gradient(145deg,#1b2417,#111912);padding:16px 18px;margin:0 0 18px}.yield-readiness-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.yield-readiness h2{font-size:16px;margin:0}.yield-readiness p{font-size:10px;color:var(--muted);line-height:1.5;margin:5px 0}.yield-scenario-controls{display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin:13px 0}.yield-scenario-controls label{display:grid;gap:5px;color:#bdc9bf;font-size:10px}.yield-scenario-controls select{min-width:120px;min-height:34px;border:1px solid #405746;border-radius:7px;background:#09140f;color:#e7efe5;padding:6px 9px;font:inherit}.yield-scenario-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.yield-scenario-card{display:grid;gap:6px;padding:12px;border:1px solid #ffffff18;border-radius:9px;background:#09110d80}.yield-scenario-card small{font-size:9px;color:var(--muted)}.yield-scenario-card strong{font-size:18px;color:var(--green2);font-variant-numeric:tabular-nums}.yield-scenario-card span{font-size:9px;color:#b8c5ba;line-height:1.45}.yield-scenario-status{color:#e6c46e!important;font-weight:700}.yield-context-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}.yield-context-grid>div{display:grid;align-content:start;gap:5px;padding:10px;border:1px solid #ffffff14;border-radius:9px;background:#09110d80}.yield-context-grid small{font-size:9px;color:var(--muted)}.yield-context-grid strong{font-size:12px;color:var(--green2)}.yield-context-grid span{font-size:9px;color:#b8c5ba;line-height:1.45}.yield-history-wrap{overflow-x:auto;margin-top:14px;border:1px solid #ffffff16;border-radius:9px}.yield-history{width:100%;border-collapse:collapse;min-width:640px;font-size:10px}.yield-history th,.yield-history td{padding:9px 10px;text-align:right;border-bottom:1px solid #ffffff12;font-variant-numeric:tabular-nums}.yield-history th:first-child,.yield-history td:first-child{text-align:left}.yield-history thead{color:#bdc9bf;background:#09110d}.yield-history tbody tr:last-child td{border-bottom:0}.yield-history .yield-future td{color:#e6c46e}.yield-provenance{margin-top:12px!important;padding-top:10px;border-top:1px solid #ffffff16}.yield-error{color:#ffb4a8!important}@media(max-width:800px){.yield-context-grid{grid-template-columns:1fr 1fr}}@media(max-width:700px){.yield-scenario-cards{grid-template-columns:1fr 1fr}}@media(max-width:500px){.yield-readiness-head{display:block}.yield-scenario-cards,.yield-context-grid{grid-template-columns:1fr}}
       .data-label{display:block;color:var(--muted);font-size:10px;margin:-6px 0 6px}
-      #weather-date{width:100%;margin-bottom:10px;color:var(--text);background:#09140f;border:1px solid var(--line);border-radius:8px;padding:7px}
-      .weather-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-      .weather-grid div{border:1px solid var(--line);border-radius:10px;background:#ffffff04;padding:9px;display:grid;grid-template-columns:22px 1fr;align-items:center;column-gap:5px}
-      .weather-grid div>span{grid-row:span 2;font-size:15px}
-      .weather-grid small{color:var(--muted);font-size:9px}
-      .weather-grid strong{font-size:12px;color:var(--text)}
-      #twin-mask-preview[hidden]{display:none}
-      #twin-mask-preview{display:block;width:100%;max-height:100px;object-fit:contain;background:#09140f;border:1px solid var(--line);border-radius:8px;margin-top:8px}
       .water-label{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:11px;margin:10px 0 4px}
       .water-label span{color:var(--green2)}
       #water-coverage{width:100%;accent-color:#42bbd0}
@@ -682,34 +648,6 @@
       .history-bar i{display:block;width:100%;max-width:18px;min-height:3px;border-radius:4px 4px 0 0;background:linear-gradient(0deg,#20b878,#8ee58a)}
       .history-bar small{font-size:9px;color:var(--muted)}
       .history-caption{font-size:10px!important;margin:8px 0 0}
-      .dataset-model-panels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:0 0 30px}
-      .dataset-model-panel{min-width:0;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(155deg,#14231b,#0e1914 70%);padding:16px;box-shadow:0 12px 34px #0002}
-      .dataset-model-panel h3{margin:0 0 4px;font-size:14px;color:var(--green2)}
-      .dataset-model-panel p{margin:0 0 10px;color:var(--muted);font-size:11px;line-height:1.5}
-      .raster-pair{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-      .raster-pair figure{margin:0;min-width:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#09140f}
-      .raster-pair img{display:block;width:100%;height:150px;object-fit:cover;image-rendering:auto}
-      .raster-pair figcaption{padding:7px 8px;color:var(--muted);font-size:10px;line-height:1.35}
-      .dataset-model-status{min-height:34px;margin-top:10px!important;color:#d1ddd3!important}
-      .dataset-model-actions{display:flex;gap:8px;flex-wrap:wrap}
-      .dataset-model-actions button{font:inherit;font-size:11px}
-      .station-profile{border:1px solid var(--line);border-radius:10px;background:#09140f;padding:12px}
-      .station-profile-head{display:flex;justify-content:space-between;gap:8px;align-items:baseline;margin-bottom:10px;color:var(--text);font-size:12px}
-      .station-profile-head span{color:var(--green2);font-weight:700}
-      .weather-feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px 14px}
-      .weather-feature{min-width:0}
-      .weather-feature-label{display:flex;justify-content:space-between;gap:6px;color:var(--muted);font-size:9px;margin-bottom:4px}
-      .weather-feature-label b{color:var(--text);font-weight:600;font-variant-numeric:tabular-nums}
-      .weather-feature-track{height:6px;border-radius:99px;background:#20372a;overflow:hidden}
-      .weather-feature-track i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#23a977,#a7e36b)}
-      .station-target{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:10px;color:var(--muted)}
-      .station-target strong{color:var(--text)}
-      .site-weather-context{margin:12px 0;padding:12px;border:1px solid #42bbd044;border-radius:10px;background:linear-gradient(145deg,#10251b,#0b1915)}
-      .site-weather-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:5px}
-      .site-weather-head strong{color:var(--green2);font-size:11px}
-      .site-weather-head span{color:var(--muted);font-size:10px;white-space:nowrap}
-      .site-weather-context>p{margin:5px 0 0;font-size:10px;color:var(--muted);line-height:1.45}
-      @media(max-width:640px){.dataset-model-panels{grid-template-columns:1fr}.raster-pair img{height:130px}}
       .wind-control{display:flex;justify-content:flex-end;margin:0 0 8px}
       .wind-control label{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:11px}
       .wind-control input{accent-color:var(--green)}
@@ -736,7 +674,7 @@
         color: #a9d879;
       }
 
-      #growth-slider {
+      .calendar-stage-action{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:9px}.calendar-stage-action button{padding:7px 10px;font-size:10px}.calendar-stage-action .growth-note{margin:0;font-size:10px}#growth-slider {
         width: 100%;
         accent-color: #8cc65b;
         cursor: pointer;
@@ -744,7 +682,7 @@
 
       .growth-labels {
         display: grid;
-        grid-template-columns: repeat(7, minmax(0, 1fr));
+        grid-template-columns: repeat(8, minmax(0, 1fr));
         gap: 4px;
         color: #b7c9b9;
         font-size: 10px;
@@ -756,28 +694,74 @@
         color: #8fa695;
         font-size: 11px;
       }
+      .study-area{margin:0 0 18px;padding:22px;border:1px solid var(--line);border-radius:var(--radius);background:radial-gradient(ellipse at 8% 0%,#1a3024 0,transparent 45%),linear-gradient(155deg,#14231b,#0e1914 70%);box-shadow:0 12px 34px #0002}
+      .study-area-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:16px}.study-area-head h2{margin:0;font-size:20px;letter-spacing:-.025em}.study-area-head p{max-width:780px;margin:7px 0 0;color:var(--muted);font-size:11px;line-height:1.6}.study-area-kicker{margin:0 0 6px;color:var(--green2);font-size:9px;font-weight:750;letter-spacing:.14em;text-transform:uppercase}
+      .study-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:16px 0}.study-facts>div{padding:11px 13px;border:1px solid #ffffff14;border-radius:10px;background:#09140f9c}.study-facts small{display:block;margin-bottom:5px;color:var(--muted);font-size:9px}.study-facts strong{color:var(--text);font-size:12px}
+      .study-overview-grid{display:grid;grid-template-columns:1fr;gap:11px}.study-side-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.study-card{min-width:0;overflow:hidden;border:1px solid #ffffff18;border-radius:12px;background:#09120e}.study-image-open{display:block;width:100%;padding:0;border:0;background:#08110d;cursor:zoom-in;text-align:left}.study-image-open img{display:block;width:100%;aspect-ratio:16/9;object-fit:contain;background:#08110d;transition:filter .18s ease}.study-image-open:hover img{filter:brightness(1.08)}.study-image-open:focus-visible{outline:2px solid var(--green2);outline-offset:-3px}.study-card-caption{padding:10px 12px 11px}.study-card-caption strong{display:block;color:#e8f0e5;font-size:11px}.study-card-caption span{display:block;margin-top:4px;color:var(--muted);font-size:9px;line-height:1.45}.study-subhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:20px 0 10px}.study-subhead h3{margin:0;font-size:14px}.study-subhead span{color:var(--muted);font-size:9px}.study-history-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.study-history-grid .study-card-caption{display:flex;justify-content:space-between;align-items:center;gap:8px}.study-year-tag{padding:4px 7px;border:1px solid #ffffff1c;border-radius:20px;color:#d4e7bd;font-size:9px;white-space:nowrap}.study-area-note{margin:12px 0 0;padding:10px 12px;border-left:2px solid #779b5b;background:#0b1510;color:#aebdb0;font-size:9px;line-height:1.55}
+      .study-image-dialog{width:min(1180px,calc(100% - 28px));max-width:none;max-height:calc(100% - 28px);padding:0;overflow:hidden;border:1px solid #506454;border-radius:14px;background:#0b1510;color:var(--text);box-shadow:0 24px 90px #000b}.study-image-dialog::backdrop{background:#020805dc;backdrop-filter:blur(4px)}.study-dialog-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 14px}.study-dialog-head strong{font-size:12px}.study-dialog-close{border:1px solid #ffffff25;border-radius:8px;background:#17251b;color:#e8f0e5;padding:6px 10px;font:inherit;font-size:10px;cursor:pointer}.study-image-dialog img{display:block;width:100%;max-height:calc(100vh - 115px);object-fit:contain;background:#050b08}.study-dialog-caption{margin:0;padding:9px 14px 12px;color:var(--muted);font-size:10px}
+      @media(max-width:720px){.study-area{padding:15px}.study-area-head{flex-direction:column}.study-overview-grid{grid-template-columns:1fr}.study-side-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto}.study-facts{grid-template-columns:1fr}.study-history-grid{grid-template-columns:1fr}.study-subhead{align-items:flex-start;flex-direction:column;gap:4px}}
+      .twin-soil-option{grid-column:1/-1;display:grid;gap:7px}.twin-soil-option-head{margin:0}.twin-soil-selectors{display:grid;grid-template-columns:1.3fr 1fr;gap:8px;padding:0 2px}.twin-soil-selectors label{display:grid;gap:4px;color:#bdc9bf;font-size:9px;font-weight:650}.twin-soil-selectors select{width:100%;min-height:34px;border:1px solid #405746;border-radius:7px;background:#09140f;color:#e7efe5;padding:6px;font:inherit;font-size:10px}.twin-soil-selectors select:focus-visible{outline:2px solid #a5dd69;outline-offset:1px}.twin-layer-controls{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;padding:12px;margin:12px 0;border:1px solid #6b815f;border-radius:10px;background:linear-gradient(120deg,#18291c,#101a14)}.twin-layer-heading{grid-column:1/-1;display:flex;justify-content:space-between;align-items:baseline;color:#e5efdf;font-size:12px;font-weight:700}.twin-layer-heading small{color:var(--muted);font-weight:400;font-size:10px}.twin-panel-toggle{border:1px solid #71866b;border-radius:7px;background:#213225;color:#eaf4e7;padding:6px 9px;font:inherit;font-size:10px;cursor:pointer;white-space:nowrap}.twin-panel-toggle:hover{background:#2d4431}.twin-screen-controls.is-collapsed{grid-template-columns:1fr;width:max-content;max-width:calc(100% - 24px);padding:8px}.twin-screen-controls.is-collapsed>.twin-layer-heading{grid-column:auto;align-items:center;gap:12px}.twin-screen-controls.is-collapsed>.twin-layer-heading small{display:none}.twin-screen-controls.is-collapsed>:not(.twin-layer-heading){display:none}.twin-layer-option{display:flex;align-items:flex-start;gap:8px;padding:9px;border:1px solid #ffffff1a;border-radius:8px;background:#09120de0;color:#e0e9df;font-size:11px;cursor:pointer}.twin-layer-option input{margin-top:2px;accent-color:#a5dd69}.twin-layer-option span{display:grid;gap:3px}.twin-layer-option small{font-size:9px;color:var(--muted);line-height:1.4}.twin-overlay-warning{grid-column:1/-1;margin:0;color:#dec88d;font-size:10px;line-height:1.45}.twin-stage{position:relative}.twin-screen-controls{position:absolute;top:12px;left:12px;z-index:7;width:min(330px,calc(100% - 24px));max-height:calc(100% - 24px);overflow:auto;margin:0;background:#0c1714eF;box-shadow:0 8px 28px #0008}.twin-weather-panel{position:absolute;right:12px;bottom:12px;z-index:5;width:min(310px,calc(100% - 24px));padding:10px 12px;border:1px solid #ffffff35;border-radius:9px;background:#08130fe8;color:#eaf4e7;backdrop-filter:blur(6px);pointer-events:none}.twin-weather-heading{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:7px}.twin-weather-heading strong{font-size:10px}.twin-weather-heading span{font-size:8px;letter-spacing:.05em;color:#c7d997}.twin-weather-values{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.twin-weather-values div{display:grid;gap:2px}.twin-weather-values small{font-size:8px;color:#aebdb0}.twin-weather-values strong{font-size:12px;font-variant-numeric:tabular-nums}.twin-weather-panel p{margin:7px 0 0;color:#aebdb0;font-size:8px;line-height:1.4}.twin-opacity-control{grid-column:1/-1;display:grid;gap:5px;padding:2px 4px 4px}.twin-opacity-heading{display:flex;justify-content:space-between;gap:8px;color:#d7e4d7;font-size:9px}.twin-opacity-heading output{color:#b8df83;font-variant-numeric:tabular-nums}.twin-opacity-control input{width:100%;accent-color:#a5dd69}.twin-layer-legend{position:absolute;right:12px;bottom:132px;z-index:5;width:min(310px,calc(100% - 24px));padding:10px 12px;border:1px solid #ffffff35;border-radius:9px;background:#08130fe8;color:#eaf4e7;backdrop-filter:blur(6px);pointer-events:none}.twin-layer-legend[hidden]{display:none}.twin-legend-heading{display:flex;justify-content:space-between;align-items:baseline;gap:8px}.twin-legend-heading strong{font-size:10px}.twin-legend-heading small{font-size:8px;color:#c7d997}.twin-legend-gradient{height:8px;margin:8px 0 4px;border-radius:5px}.twin-legend-range{display:flex;justify-content:space-between;color:#b8c5b9;font-size:8px;font-variant-numeric:tabular-nums}.twin-legend-detail{margin:6px 0 0;color:#aebdb0;font-size:8px;line-height:1.4}.twin-layer-pill{position:absolute;right:12px;top:12px;z-index:5;padding:8px 11px;border:1px solid #ffffff40;border-radius:8px;background:#08130fe8;color:#eaf4e7;font-size:10px;font-weight:650;backdrop-filter:blur(6px);pointer-events:none;max-width:calc(100% - 24px)}@media(max-width:520px){.twin-layer-legend{bottom:132px;width:min(270px,calc(100% - 24px))}.twin-layer-controls{grid-template-columns:1fr}.twin-layer-heading,.twin-overlay-warning{grid-column:auto}}
 
-      .dataset-view-switcher{grid-column:1/-1;padding:16px 18px;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(155deg,#14231b,#0e1914 70%);box-shadow:0 12px 34px #0002}
-      .dataset-view-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:12px}
-      .dataset-view-head h2{font-size:16px;margin:0 0 5px}
-      .dataset-view-head p{font-size:11px;color:var(--muted);margin:0;line-height:1.5}
-      .dataset-view-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
-      .dataset-view-tab{border:1px solid var(--line);border-radius:11px;background:#08140f;color:#cbd6cc;padding:10px 12px;text-align:left;font-size:11px;line-height:1.4}
-      .dataset-view-tab strong{display:block;color:var(--text);font-size:12px;margin-bottom:3px}
-      .dataset-view-tab[aria-selected="true"]{border-color:var(--green);background:#a7e36b12;box-shadow:inset 0 0 0 1px #a7e36b35}
-      .dataset-view-tab[aria-selected="true"] strong{color:var(--green2)}
-      .dataset-view-summary{display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:14px;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
-      .dataset-view-summary strong{display:block;color:var(--green2);font-size:12px;margin-bottom:4px}
-      .dataset-view-summary p{margin:0;color:var(--muted);font-size:11px;line-height:1.55}
-      .dataset-preview-pair{display:grid;grid-template-columns:1fr 1fr;gap:7px;min-width:0}
-      .dataset-preview-pair figure{margin:0;min-width:0}
-      .dataset-preview-pair img{display:block;width:100%;height:82px;object-fit:contain;border:1px solid var(--line);border-radius:8px;background:#08140f}
-      .dataset-preview-pair figcaption{margin-top:4px;color:var(--muted);font-size:9px;line-height:1.3}
-      .dataset-preview-empty{color:var(--muted);font-size:10px;line-height:1.5;border:1px dashed var(--line);border-radius:9px;padding:10px}
-      .dataset-preview-pair[hidden],.dataset-preview-empty[hidden]{display:none}
-      .model-output.is-selected{border-radius:10px;border:1px solid #a7e36b55;background:#a7e36b0b;padding-left:10px;padding-right:10px}
-      .field-view-caveat{font-size:10px!important;color:#c7b697!important;margin-top:8px!important}
-      @media(max-width:640px){.dataset-view-tabs{grid-template-columns:1fr}.dataset-view-summary{grid-template-columns:1fr}.dataset-preview-pair img{height:120px}}
+      .satellite-explorer{border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(155deg,#14231b,#0e1914 70%);padding:18px;margin:0 0 18px;box-shadow:0 12px 34px #0002}
+      .satellite-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}
+      .satellite-head h2{margin:0;font-size:18px;letter-spacing:-.02em}
+      .satellite-head p{margin:5px 0 0;color:var(--muted);font-size:11px;line-height:1.5}
+      .satellite-controls{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:10px;margin-bottom:12px}
+      .satellite-controls label{display:grid;gap:5px;color:#bdc9bf;font-size:10px;font-weight:650}
+      .satellite-controls select{width:100%;min-height:38px;border:1px solid #304436;border-radius:9px;background:#09140f;color:var(--text);padding:8px}
+      .satellite-timeline{display:grid;grid-template-columns:1fr auto;gap:5px 12px;align-items:center;margin:4px 0 12px}
+      .satellite-timeline label{font-size:10px;color:#bdc9bf;font-weight:650}
+      .satellite-timeline output{font-size:11px;color:var(--green2);font-variant-numeric:tabular-nums;text-align:right}
+      .satellite-timeline input{grid-column:1/-1;width:100%;accent-color:var(--green)}
+      .paddy-doctor-controls{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:8px 0}.paddy-doctor-controls input{max-width:280px;color:var(--muted);font-size:10px}.paddy-doctor-controls button{padding:8px 10px;border:1px solid #85564d;border-radius:8px;background:#382423;color:#f1d8d2;font-size:10px;cursor:pointer}.paddy-doctor-controls button:disabled{opacity:.55;cursor:not-allowed}.paddy-doctor-controls span{font-size:10px;color:#e5a294}
+      .paddy-doctor{border:1px solid #784f54;border-radius:var(--radius);background:#171417;padding:16px 18px;margin:0 0 18px}.paddy-doctor-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.paddy-doctor h2{font-size:16px;margin:0}.paddy-doctor p{font-size:10px;color:var(--muted);line-height:1.5;margin:5px 0}.paddy-doctor-classes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 18px;margin:12px 0}.paddy-class-row{display:grid;grid-template-columns:minmax(110px,1fr) 3fr auto;gap:8px;align-items:center;font-size:9px;color:#d4ddd5}.paddy-class-bar{height:7px;border-radius:5px;background:#30252a;overflow:hidden}.paddy-class-bar i{display:block;height:100%;background:#c98672;border-radius:5px}.paddy-doctor-note{padding:8px 10px;border-left:2px solid #cf8a76;background:#100d0f;color:#dbc8c5!important}
+      .water-demo{border:1px solid #9b7a37aa;border-radius:var(--radius);background:linear-gradient(150deg,#211c12,#111813 75%);padding:16px 18px;margin:0 0 18px}.water-demo-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.water-demo h2{font-size:16px;margin:0}.water-demo p{font-size:10px;color:var(--muted);line-height:1.5;margin:5px 0}.water-demo select{background:#09140f;color:var(--text);border:1px solid #5c4a2d;border-radius:7px;padding:7px;margin:8px 8px 8px 0}.water-demo-chart-wrap{height:240px;border:1px solid #ffffff15;border-radius:9px;background:#09110d}.water-demo-chart{width:100%;height:100%;display:block}.water-demo-meta{color:#d9c58c!important;font-size:9px!important}
+      .soil-reference{border:1px solid var(--line);border-radius:var(--radius);background:#101b15;padding:16px 18px;margin:0 0 18px}.soil-reference-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.soil-reference h2{font-size:16px;margin:0}.soil-reference p{font-size:10px;color:var(--muted);line-height:1.5;margin:5px 0}.soil-reference-controls{display:flex;gap:10px;align-items:center;margin:10px 0}.soil-reference-controls label{font-size:10px;color:var(--muted)}.soil-reference-controls select{margin-left:6px;background:#09140f;color:var(--text);border:1px solid #304436;border-radius:7px;padding:7px}.soil-reference-value{font-size:22px;font-weight:700;color:var(--green2)}.soil-reference-note{font-size:9px!important;color:#d6c99e!important}
+      .satellite-context{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:8px 0 14px}.satellite-context>div{border:1px solid #ffffff14;border-radius:9px;background:#09140f;padding:9px 10px}.satellite-context small{display:block;color:var(--muted);font-size:9px;margin-bottom:5px}.satellite-context strong{display:block;color:var(--text);font-size:12px}.satellite-context p{grid-column:1/-1;margin:0;color:var(--muted);font-size:9px;line-height:1.45}@media(max-width:640px){.satellite-context{grid-template-columns:repeat(2,minmax(0,1fr))}}
+      #satellite-status{min-height:20px;color:#c7d3c8;font-size:10px;line-height:1.5;margin:8px 0}
+      .satellite-map-wrap{position:relative;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#08110d}
+      #satellite-map{display:block;width:100%;height:620px}
+      .satellite-map-legend{position:absolute;right:12px;bottom:12px;width:150px;padding:8px 10px;border:1px solid #ffffff20;border-radius:9px;background:#08130fe8;color:var(--muted);font-size:9px;backdrop-filter:blur(6px)}
+      .satellite-map-legend strong{display:block;color:var(--text);margin-bottom:5px}
+      #satellite-legend-gradient{height:7px;border-radius:5px;background:linear-gradient(90deg,#754638,#dbbd69,#8dd068,#187744)}
+      .satellite-legend-range{display:flex;justify-content:space-between;margin-top:3px}
+      .satellite-foot{display:flex;justify-content:space-between;gap:12px;margin-top:10px;color:var(--muted);font-size:10px;line-height:1.5}
+      .satellite-comparison{margin-top:18px;padding:15px;border:1px solid #ffffff16;border-radius:12px;background:#09140f}
+      .satellite-comparison-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+      .satellite-comparison h3{margin:0;font-size:14px}
+      .satellite-comparison-head p,.satellite-comparison-note{margin:5px 0;color:var(--muted);font-size:10px;line-height:1.5}
+      .satellite-comparison-legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin:12px 0;color:#c7d3c8;font-size:9px}
+      .satellite-comparison-legend span{display:inline-flex;align-items:center;gap:6px}
+      .comparison-swatch{width:18px;height:3px;border-radius:2px;background:var(--swatch)}
+      .comparison-swatch.fill{width:8px;height:8px;border:1.5px solid var(--swatch);background:transparent;transform:rotate(45deg)}
+      .comparison-swatch.change{height:2px;background:repeating-linear-gradient(90deg,var(--swatch) 0 4px,transparent 4px 7px)}
+      #satellite-comparison-chart{width:100%;display:block;overflow:visible}
+      #satellite-comparison-chart text{font-family:Inter,ui-sans-serif,system-ui,sans-serif}
+      #satellite-comparison-chart .comparison-point{cursor:pointer}
+      #satellite-comparison-chart .comparison-point:focus{outline:none}
+      #satellite-comparison-chart .comparison-point:focus circle,#satellite-comparison-chart .comparison-point:focus rect{stroke:#fff;stroke-width:2}
+      #satellite-comparison-status{min-height:16px;margin:6px 0 0;color:#c7d3c8;font-size:10px;line-height:1.5}
+      .comparison-guide{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:12px 0;padding:0;list-style:none;counter-reset:comparison-step}
+      .comparison-guide li{counter-increment:comparison-step;border:1px solid #ffffff14;border-radius:9px;padding:9px 10px;color:#bdc9bf;font-size:9px;line-height:1.45}
+      .comparison-guide li:before{content:counter(comparison-step);display:inline-grid;place-items:center;width:17px;height:17px;margin-right:6px;border-radius:50%;background:#a7e36b20;color:var(--green2);font-weight:700}
+      .satellite-difference-controls{display:flex;align-items:center;gap:10px;margin:14px 0 8px}
+      .satellite-difference-controls label{display:grid;gap:5px;color:#bdc9bf;font-size:10px;font-weight:650}
+      .satellite-difference-controls select{min-height:36px;min-width:190px;border:1px solid #304436;border-radius:8px;background:#09140f;color:var(--text);padding:7px}
+      .satellite-difference-wrap{position:relative;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#08110d}
+      #satellite-difference-map{display:block;width:100%;height:420px}
+      .satellite-difference-legend{position:absolute;right:12px;bottom:12px;width:185px;padding:8px 10px;border:1px solid #ffffff20;border-radius:9px;background:#08130fe8;color:var(--muted);font-size:9px;backdrop-filter:blur(6px)}
+      .satellite-difference-legend strong{display:block;color:var(--text);margin-bottom:5px}
+      #satellite-difference-gradient{height:8px;border-radius:5px;background:linear-gradient(90deg,#d66a5a,#c7b985,#67bc8a)}
+      .satellite-difference-legend div:last-child{display:flex;justify-content:space-between;margin-top:4px}
+      .satellite-difference-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:10px 0}
+      .satellite-difference-summary>div{border:1px solid #ffffff14;border-radius:8px;background:#0d1912;padding:9px}
+      .satellite-difference-summary small{display:block;color:var(--muted);font-size:9px;margin-bottom:4px}
+      .satellite-difference-summary strong{display:block;color:var(--text);font-size:11px;line-height:1.4}
+      #satellite-difference-status{min-height:18px;margin:8px 0;color:#c7d3c8;font-size:10px;line-height:1.5}
+      .satellite-difference-note{margin:6px 0;color:var(--muted);font-size:9px;line-height:1.5}
+      @media(max-width:640px){.comparison-guide{grid-template-columns:1fr}.satellite-difference-controls{align-items:stretch;flex-direction:column}.satellite-difference-controls select{width:100%}#satellite-difference-map{height:340px}.satellite-difference-summary{grid-template-columns:1fr}}
+      @media(max-width:640px){.satellite-comparison{padding:11px}.satellite-comparison-head{flex-direction:column}#satellite-comparison-chart{min-height:300px}}
+      @media(max-width:640px){.satellite-controls{grid-template-columns:1fr}.satellite-head{flex-direction:column}#satellite-map{height:470px}.satellite-foot{flex-direction:column}}
     </style>
   </head>
   <body>
@@ -793,122 +777,106 @@
         <div>
           <div class="eyebrow">Precision agriculture · rice analytics</div>
           <h1>See your fields<br><span>more clearly.</span></h1>
-          <p>Turn satellite imagery and field conditions into practical crop insights. Upload
-            imagery, estimate yield, and explore your agricultural data in one place.</p>
-          <div class="chips"><span class="chip">U-Net Segmentation</span><span
-              class="chip">Multispectral CNN</span><span class="chip">Random Forest</span><span
-              class="chip">PostgreSQL</span><span class="chip">FastAPI</span></div>
+          <p>Explore the 66.878 ha Sekinchan study area through satellite history, historical weather,
+            soil references, crop-calendar context, and image-based disease screening.</p>
+          <div class="chips"><span class="chip">Sentinel-1/2 history</span><span class="chip">Historical weather</span><span
+              class="chip">Soil &amp; crop context</span><span class="chip">PostgreSQL</span><span
+              class="chip">FastAPI</span></div>
         </div>
-        <div class="hero-stat"><small>ANALYTICS WORKSPACE</small><strong>Rice · Aman</strong></div>
+        <div class="hero-stat"><small>STUDY AREA</small><strong>Sekinchan · Paddy</strong></div>
+      </section>
+      <section class="study-area" aria-labelledby="study-area-title">
+        <div class="study-area-head"><div><p class="study-area-kicker">Project location · Selangor, Malaysia</p><h2 id="study-area-title">The Sekinchan study area</h2><p>From the wider coastal rice-growing landscape to the selected 66.878 ha area, these Google Earth Pro views introduce the place behind the digital twin.</p></div><span class="badge">FIELD CONTEXT</span></div>
+        <div class="study-facts" aria-label="Study area facts"><div><small>Study location</small><strong>Sekinchan · Selangor, Malaysia</strong></div><div><small>Mapped study area</small><strong>66.878 ha · supplied boundary</strong></div><div><small>Historical views</small><strong>2020 and 2024</strong></div></div>
+        <div class="study-overview-grid">
+          <article class="study-card"><button class="study-image-open" type="button" data-full="assets/study-area/sekinchan-overview.jpg" data-alt="Google Earth Pro regional overview of Sekinchan and surrounding agricultural landscape" data-caption="Regional overview · Sekinchan, Selangor, Malaysia"><img src="assets/study-area/sekinchan-overview.jpg" alt="Regional Google Earth Pro overview showing Sekinchan, nearby rice fields, coastline and surrounding landscape" loading="lazy" decoding="async"></button><div class="study-card-caption"><strong>Regional overview</strong><span>Sekinchan within the surrounding coastal and agricultural landscape.</span></div></article>
+          <div class="study-side-grid">
+            <article class="study-card"><button class="study-image-open" type="button" data-full="assets/study-area/paddy-field-closeup.jpg" data-alt="Google Earth Pro close-up of Sekinchan paddy fields" data-caption="Paddy-field close-up · Sekinchan"><img src="assets/study-area/paddy-field-closeup.jpg" alt="Close-up Google Earth Pro view of the rice-field pattern around Sekinchan" loading="lazy" decoding="async"></button><div class="study-card-caption"><strong>Paddy-field landscape</strong><span>Field pattern and surrounding landscape at closer scale.</span></div></article>
+            <article class="study-card"><button class="study-image-open" type="button" data-full="assets/study-area/study-area-reference.jpg" data-alt="Google Earth Pro view with the selected Sekinchan study-area boundary outlined" data-caption="Study-area reference · outlined area is the project AOI"><img src="assets/study-area/study-area-reference.jpg" alt="Google Earth Pro close view showing the selected study-area boundary outlined among rice plots" loading="lazy" decoding="async"></button><div class="study-card-caption"><strong>Study-area reference</strong><span>Outlined area identifies the project’s selected area of interest.</span></div></article>
+          </div>
+        </div>
+        <div class="study-subhead"><h3>Historical imagery comparison</h3><span>Same study-area view · years shown in the original imagery</span></div>
+        <div class="study-history-grid">
+          <article class="study-card"><button class="study-image-open" type="button" data-full="assets/study-area/historical-2020.jpg" data-alt="Google Earth Pro historical satellite image of the study area from 2020" data-caption="Historical imagery · 2020"><img src="assets/study-area/historical-2020.jpg" alt="Historical Google Earth Pro satellite view of the study area in 2020" loading="lazy" decoding="async"></button><div class="study-card-caption"><strong>Historical view</strong><span>Google Earth Pro imagery</span><span class="study-year-tag">2020</span></div></article>
+          <article class="study-card"><button class="study-image-open" type="button" data-full="assets/study-area/historical-2024.jpg" data-alt="Google Earth Pro historical satellite image of the study area from 2024" data-caption="Historical imagery · 2024"><img src="assets/study-area/historical-2024.jpg" alt="Historical Google Earth Pro satellite view of the study area in 2024" loading="lazy" decoding="async"></button><div class="study-card-caption"><strong>Historical view</strong><span>Google Earth Pro imagery</span><span class="study-year-tag">2024</span></div></article>
+        </div>
+        <p class="study-area-note">These images provide geographic and visual context. Satellite appearance can vary with image date, season, and capture conditions; the comparison is not a field-verified record of crop health or yield. Google Earth Pro attribution and scale markings are retained in each image.</p>
+      </section>
+      <section class="satellite-explorer" aria-labelledby="satellite-title">
+        <div class="satellite-head">
+          <div><h2 id="satellite-title">Sekinchan · Satellite history</h2><p>10 m Sentinel-1/2 pixel values clipped to the supplied 66.878 ha study boundary. Select a date window to explore the observed record.</p></div>
+          <span class="badge" id="satellite-data-badge">LOCAL SATELLITE DATA</span>
+        </div>
+        <div class="satellite-controls">
+          <label for="satellite-window-select">Ten-day window<select id="satellite-window-select"><option value="">Loading satellite dates…</option></select></label>
+          <label for="satellite-metric">Layer<select id="satellite-metric"><option value="NDVI">NDVI · vegetation index</option><option value="NDMI">NDMI · moisture index</option><option value="NDWI">NDWI · water index</option><option value="S1_VV">Sentinel-1 VV · dB</option><option value="S1_VH">Sentinel-1 VH · dB</option></select></label>
+          <label for="satellite-source">Sentinel-2 source<select id="satellite-source"><option value="all">Real + monthly fill</option><option value="v3_10day">Real 10-day only</option><option value="v2_monthly_fill">Monthly fill only</option></select></label>
+        </div>
+        <div class="satellite-timeline"><label for="satellite-timeline-slider">Time window</label><output id="satellite-window-label" for="satellite-timeline-slider">—</output><input id="satellite-timeline-slider" type="range" min="0" max="0" value="0" step="1" disabled aria-label="Move through the satellite time series"></div>
+        <p id="satellite-status" role="status" aria-live="polite">Connecting to the Sekinchan satellite data service…</p>
+        <div class="satellite-context" aria-live="polite"><div><small>Calendar-estimated stage</small><strong id="satellite-context-stage">Loading reference…</strong></div><div><small>Mean temperature</small><strong id="satellite-context-temp">—</strong></div><div><small>Rain total</small><strong id="satellite-context-rain">—</strong></div><div><small>Mean daily max wind</small><strong id="satellite-context-wind">—</strong></div><p id="satellite-context-source">Historical weather · Open-Meteo regional grid; crop stage is a recurring monthly reference, not a verified field date.</p></div>
+        <div class="satellite-map-wrap"><canvas id="satellite-map" role="img" aria-label="Satellite index map of the Sekinchan study boundary"></canvas><div class="satellite-map-legend"><strong id="satellite-legend-title">NDVI · unitless</strong><div id="satellite-legend-gradient"></div><div class="satellite-legend-range"><span id="satellite-legend-min">−0.2</span><span id="satellite-legend-max">0.9</span></div></div></div>
+        <div class="satellite-foot"><span id="satellite-source-note">Source, pixel count, and fill status will appear here.</span><span>Supplied GeoJSON boundary · 10 m cells · field-aligned view; north arrow shown.</span></div>
+        <section class="satellite-comparison" aria-labelledby="satellite-comparison-title">
+          <div class="satellite-comparison-head"><div><h3 id="satellite-comparison-title">Three-year field comparison · NDVI</h3><p>Calendar-aligned ten-day periods for 2023, 2024 and 2025. Each satellite window is assigned to the calendar period it overlaps most; actual dates and available pixel counts are retained.</p></div><span class="badge">AOI · 66.878 ha</span></div>
+          <ol class="comparison-guide" aria-label="Three-year comparison walkthrough"><li>Read the annual NDVI lines by matching month and ten-day period.</li><li>Choose a period below to inspect where direct NDVI changed on the field.</li><li>Check actual window dates and paired-pixel coverage before interpreting it.</li></ol>
+          <div class="satellite-comparison-legend" aria-label="Chart legend"><span><i class="comparison-swatch" style="--swatch:#70b9e8"></i>2023 direct 10-day</span><span><i class="comparison-swatch" style="--swatch:#e7bd65"></i>2024 direct 10-day</span><span><i class="comparison-swatch" style="--swatch:#a7e36b"></i>2025 direct 10-day</span><span><i class="comparison-swatch fill" style="--swatch:#c7d3c8"></i>Monthly fill · separate marker</span><span><i class="comparison-swatch change" style="--swatch:#c39af5"></i>Paired-pixel mean change · 2025 − 2023</span></div>
+          <svg id="satellite-comparison-chart" viewBox="0 0 920 430" role="img" aria-label="Loading three-year comparison of direct Sentinel-2 NDVI and the 2025 minus 2023 difference"></svg>
+          <p id="satellite-comparison-status" role="status" aria-live="polite">Loading polygon-clipped satellite comparison…</p>
+          <p class="satellite-comparison-note">Annual lines show direct-observation means. Hollow diamonds show monthly fills separately. The difference line is the mean change on the same pixel coordinates with direct data in both years. Missing values are not interpolated. This is an NDVI difference, not yield, disease, or a causal weather measurement.</p>
+          <div class="satellite-difference-controls"><label for="satellite-difference-period">Calendar-aligned comparison period<select id="satellite-difference-period" disabled><option>Loading periods…</option></select></label></div>
+          <div class="satellite-difference-wrap"><canvas id="satellite-difference-map" role="img" aria-label="Loading paired-pixel Sentinel-2 NDVI difference map for 2025 minus 2023"></canvas><div class="satellite-difference-legend"><strong>NDVI difference · 2025 − 2023</strong><div id="satellite-difference-gradient"></div><div><span id="satellite-difference-min">−0.10</span><span>0</span><span id="satellite-difference-max">+0.10</span></div></div></div>
+          <div class="satellite-difference-summary" aria-live="polite"><div><small>2023 direct window</small><strong id="satellite-difference-window-2023">—</strong></div><div><small>2025 direct window</small><strong id="satellite-difference-window-2025">—</strong></div><div><small>Same observed 10 m grid cells</small><strong id="satellite-difference-pixels">—</strong></div></div>
+          <p id="satellite-difference-status" role="status" aria-live="polite">Choose a calendar period to load its paired-pixel difference map.</p>
+          <p class="satellite-difference-note">Only grid cells with direct Sentinel-2 NDVI in both selected windows are compared; monthly fills and unmatched pixels are excluded. The symmetric colour scale uses the 95th percentile, so larger outliers saturate at the legend bounds. Red indicates lower NDVI in 2025, green higher NDVI, and neutral similar values. This describes satellite greenness change only—not yield, disease, a field diagnosis, or a weather-caused effect.</p>
+        </section>
       </section>
       <div class="twin-dashboard">
-        <section class="dataset-view-switcher" aria-labelledby="dataset-view-heading">
-          <div class="dataset-view-head"><div><h2 id="dataset-view-heading">Dataset-specific field views</h2><p>Select a source to inspect its matching model and data context. These datasets describe different plots/locations.</p></div><span class="badge">3 DATA VIEWS</span></div>
-          <div class="dataset-view-tabs" role="tablist" aria-label="Choose a model data view">
-            <button class="dataset-view-tab" type="button" role="tab" aria-selected="true" data-twin-view="unet"><strong>01 · WeedyRice UAV</strong>U-Net · RGB mask</button>
-            <button class="dataset-view-tab" type="button" role="tab" aria-selected="false" data-twin-view="cnn"><strong>02 · RiceUAS plot</strong>Multispectral CNN · yield</button>
-            <button class="dataset-view-tab" type="button" role="tab" aria-selected="false" data-twin-view="rf"><strong>03 · Weather station</strong>Random Forest · Aman yield</button>
-          </div>
-          <div class="dataset-view-summary" aria-live="polite">
-            <div><strong id="dataset-view-title">WeedyRice UAV image sample · U-Net</strong><p id="dataset-view-description">Ground-truth annotation preview from the matching RGB/mask dataset. The U-Net prediction appears only after a successful API run. This image is a local patch, not a full-field orthomosaic.</p><p class="field-view-caveat" id="dataset-view-caveat">The 3D crop scene below is illustrative and is not georeferenced to this image.</p></div>
-            <div class="dataset-preview-pair" id="dataset-preview-pair" aria-label="WeedyRice input and ground-truth annotation">
-              <figure><img src="../data/raw/weedy-rice/RGB/DJI_DateTime_2025_01_15_15_22_0203_lat_10.3637984_lon_105.4192671_alt_20.403m.JPG" alt="Raw RGB input image, WeedyRice sample 0203"><figcaption>RGB input · sample 0203</figcaption></figure>
-              <figure><img src="../data/raw/weedy-rice/Masks/DJI_DateTime_2025_01_15_15_22_0203_lat_10.3637984_lon_105.4192671_alt_20.403m.png" alt="Dataset ground-truth binary annotation mask for sample 0203"><figcaption>Ground-truth mask · train label</figcaption></figure>
-            </div>
-            <div class="dataset-preview-empty" id="dataset-preview-empty" hidden></div>
-          </div>
-        </section>
-        <aside class="twin-panel">
-          <h3>Field information</h3>
-          <select id="twin-field-select" aria-label="Choose a database field"><option value="">Loading field records…</option></select>
-          <dl class="field-facts">
-            <div><dt>Crop</dt><dd id="field-crop">Not recorded</dd></div>
-            <div><dt>Season</dt><dd id="field-season">Not recorded</dd></div>
-            <div><dt>Area</dt><dd id="field-area">Not recorded</dd></div>
-            <div><dt>Coordinates</dt><dd id="field-location">Not recorded</dd></div>
-          </dl>
-          <p class="source-note" id="field-source-status" role="status">Loading saved field records from FastAPI…</p>
-          <h3>Weather archive</h3>
-          <label for="weather-date" class="data-label">RiceUAS research-site archive · historical only · synced with the CNN sample date</label>
-          <input id="weather-date" type="date" aria-label="Choose historical weather observation">
-          <div class="weather-grid" aria-live="polite">
-            <div><span aria-hidden="true">🌡️</span><small>Air temperature</small><strong id="weather-temp">—</strong></div>
-            <div><span aria-hidden="true">🌧️</span><small>Daily rainfall</small><strong id="weather-rain">—</strong></div>
-            <div><span aria-hidden="true">💧</span><small>Relative humidity</small><strong id="weather-humidity">—</strong></div>
-            <div><span aria-hidden="true">🌬️</span><small>Wind speed</small><strong id="weather-wind">—</strong></div>
-          </div>
-          <p class="source-note" id="weather-source-status">Loading the 2021–2022 weather archive. These observations are not live readings from the selected database field.</p>
-          <div class="model-output"><strong>Historical Aman target</strong><div id="historical-yield-chart" class="history-chart" role="img" aria-label="Historical normalized Aman model target by year">Dataset loading…</div><p class="history-caption">Normalized training target · selected weather station · not tonnes per hectare</p></div>
-        </aside>
-        <section class="digital-twin-section twin-visual">
-          <div class="section-head"><div><h2>Digital Twin</h2><p>Interactive 3D paddy field visualization</p></div><span class="badge">THREE.JS FIELD VIEW</span></div>
+        <section class="digital-twin-section twin-visual" aria-labelledby="digital-twin-title">
+          <div class="section-head"><div><h2 id="digital-twin-title">Sekinchan · 66.878 ha digital twin</h2><p>AOI proportions and orientation follow the supplied study-boundary polygon.</p></div><span class="badge">THREE.JS · AOI ALIGNED</span></div>
           <div class="growth-controls">
-            <div class="growth-heading"><label for="growth-slider">Crop Growth Stage</label><span id="growth-stage-label">Mature crop</span></div>
-            <input type="range" id="growth-slider" min="1" max="7" step="1" value="7" list="growth-stage-ticks">
-            <datalist id="growth-stage-ticks"><option value="1"></option><option value="2"></option><option value="3"></option><option value="4"></option><option value="5"></option><option value="6"></option><option value="7"></option></datalist>
-            <div class="growth-labels"><span>Seedling</span><span>Early veg.</span><span>Tillering</span><span>Stem elong.</span><span>Booting</span><span>Heading</span><span>Mature</span></div>
-            <p class="growth-note">Illustrative growth simulation · Not calibrated to actual crop measurements</p>
-            <p class="growth-note" id="segmentation-scene-status" role="status">Illustrative full-field default · run U-Net to update crop positions from its mask.</p>
+            <div class="growth-heading"><label for="growth-slider">Illustrative crop stage</label><span id="growth-stage-label">Mature crop</span></div>
+            <input type="range" id="growth-slider" min="1" max="8" step="1" value="7" list="growth-stage-ticks">
+            <datalist id="growth-stage-ticks"><option value="1"></option><option value="2"></option><option value="3"></option><option value="4"></option><option value="5"></option><option value="6"></option><option value="7"></option><option value="8"></option></datalist>
+            <div class="growth-labels"><span>Seedling</span><span>Early veg.</span><span>Tillering</span><span>Stem elong.</span><span>Booting</span><span>Heading</span><span>Mature</span><span>Harvest</span></div>
+            <div class="calendar-stage-action"><button class="secondary" id="apply-calendar-stage" type="button" disabled>Apply calendar stage</button><span id="calendar-stage-action-status" class="growth-note" role="status">Choose a satellite date window to load its crop-calendar reference.</span></div>
+            <p class="growth-note">Plant density and growth appearance are illustrative; satellite colours show the dated Sekinchan observation. Calendar stages are recurring references, not field-verified observations.</p>
+
             <div class="wind-control"><label><input id="wind-toggle" type="checkbox" checked> Wind animation</label></div>
             <button class="secondary camera-reset" id="reset-camera" type="button">Reset camera view</button>
           </div>
-          <div id="digital-twin-container"><div class="digital-twin-loading">Initializing Digital Twin…</div></div>
+          <div class="twin-stage"><div id="digital-twin-container"><div class="digital-twin-loading">Initializing Digital Twin…</div></div>            <div class="twin-layer-controls twin-screen-controls is-collapsed" id="twin-overlay-controls" aria-label="Select the data layer shown over the 3D field">
+              <div class="twin-layer-heading"><span>3D field overlay</span><small>Choose one layer</small><button class="twin-panel-toggle" id="twin-overlay-toggle" type="button" aria-expanded="false" aria-controls="twin-overlay-controls">Expand</button></div>
+              <label class="twin-layer-option"><input id="satellite-3d-toggle" type="checkbox" checked><span><strong>Satellite history</strong><small>10 m Sentinel pixels · follows selected date, metric and source</small></span></label>
+              <div class="twin-soil-option">
+                <label class="twin-layer-option twin-soil-option-head" for="soil-3d-toggle"><input id="soil-3d-toggle" type="checkbox"><span><strong>Soil reference</strong><small>Choose a soil property and depth for the 3D field</small></span></label>
+                <div class="twin-soil-selectors">
+                  <label for="soil-property-select">Property<select id="soil-property-select"><option value="phh2o">pH</option><option value="clay">Clay</option><option value="sand">Sand</option><option value="silt">Silt</option><option value="cec">CEC</option><option value="soil_organic_carbon">Soil organic carbon</option><option value="nitrogen">Nitrogen</option></select></label>
+                  <label for="soil-depth-select">Depth<select id="soil-depth-select"><option value="0-5">0–5 cm</option><option value="5-15">5–15 cm</option></select></label>
+                </div>
+              </div>
+              <p class="growth-note" id="satellite-3d-status" role="status">Waiting for the selected Sekinchan satellite window…</p>
+              <p class="growth-note" id="soil-3d-status" role="status">SoilGrids reference; not local lab measurements.</p>
+              <div class="twin-opacity-control"><label class="twin-opacity-heading" for="twin-overlay-opacity"><span>Active overlay opacity</span><output id="twin-overlay-opacity-value" for="twin-overlay-opacity">82%</output></label><input id="twin-overlay-opacity" type="range" min="20" max="100" step="1" value="82" aria-label="Adjust active 3D satellite or soil overlay opacity"></div>
+              <p class="twin-overlay-warning">Water/irrigation is synthetic demo data, so it has no Sekinchan field overlay.</p>
+            </div><div class="twin-layer-pill" id="twin-layer-pill" aria-live="polite">Satellite layer · loading selected window</div><div class="twin-layer-legend" id="twin-layer-legend" aria-live="polite" hidden><div class="twin-legend-heading"><strong id="twin-legend-title">Selected layer</strong><small id="twin-legend-kind">3D OVERLAY</small></div><div class="twin-legend-gradient" id="twin-legend-gradient"></div><div class="twin-legend-range"><span id="twin-legend-min">—</span><span id="twin-legend-max">—</span></div><p class="twin-legend-detail" id="twin-legend-detail"></p></div><div class="twin-weather-panel" role="status" aria-live="polite"><div class="twin-weather-heading"><strong>Selected-window weather</strong><span>REGIONAL · NOT FIELD SENSOR</span></div><div class="twin-weather-values"><div><small>Mean temp</small><strong id="twin-weather-temp">—</strong></div><div><small>Rain total</small><strong id="twin-weather-rain">—</strong></div><div><small>Max wind</small><strong id="twin-weather-wind">—</strong></div></div><p id="twin-weather-coverage">Waiting for the selected satellite window’s matching weather archive.</p></div></div>
         </section>
-        <aside class="twin-panel">
-          <h3>Model results</h3>
-          <div class="model-output is-selected" data-result-card="unet"><strong>U-Net · weedy-rice mask</strong><span data-model-output="segmentation">No prediction run yet.</span><img id="twin-mask-preview" alt="U-Net prediction mask returned by the API" hidden></div>
-          <section class="health-demo" aria-labelledby="health-demo-title">
-            <h4 id="health-demo-title">Field health overlay · demo</h4>
-            <p class="health-demo-intro">Click a zone to highlight its example area in the 3D field.</p>
-            <p class="health-demo-disclaimer"><strong>Illustrative only:</strong> these manually placed example zones stay the same across data views. They are not U-Net results, sensor readings, or a disease diagnosis.</p>
-            <div class="health-demo-zones" role="group" aria-label="Illustrative field health zones">
-              <button class="health-demo-zone" type="button" data-health-zone="healthy" aria-pressed="false"><i class="health-demo-dot" aria-hidden="true"></i><span>Healthy zone · example</span></button>
-              <button class="health-demo-zone" type="button" data-health-zone="disease" aria-pressed="false"><i class="health-demo-dot" aria-hidden="true"></i><span>Disease zone · example only</span></button>
-              <button class="health-demo-zone" type="button" data-health-zone="warning" aria-pressed="false"><i class="health-demo-dot" aria-hidden="true"></i><span>Inspect this area · unconfirmed</span></button>
-            </div>
-            <p id="health-demo-focus" aria-live="polite">Example zones are visible in the field; choose a label to emphasize its area.</p>
-          </section>
-          <div class="model-output" data-result-card="cnn"><strong>Multispectral CNN · plot-level</strong><span data-model-output="image-yield">No prediction run yet.</span></div>
-          <div class="model-output" data-result-card="rf"><strong>Agricultural Random Forest · station/year-level</strong><span data-model-output="agricultural-yield">No prediction run yet.</span></div>
-          <p class="source-note">AI outputs appear only after a successful trained-model API response. The health overlay is a separate manual demo, not model output.</p>
-        </aside>
       </div>
-
-      <section class="dataset-model-panels" aria-label="Dataset-specific model views">
-        <article class="dataset-model-panel">
-          <h3>RiceUAS plot imagery · Multispectral CNN</h3>
-          <p>Actual held-out test-split sample, 27 May 2022 · plot 31760. RGB and false-color previews are derived from this plot’s TIFF bands. The CNN returns one plot-level estimate in t/ha, not a pixel map; its recorded 2022 test R² is −0.004, so interpret estimates cautiously.</p>
-          <div class="raster-pair">
-            <figure><img src="assets/riceuas_test_rgb.png" alt="True-color preview made from RiceUAS test plot 31760 red, green and blue TIFF bands"><figcaption>True color · Red / Green / Blue</figcaption></figure>
-            <figure><img src="assets/riceuas_test_nir.png" alt="False-color preview made from RiceUAS test plot 31760 near-infrared, red-edge and green TIFF bands"><figcaption>False color · NIR / Red Edge / Green</figcaption></figure>
-          </div>
-          <div class="site-weather-context" aria-live="polite">
-            <div class="site-weather-head"><strong>RiceUAS site weather at image date</strong><span id="riceuas-weather-date-label">—</span></div>
-            <p id="riceuas-weather-day">Loading matching historical observation…</p>
-            <p id="riceuas-weather-window">The seven-day context will appear when archive data is loaded.</p>
-            <p>Historical site context only; weather is not an input to the multispectral CNN.</p>
-          </div>
-          <p class="dataset-model-status" data-model-output="image-yield">No CNN prediction run yet. Load this matching five-band sample or choose your own TIFFs below.</p>
-          <p id="riceuas-sample-status" class="source-note" role="status">Fixed reference preview from the included 38 × 22 pixel test-split plot; stretched for display only. Choosing other files does not update this preview.</p>
-          <div class="dataset-model-actions"><button class="secondary" type="button" id="loadRiceuasSample">Load this five-band test sample</button><button class="secondary" type="button" data-scroll-to="multiCard">Open CNN inputs</button></div>
-        </article>
-        <article class="dataset-model-panel">
-          <h3>Station-year weather profile · Random Forest</h3>
-          <p>Selected row from the Bangladesh historical dataset. Bars show the model’s normalized input features (0–1); they are not live sensor readings.</p>
-          <div class="station-profile" aria-live="polite">
-            <div class="station-profile-head"><strong id="station-profile-name">Loading station…</strong><span id="station-profile-year">—</span></div>
-            <div class="weather-feature-grid" id="weather-feature-grid"><span class="source-note">Loading the selected station/year row…</span></div>
-            <div class="station-target">Dataset Aman target for this row: <strong id="station-target-value">—</strong> <span>(normalized; not the model’s prediction)</span></div>
-          </div>
-          <p class="dataset-model-status" data-model-output="agricultural-yield">No Random Forest prediction run yet. Choose a station and year below.</p>
-          <div class="dataset-model-actions"><button class="secondary" type="button" data-scroll-to="agriCard">Open station/year inputs</button></div>
-        </article>
+      <section class="yield-readiness" aria-labelledby="yield-readiness-title">
+        <div class="yield-readiness-head"><div><h2 id="yield-readiness-title">Sekinchan · Season-wise yield scenarios</h2><p>Explore separate season estimates for the 66.878 ha study-area boundary.</p></div><span class="badge" style="border-color:#b38b3c;color:#e4c673">SYNTHETIC DEMO · NOT MEASURED</span></div>
+        <div class="yield-scenario-controls"><label for="yield-scenario-year">Year<select id="yield-scenario-year" aria-label="Select yield scenario year"><option>Loading…</option></select></label><label for="yield-scenario-season">Season<select id="yield-scenario-season" aria-label="Select yield scenario season"><option>Season 1</option><option>Season 2</option></select></label></div>
+        <div class="yield-scenario-cards" aria-live="polite"><div class="yield-scenario-card"><small>Season yield estimate</small><strong id="yield-scenario-rate">—</strong><span>tonnes per hectare</span></div><div class="yield-scenario-card"><small>Estimated AOI harvest</small><strong id="yield-scenario-total">—</strong><span id="yield-scenario-area">Using reported GIS AOI area · not measured harvested area</span></div><div class="yield-scenario-card"><small>Evidence status</small><strong id="yield-scenario-status" class="yield-scenario-status">Loading synthetic demo…</strong><span id="yield-scenario-identity">AOI aggregate · no real sub-plot records</span></div></div>
+        <div class="yield-history-wrap"><table class="yield-history"><thead><tr><th>Year</th><th>Season 1 · t/ha</th><th>Est. harvest · t</th><th>Season 2 · t/ha</th><th>Est. harvest · t</th></tr></thead><tbody id="yield-scenario-history"><tr><td colspan="5">Loading synthetic examples…</td></tr></tbody></table></div>
+        <div class="yield-context-grid" aria-live="polite" aria-label="Historical seasonal satellite, weather, and calendar context"><div><small>Calendar season window · reference</small><strong id="yield-context-calendar">Loading…</strong><span id="yield-context-calendar-note">Recurring crop-calendar dates; not verified field dates.</span></div><div><small>Satellite · AOI-clipped Sentinel-2</small><strong id="yield-context-satellite">Loading…</strong><span id="yield-context-satellite-note">Direct 10-day observations and monthly fills are counted separately.</span></div><div><small>Weather · regional archive context</small><strong id="yield-context-weather">Loading…</strong><span id="yield-context-weather-note">Not an in-field sensor; context does not feed the synthetic yield scenario.</span></div></div>
+        <p class="yield-provenance" id="yield-scenario-caveat">Synthetic example values are being loaded.</p>
       </section>
-
+      <section class="soil-reference" aria-labelledby="soil-reference-title"><div class="soil-reference-head"><div><h2 id="soil-reference-title">Sekinchan · Soil reference estimate</h2><p>SoilGrids reference value and source details for the property and depth selected in the 3D field panel.</p></div><span class="badge">REFERENCE · NOT LAB MEASURED</span></div><div class="soil-reference-value" id="soil-reference-value">Loading…</div><p id="soil-reference-detail">Loading source and resolution details…</p><p class="soil-reference-note" id="soil-reference-caveat">SoilGrids values are reference estimates. SOC and nitrogen are low confidence; do not use them for recommendations without local lab validation.</p></section>
+      <section class="water-demo" aria-labelledby="water-demo-title"><div class="water-demo-head"><div><h2 id="water-demo-title">Water & irrigation · synthetic demo</h2><p>Explore simulated water-depth observations and irrigation/drainage events. This example campaign is separate from the Sekinchan AOI, its satellite timeline, and its weather archive.</p></div><span class="badge" style="border-color:#b38b3c;color:#e4c673">SYNTHETIC · NOT FIELD DATA</span></div><label for="water-campaign-select" class="data-label">Simulated field-season</label><select id="water-campaign-select"><option>Loading demo campaigns…</option></select><div class="water-demo-chart-wrap"><canvas id="water-demo-chart" class="water-demo-chart" role="img" aria-label="Synthetic simulated water depth timeline with irrigation and drainage event markers"></canvas></div><p id="water-demo-status" role="status" aria-live="polite">Loading synthetic example…</p><p class="water-demo-meta" id="water-demo-provenance">Synthetic demo · not a real Sekinchan field record.</p></section>
+      <section class="paddy-doctor" aria-labelledby="paddy-doctor-title"><div class="paddy-doctor-head"><div><h2 id="paddy-doctor-title">Paddy Doctor · external image dataset</h2><p>Training class balance from labelled image metadata. This describes the dataset, not disease prevalence in Sekinchan.</p></div><span class="badge" style="border-color:#9d625e;color:#e5a294">EXTERNAL MODEL DATA</span></div><div id="paddy-doctor-classes" class="paddy-doctor-classes" aria-live="polite">Loading class counts…</div><div class="paddy-doctor-controls"><input type="file" id="paddy-doctor-image" accept="image/*" aria-label="Choose rice-leaf image for external Paddy Doctor classifier"><button type="button" id="paddy-doctor-predict" disabled>Classify uploaded image</button><span id="paddy-doctor-prediction" aria-live="polite">External classifier waiting for a trained model.</span></div><p class="paddy-doctor-note" id="paddy-doctor-status">No Sekinchan disease classifier result or field outbreak record is connected.</p></section>
       <div class="section-head">
         <div>
-          <h2>Prediction workspace</h2>
-          <p>Run a model with your own field data</p>
+          <h2>External image-model demos</h2>
+          <p>These models use separate image datasets; their outputs are not Sekinchan field assessments.</p>
         </div><button class="secondary" id="resetAll">Reset all</button>
       </div>
       <main class="cards">
@@ -927,56 +895,7 @@
               alt="Predicted segmentation mask" hidden><span id="maskOutputCaption">Model output · not run yet</span></div>
           <div class="result" id="segResult" role="status"></div>
         </section>
-        <section class="card" id="multiCard">
-          <div class="card-head">
-            <div class="icon">▦</div><span class="badge">CNN · 5 bands</span>
-          </div>
-          <h3>Multispectral Yield</h3>
-          <p class="desc">Select one TIFF file for each band. All five bands are required.</p>
-          <div class="band-list">
-            <div class="band"><label for="blue">Blue <span>blue.tif</span></label><input id="blue"
-                type="file" accept=".tif,.tiff,image/tiff"></div>
-            <div class="band"><label for="green">Green <span>green.tif</span></label><input
-                id="green" type="file" accept=".tif,.tiff,image/tiff"></div>
-            <div class="band"><label for="red">Red <span>red.tif</span></label><input id="red"
-                type="file" accept=".tif,.tiff,image/tiff"></div>
-            <div class="band"><label for="red_edge">Red edge <span>red_edge.tif</span></label><input
-                id="red_edge" type="file" accept=".tif,.tiff,image/tiff"></div>
-            <div class="band"><label for="nir">NIR <span>nir.tif</span></label><input id="nir"
-                type="file" accept=".tif,.tiff,image/tiff"></div>
-          </div><button class="action" id="multiRun">Predict multispectral yield</button>
-          <div class="result" id="multiResult" role="status"></div>
-        </section>
-        <section class="card" id="agriCard">
-          <div class="card-head">
-            <div class="icon">⌂</div><span class="badge">Random Forest</span>
-          </div>
-          <h3>Agricultural Yield Intelligence</h3>
-          <p class="desc">Choose a year and weather station. The matching dataset row fills the
-            model inputs for you.</p>
-          <form id="agriForm">
-            <div class="form-grid">
-              <div class="field"><label for="YEAR">Year</label><select id="YEAR" name="YEAR"
-                  required></select></div>
-              <div class="field"><label for="Station">Weather station</label><select id="Station"
-                  name="Station" required></select></div>
-            </div>
-            <p class="weather-note"><strong>Dataset profile loaded:</strong> station coordinates and
-              weather values come from the selected training-data row. The numeric features are
-              already normalized for this model. Change individual values below only if you want to
-              demonstrate a custom scenario.</p>
-            <details class="advanced">
-              <summary>Edit model inputs (optional)</summary>
-              <p class="advanced-help">All values start prefilled from the selected Year and
-                Station. Keep them unchanged for a dataset-based example.</p>
-              <div class="form-grid" id="agriAdvanced"></div>
-            </details>
-            <button class="action" id="agriRun" type="submit">Predict Aman yield</button>
-            <p class="scale-note">The trained target is normalized from 0 to 1. Results are shown as
-              a model score, not tonnes or kg.</p>
-          </form>
-          <div class="result" id="agriResult" role="status"></div>
-        </section>
+        <p class="model-scope-note">U-Net is an external UAV image-mask demo from a different study location. Its mask is shown in the image workspace only and is not projected onto the Sekinchan field.</p>
       </main>
       <!-- =====================================================
      DIGITAL TWIN
@@ -987,447 +906,921 @@
       <footer class="foot"><span>PaddyVision AI · Model predictions depend on input
           quality.</span><span>API endpoint: <code id="apiDisplay"></code></span></footer>
     </div>
+    <dialog class="study-image-dialog" id="study-image-dialog" aria-labelledby="study-image-dialog-title"><div class="study-dialog-head"><strong id="study-image-dialog-title">Sekinchan imagery</strong><button class="study-dialog-close" id="study-image-dialog-close" type="button" aria-label="Close enlarged image">Close</button></div><img id="study-image-dialog-image" alt=""><p class="study-dialog-caption" id="study-image-dialog-caption"></p></dialog>
     <script>
       // Set this to your FastAPI origin, e.g. "http://localhost:8000".
       const API_BASE_URL = window.PADDYVISION_API_BASE_URL ?? "http://localhost:8000";
-      const API = {
-        segmentation: "/predict/segmentation",
-        imageYield: "/predict/image-yield",
-        agriculturalYield: "/predict/agricultural-yield"
-      };
+      const API = { segmentation: "/predict/segmentation" };
       const $ = (id) => document.getElementById(id);
-      const updateTwinMaskProjection = (source) => {
-        if (typeof window.applyPaddyMaskProjection === "function") {
-          return window.applyPaddyMaskProjection(source);
-        }
-        document.dispatchEvent(new CustomEvent("paddy-mask-projection", { detail: { source } }));
-      };
-      const base = API_BASE_URL.replace(/\/$/, "");
+      const base = API_BASE_URL.replace(/\/$/, "");      const overlayPanel = $("twin-overlay-controls");
+      const studyImageDialog = $("study-image-dialog");
+      document.querySelectorAll(".study-image-open").forEach((button) => {
+        button.addEventListener("click", () => {
+          $("study-image-dialog-image").src = button.dataset.full;
+          $("study-image-dialog-image").alt = button.dataset.alt || "";
+          $("study-image-dialog-caption").textContent = button.dataset.caption || "";
+          studyImageDialog.showModal();
+        });
+      });
+      $("study-image-dialog-close").addEventListener("click", () => studyImageDialog.close());
+      studyImageDialog.addEventListener("click", (event) => {
+        if (event.target === studyImageDialog) studyImageDialog.close();
+      });
+      const overlayToggle = $("twin-overlay-toggle");
+      overlayToggle?.addEventListener("click", () => {
+        const expanded = overlayToggle.getAttribute("aria-expanded") !== "true";
+        overlayToggle.setAttribute("aria-expanded", String(expanded));
+        overlayPanel?.classList.toggle("is-collapsed", !expanded);
+        overlayToggle.textContent = expanded ? "Collapse" : "Expand";
+        overlayToggle.setAttribute("aria-label", expanded ? "Collapse 3D field overlay controls" : "Expand 3D field overlay controls");
+      });
       $("apiDisplay").textContent = base || "same origin";
 
-      const twinViewDetails = {
-        unet: {
-          title: "WeedyRice UAV image sample · U-Net",
-          description: "January 2025 RGB patch from the WeedyRice dataset. The image shown is the dataset's polygon annotation overlay (0203, training split), not the U-Net's prediction. Upload an RGB image below to run the model; its predicted binary mask will appear in Model results.",
-          caveat: "Location: 10.3637984, 105.4192671 · An Giang, Vietnam. No full-field boundary/orthomosaic is available; the 3D crop scene is illustrative, not georeferenced to this patch.",
-          image: "../data/raw/weedy-rice/Overlay/DJI_DateTime_2025_01_15_15_22_0203_lat_10.3637984_lon_105.4192671_alt_20.403m.JPG",
-          model: "unet"
-        },
-        cnn: {
-          title: "RiceUAS research plot · multispectral CNN",
-          description: "Separate RiceUAS dataset from Stuttgart, Arkansas. The CNN uses five plot/date TIFF bands (Blue, Green, Red, Red Edge, NIR) and returns one plot-level yield estimate in t/ha, not a pixel-wise yield map. Its recorded 2022 test R² is −0.004, so interpret demo predictions cautiously.",
-          caveat: "Dataset sample unit: research plot/date. The current 3D scene is illustrative and is not the RiceUAS plot geometry.",
-          image: "",
-          model: "cnn"
-        },
-        rf: {
-          title: "Bangladesh weather station record · Random Forest",
-          description: "Historical annual station/weather dataset (15 stations, 1970–2013). The model returns a normalized Aman yield score. It is not a drone-derived field measurement and the API does not convert the score to t/ha.",
-          caveat: "Spatial unit: weather station/year, not an individual paddy plot. The 3D crop scene is illustrative and is not georeferenced to the selected station.",
-          image: "",
-          model: "rf"
+      const paddyDoctorFile = $("paddy-doctor-image");
+      const paddyDoctorButton = $("paddy-doctor-predict");
+      paddyDoctorFile.addEventListener("change", () => { paddyDoctorButton.disabled = !paddyDoctorFile.files.length; });
+      paddyDoctorButton.addEventListener("click", async () => {
+        const file = paddyDoctorFile.files[0]; if (!file) return;
+        const body = new FormData(); body.append("file", file); paddyDoctorButton.disabled = true; $("paddy-doctor-prediction").textContent = "Classifying with external dataset model…";
+        try {
+          const response = await fetch(base + "/predict/paddy-doctor", { method: "POST", body });
+          const result = await response.json(); if (!response.ok) throw new Error(result.detail || "Prediction failed.");
+          $("paddy-doctor-prediction").textContent = result.predicted_class.replaceAll("_", " ") + " · top class " + (result.top_predictions[0].probability * 100).toFixed(1) + "% · external model output, not local diagnosis.";
+          $("paddy-doctor-status").textContent = result.caveat;
+        } catch (error) { $("paddy-doctor-prediction").textContent = error.message; }
+        finally { paddyDoctorButton.disabled = !paddyDoctorFile.files.length; }
+      });
+      async function loadPaddyDoctorProfile() {
+        try {
+          const response = await fetch(base + "/digital-twin/disease/external-dataset");
+          const profile = await response.json(); if (!response.ok) throw new Error(profile.detail || "Dataset profile unavailable.");
+          const host = $("paddy-doctor-classes"), maximum = Math.max(...profile.training_images_by_class.map(item => item.count), 1);
+          host.replaceChildren(...profile.training_images_by_class.map(item => {
+            const row = document.createElement("div"); row.className = "paddy-class-row";
+            const label = document.createElement("span"); label.textContent = item.label.replaceAll("_", " ");
+            const bar = document.createElement("span"); bar.className = "paddy-class-bar";
+            const fill = document.createElement("i"); fill.style.width = (item.count / maximum * 100).toFixed(1) + "%"; bar.append(fill);
+            const count = document.createElement("strong"); count.textContent = item.count.toLocaleString();
+            row.append(label, bar, count); return row;
+          }));
+          $("paddy-doctor-status").textContent = profile.training_image_count.toLocaleString() + " labelled training images across " + profile.training_images_by_class.length + " classes · " + (profile.unlabelled_test_split_present ? "unlabelled test images present" : "no test images detected") + " · " + profile.classifier_status + " " + profile.limitations;
+        } catch (error) { $("paddy-doctor-classes").textContent = "Dataset metadata unavailable"; $("paddy-doctor-status").textContent = error.message; }
+      }
+      loadPaddyDoctorProfile();
+
+      const waterDemoCanvas = $("water-demo-chart");
+      const waterDemoSelect = $("water-campaign-select");
+      let waterDemoCampaigns = [];
+      function drawWaterDemo(campaign) {
+        const canvas = waterDemoCanvas, ctx = canvas.getContext("2d");
+        const width = canvas.clientWidth || 900, height = canvas.clientHeight || 240;
+        const ratio = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.round(width * ratio); canvas.height = Math.round(height * ratio);
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0); ctx.clearRect(0, 0, width, height);
+        ctx.fillStyle = "#09110d"; ctx.fillRect(0, 0, width, height);
+        const observations = (campaign?.observations || []).filter(row => row.water_depth_cm != null);
+        const allDates = [...(campaign?.observations || []).map(row => row.date), ...(campaign?.events || []).map(row => row.date)].sort();
+        if (!allDates.length) return;
+        const minDate = Date.parse(allDates[0]), maxDate = Date.parse(allDates[allDates.length - 1]);
+        const left = 42, right = width - 16, top = 18, bottom = height - 28;
+        const x = value => left + (Date.parse(value) - minDate) / Math.max(1, maxDate - minDate) * (right - left);
+        const low = -3, high = 12, y = value => bottom - (value - low) / (high - low) * (bottom - top);
+        ctx.font = "10px system-ui"; ctx.strokeStyle = "#ffffff18"; ctx.fillStyle = "#9daf9f"; ctx.lineWidth = 1;
+        for (let tick = -2; tick <= 12; tick += 2) { const yy = y(tick); ctx.beginPath(); ctx.moveTo(left, yy); ctx.lineTo(right, yy); ctx.stroke(); ctx.fillText(tick + " cm", 5, yy + 3); }
+        ctx.strokeStyle = "#c7d66b"; ctx.lineWidth = 1.8; ctx.beginPath();
+        observations.forEach((row, index) => { const xx = x(row.date), yy = y(row.water_depth_cm); if (index === 0) ctx.moveTo(xx, yy); else ctx.lineTo(xx, yy); }); ctx.stroke();
+        for (const row of observations) { ctx.fillStyle = row.water_depth_cm < -2 ? "#e17c68" : row.water_depth_cm <= 0.5 ? "#d3bd71" : "#74c99a"; ctx.beginPath(); ctx.arc(x(row.date), y(row.water_depth_cm), 2.7, 0, Math.PI * 2); ctx.fill(); }
+        for (const event of campaign.events || []) { ctx.strokeStyle = event.event_type.startsWith("drainage") ? "#d7837b88" : event.event_type === "irrigation" || event.event_type === "initial_flooding" ? "#68b8e388" : "#ffffff25"; ctx.beginPath(); ctx.moveTo(x(event.date), top); ctx.lineTo(x(event.date), bottom); ctx.stroke(); }
+        ctx.fillStyle = "#9daf9f"; ctx.fillText(allDates[0], left, height - 8); ctx.textAlign = "right"; ctx.fillText(allDates[allDates.length - 1], right, height - 8); ctx.textAlign = "start";
+      }
+      async function loadWaterDemoCampaign() {
+        const option = waterDemoCampaigns[Number(waterDemoSelect.value)]; if (!option) return;
+        const query = new URLSearchParams({ field_id: option.field_id, year: option.year, season: option.season });
+        try {
+          const response = await fetch(base + "/digital-twin/water/synthetic/campaign?" + query);
+          const campaign = await response.json(); if (!response.ok) throw new Error(campaign.detail || "Synthetic water demo unavailable.");
+          drawWaterDemo(campaign);
+          const irrigations = campaign.events.filter(event => event.event_type === "irrigation").length;
+          const drains = campaign.events.filter(event => event.event_type.startsWith("drainage")).length;
+          $("water-demo-status").textContent = campaign.field_id + " · " + campaign.year + " · " + campaign.season + " · " + campaign.observations.length + " simulated observations · " + irrigations + " irrigation events · " + drains + " drainage events.";
+          $("water-demo-provenance").textContent = campaign.caveat;
+        } catch (error) { $("water-demo-status").textContent = error.message; }
+      }
+      async function loadWaterDemoOptions() {
+        try {
+          const response = await fetch(base + "/digital-twin/water/synthetic/options");
+          const result = await response.json(); if (!response.ok) throw new Error(result.detail || "Synthetic water demo unavailable.");
+          waterDemoCampaigns = result.options;
+          waterDemoSelect.replaceChildren(...waterDemoCampaigns.map((item, index) => new Option(item.field_id + " · " + item.year + " · " + item.season, String(index))));
+          waterDemoSelect.addEventListener("change", loadWaterDemoCampaign);
+          await loadWaterDemoCampaign();
+        } catch (error) { $("water-demo-status").textContent = error.message; }
+      }
+      window.addEventListener("resize", () => { if (waterDemoCampaigns.length) loadWaterDemoCampaign(); });
+      loadWaterDemoOptions();
+
+      let syntheticYieldRecords = [];
+      function formatYieldValue(value, digits) {
+        return Number(value).toLocaleString(undefined, { minimumFractionDigits: digits, maximumFractionDigits: digits });
+      }
+      function updateYieldScenarioSelection() {
+        const year = Number($("yield-scenario-year").value);
+        const season = $("yield-scenario-season").value;
+        const item = syntheticYieldRecords.find(record => record.year === year && record.season === season);
+        if (!item) return;
+        $("yield-scenario-rate").textContent = formatYieldValue(item.yield_t_ha, 3) + " t/ha";
+        $("yield-scenario-total").textContent = formatYieldValue(item.total_harvest_t, 1) + " t";
+        $("yield-scenario-area").textContent = formatYieldValue(item.area_ha, 3) + " ha AOI reference area · not measured harvested area";
+        const future = item.record_status === "SYNTHETIC_TREND_SCENARIO";
+        $("yield-scenario-status").textContent = future ? "Synthetic trend scenario" : "Synthetic example record";
+        $("yield-scenario-identity").textContent = item.field_id + " · " + item.plot_id;
+        const context = item.season_context || {};
+        const calendar = context.calendar || {};
+        $("yield-context-calendar").textContent = calendar.start_date && calendar.end_date ? calendar.start_date + " — " + calendar.end_date : "Reference window unavailable";
+        $("yield-context-calendar-note").textContent = calendar.note || context.note || "Recurring crop-calendar dates are references, not verified field dates.";
+        const satellite = context.satellite || {};
+        $("yield-context-satellite").textContent = satellite.mean_ndvi == null ? "No archive values" : "Mean NDVI " + formatYieldValue(satellite.mean_ndvi, 3);
+        $("yield-context-satellite-note").textContent = satellite.mean_ndvi == null ? (context.note || "No matching AOI-clipped satellite values.") : satellite.direct_windows + " direct-value windows · " + satellite.filled_windows + " monthly-fill windows · " + satellite.valid_pixel_window_values.toLocaleString() + " pixel-window values · " + (satellite.source || "Sekinchan Sentinel-2 archive") + ".";
+        const weather = context.weather || {};
+        const hasWeather = weather.mean_temperature_c != null || weather.precipitation_total_mm != null;
+        $("yield-context-weather").textContent = hasWeather ? (weather.mean_temperature_c == null ? "—" : formatYieldValue(weather.mean_temperature_c, 1) + " °C") + " · " + (weather.precipitation_total_mm == null ? "—" : formatYieldValue(weather.precipitation_total_mm, 0) + " mm rain") : "No archive values";
+        $("yield-context-weather-note").textContent = hasWeather ? weather.days_available + "/" + weather.days_expected + " archive dates · mean daily max wind " + (weather.mean_daily_max_wind_kmh == null ? "—" : formatYieldValue(weather.mean_daily_max_wind_kmh, 1) + " km/h") + " · " + (weather.source || "Open-Meteo regional archive") + ". Context only; not an in-field sensor." : (context.note || "No matching historical weather archive values.");
+      }
+      function renderYieldScenarioHistory() {
+        const years = [...new Set(syntheticYieldRecords.map(record => record.year))].sort();
+        const host = $("yield-scenario-history");
+        host.replaceChildren(...years.map(year => {
+          const row = document.createElement("tr");
+          if (year >= 2026) row.className = "yield-future";
+          const yearCell = document.createElement("td"); yearCell.textContent = String(year) + (year >= 2026 ? " · scenario" : " · synthetic"); row.append(yearCell);
+          for (const season of ["Season 1", "Season 2"]) {
+            const record = syntheticYieldRecords.find(item => item.year === year && item.season === season);
+            const cells = [[record?.yield_t_ha, 3], [record?.total_harvest_t, 1]];
+            for (const [value, digits] of cells) {
+              const cell = document.createElement("td");
+              cell.textContent = value == null ? "—" : formatYieldValue(value, digits);
+              row.append(cell);
+            }
+          }
+          return row;
+        }));
+      }
+      async function loadSyntheticYieldOutlook() {
+        try {
+          const response = await fetch(base + "/digital-twin/yield/synthetic");
+          const result = await response.json();
+          if (!response.ok) throw new Error(result.detail || "Synthetic yield demo unavailable.");
+          syntheticYieldRecords = result.records;
+          const yearSelect = $("yield-scenario-year");
+          yearSelect.replaceChildren(...result.years.map(year => new Option(String(year), String(year))));
+          yearSelect.value = "2026";
+          $("yield-scenario-season").value = "Season 1";
+          yearSelect.addEventListener("change", updateYieldScenarioSelection);
+          $("yield-scenario-season").addEventListener("change", updateYieldScenarioSelection);
+          renderYieldScenarioHistory();
+          updateYieldScenarioSelection();
+          $("yield-scenario-caveat").textContent = result.caveat + " Method: " + result.method;
+        } catch (error) {
+          $("yield-scenario-status").textContent = "Demo unavailable";
+          $("yield-scenario-status").classList.add("yield-error");
+          $("yield-scenario-caveat").textContent = error.message;
         }
+      }
+      loadSyntheticYieldOutlook();
+
+      async function loadSoilReference() {
+        const propertySelect = $("soil-property-select");
+        const depthSelect = $("soil-depth-select");
+        try {
+          const response = await fetch(base + "/digital-twin/soil/reference");
+          const result = await response.json();
+          if (!response.ok) throw new Error(result.detail || "Soil reference data unavailable.");
+          const render = () => {
+            const layer = result.layers.find(item => item.property === propertySelect.value && item.depth_cm === depthSelect.value);
+            if (!layer) { $("soil-reference-value").textContent = "No reference value"; return; }
+            $("soil-reference-value").textContent = Number(layer.area_weighted_mean).toFixed(2) + " " + layer.unit;
+            $("soil-reference-detail").textContent = layer.property.replaceAll("_", " ") + " · " + layer.depth_cm + " cm · area-weighted mean · " + layer.confidence + " · " + layer.resolution_m_approx + " cells · " + layer.pixel_count_center_rule + " pixel centres / " + layer.pixels_touched + " intersecting cells.";
+          };
+          propertySelect.addEventListener("change", render);
+          depthSelect.addEventListener("change", render);
+          render();
+        } catch (error) {
+          $("soil-reference-value").textContent = "Unavailable";
+          $("soil-reference-detail").textContent = error.message;
+        }
+      }
+      loadSoilReference();
+
+      const soil3dToggle = $("soil-3d-toggle");
+      let soilLayerRequest = null;
+      async function loadSoilSpatialLayer() {
+        if (!soil3dToggle?.checked) return;
+        soilLayerRequest?.abort();
+        soilLayerRequest = new AbortController();
+        const property = $("soil-property-select").value;
+        const depth = $("soil-depth-select").value;
+        $("soil-3d-status").textContent = "Loading coarse SoilGrids cells for the selected property…";
+        try {
+          const query = new URLSearchParams({ property, depth_cm: depth });
+          const response = await fetch(base + "/digital-twin/soil/spatial-layer?" + query, { signal: soilLayerRequest.signal });
+          const data = await response.json();
+          if (!response.ok) throw new Error(data.detail || ("Soil layer service returned " + response.status + "."));
+          document.dispatchEvent(new CustomEvent("paddy-soil-layer", { detail: data }));
+        } catch (error) {
+          if (error.name === "AbortError") return;
+          $("soil-3d-status").textContent = error.message + " Soil reference remains available in the summary panel.";
+        }
+      }
+      soil3dToggle?.addEventListener("change", loadSoilSpatialLayer);
+      function selectSoilLayerFromControls() {
+        if (!soil3dToggle.checked) {
+          soil3dToggle.checked = true;
+          soil3dToggle.dispatchEvent(new Event("change"));
+        } else {
+          loadSoilSpatialLayer();
+        }
+      }
+      $("soil-property-select").addEventListener("change", selectSoilLayerFromControls);
+      $("soil-depth-select").addEventListener("change", selectSoilLayerFromControls);
+
+      const satelliteCanvas = $("satellite-map");
+      const satelliteContext = satelliteCanvas.getContext("2d");
+      const satelliteWindowSelect = $("satellite-window-select");
+      const satelliteMetricSelect = $("satellite-metric");
+      const satelliteSourceSelect = $("satellite-source");
+      const satelliteSlider = $("satellite-timeline-slider");
+      let satelliteCatalogue = null;
+      let satelliteRequest = null;
+      let satelliteRenderTimer = null;
+      let lastSatelliteLayer = null;
+      let satelliteComparisonData = null;
+      let lastSatelliteDifference = null;
+      let satelliteDifferenceRequest = null;
+      const satelliteComparisonColors = { 2023: "#70b9e8", 2024: "#e7bd65", 2025: "#a7e36b" };
+      const satelliteMetricStyle = {
+        NDVI: { title: "NDVI · unitless", min: -0.2, max: 0.9, minLabel: "−0.2", maxLabel: "0.9", gradient: "linear-gradient(90deg,#754638,#c68b4c,#e2d06b,#8dd068,#187744)" },
+        NDMI: { title: "NDMI · unitless", min: -1, max: 1, minLabel: "−1", maxLabel: "1", gradient: "linear-gradient(90deg,#9d5547,#e1c774,#67a7c4,#356fa1)" },
+        NDWI: { title: "NDWI · unitless", min: -1, max: 1, minLabel: "−1", maxLabel: "1", gradient: "linear-gradient(90deg,#9d5547,#e1c774,#67a7c4,#356fa1)" },
+        S1_VV: { title: "Sentinel-1 VV · dB", min: -30, max: 0, minLabel: "−30", maxLabel: "0", gradient: "linear-gradient(90deg,#392d69,#417da5,#78c8b5,#e6d876)" },
+        S1_VH: { title: "Sentinel-1 VH · dB", min: -35, max: -5, minLabel: "−35", maxLabel: "−5", gradient: "linear-gradient(90deg,#392d69,#417da5,#78c8b5,#e6d876)" }
       };
 
-      function selectTwinDataView(viewKey) {
-        const view = twinViewDetails[viewKey];
-        if (!view) return;
-        document.querySelectorAll("[data-twin-view]").forEach(button => {
-          const selected = button.dataset.twinView === viewKey;
-          button.setAttribute("aria-selected", String(selected));
-          button.tabIndex = selected ? 0 : -1;
+      function satelliteColor(value, metric) {
+        const style = satelliteMetricStyle[metric];
+        const t = Math.max(0, Math.min(1, (value - style.min) / (style.max - style.min)));
+        const palettes = metric === "NDVI"
+          ? [[117,70,56],[198,139,76],[226,208,107],[141,208,104],[24,119,68]]
+          : metric.startsWith("S1_")
+            ? [[57,45,105],[65,125,165],[120,200,181],[230,216,118]]
+            : [[157,85,71],[225,199,116],[103,167,196],[53,111,161]];
+        const scaled = t * (palettes.length - 1);
+        const index = Math.min(palettes.length - 2, Math.floor(scaled));
+        const blend = scaled - index;
+        const rgb = palettes[index].map((channel, i) => Math.round(channel + (palettes[index + 1][i] - channel) * blend));
+        return "rgb(" + rgb.join(",") + ")";
+      }
+
+      function drawSatelliteMap(data) {
+        if (!satelliteCatalogue || !satelliteContext) return;
+        lastSatelliteLayer = data;
+        const ring = satelliteCatalogue.boundary.coordinates[0];
+        const width = satelliteCanvas.clientWidth || 900;
+        const height = satelliteCanvas.clientHeight || 500;
+        const ratio = Math.min(window.devicePixelRatio || 1, 2);
+        satelliteCanvas.width = Math.round(width * ratio);
+        satelliteCanvas.height = Math.round(height * ratio);
+        satelliteContext.setTransform(ratio, 0, 0, ratio, 0, 0);
+        const ctx = satelliteContext;
+        ctx.clearRect(0, 0, width, height);
+        ctx.fillStyle = "#08110d";
+        ctx.fillRect(0, 0, width, height);
+        const vertices = ring.slice(0, -1);
+        const meanLatitude = vertices.reduce((sum, point) => sum + point[1], 0) / vertices.length;
+        const centerLongitude = vertices.reduce((sum, point) => sum + point[0], 0) / vertices.length;
+        const cosLatitude = Math.cos(meanLatitude * Math.PI / 180);
+        const project = point => [(point[0] - centerLongitude) * 111320 * cosLatitude, (point[1] - meanLatitude) * 110574];
+        const projectedVertices = vertices.map(project);
+        let majorEdge = null;
+        for (let index = 0; index < projectedVertices.length; index++) {
+          const a = projectedVertices[index];
+          const b = projectedVertices[(index + 1) % projectedVertices.length];
+          const dx = b[0] - a[0], dy = b[1] - a[1];
+          const length = Math.hypot(dx, dy);
+          if (!majorEdge || length > majorEdge.length) majorEdge = { dx, dy, length };
+        }
+        const ux = majorEdge.dx / majorEdge.length;
+        const uy = majorEdge.dy / majorEdge.length;
+        const projectLocal = point => {
+          const [east, north] = project(point);
+          return [east * ux + north * uy, -east * uy + north * ux];
+        };
+        const projectedRing = ring.map(projectLocal);
+        const xs = projectedRing.map(point => point[0]);
+        const ys = projectedRing.map(point => point[1]);
+        const minX = Math.min(...xs), maxX = Math.max(...xs);
+        const minY = Math.min(...ys), maxY = Math.max(...ys);
+        const padding = 28;
+        const scale = Math.min((width - padding * 2) / (maxX - minX), (height - padding * 2) / (maxY - minY));
+        const originX = (width - (maxX - minX) * scale) / 2;
+        const originY = (height - (maxY - minY) * scale) / 2;
+        const screen = point => [originX + (projectLocal(point)[0] - minX) * scale, height - originY - (projectLocal(point)[1] - minY) * scale];
+        const traceBoundary = () => {
+          ctx.beginPath();
+          projectedRing.forEach((point, index) => {
+            const x = originX + (point[0] - minX) * scale;
+            const y = height - originY - (point[1] - minY) * scale;
+            if (index === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+          });
+          ctx.closePath();
+        };
+        traceBoundary();
+        ctx.fillStyle = "#10251a";
+        ctx.fill();
+        ctx.save();
+        ctx.clip();
+        const cellSize = Math.max(1, 9.7 * scale);
+        for (const point of data?.points ?? []) {
+          const [x, y] = screen([point.longitude, point.latitude]);
+          ctx.fillStyle = satelliteColor(point.value, data.metric);
+          ctx.fillRect(x - cellSize / 2, y - cellSize / 2, cellSize + 0.35, cellSize + 0.35);
+        }
+        ctx.restore();
+        traceBoundary();
+        ctx.strokeStyle = "#e8f3d0";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.fillStyle = "#e5eee3";
+        ctx.font = "11px Inter, system-ui, sans-serif";
+        ctx.fillText("SEKINCHAN · 66.878 ha", 14, 22);
+        ctx.fillStyle = "#a5b5a8";
+        ctx.font = "10px Inter, system-ui, sans-serif";
+        const compassX = width - 34, compassY = 38;
+        const northX = uy, northY = -ux;
+        const arrowTipX = compassX + northX * 12, arrowTipY = compassY + northY * 12;
+        ctx.strokeStyle = "#dce8d5";
+        ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(compassX, compassY); ctx.lineTo(arrowTipX, arrowTipY); ctx.stroke();
+        const arrowAngle = Math.atan2(northY, northX);
+        for (const side of [-1, 1]) {
+          const angle = arrowAngle + Math.PI + side * 0.48;
+          ctx.beginPath(); ctx.moveTo(arrowTipX, arrowTipY); ctx.lineTo(arrowTipX + Math.cos(angle) * 5, arrowTipY + Math.sin(angle) * 5); ctx.stroke();
+        }
+        ctx.fillStyle = "#a5b5a8";
+        ctx.fillText("N", compassX - 3, compassY + 22);
+        if (!data?.points?.length) {
+          ctx.fillStyle = "#d4ddd5";
+          ctx.textAlign = "center";
+          ctx.fillText("No valid pixel values in this window", width / 2, height / 2);
+          ctx.textAlign = "start";
+        }
+        satelliteCanvas.setAttribute("aria-label", data
+          ? data.metric + " satellite layer for Sekinchan, " + data.window_id + ", " + data.points.length + " valid pixels"
+          : "Satellite map of the Sekinchan study boundary");
+      }
+
+      function updateSatelliteLegend(metric) {
+        const style = satelliteMetricStyle[metric];
+        $("satellite-legend-title").textContent = style.title;
+        $("satellite-legend-min").textContent = style.minLabel;
+        $("satellite-legend-max").textContent = style.maxLabel;
+        $("satellite-legend-gradient").style.background = style.gradient;
+        satelliteSourceSelect.disabled = metric.startsWith("S1_");
+      }
+
+      function drawSatelliteComparison(data) {
+        const svg = $("satellite-comparison-chart");
+        const namespace = "http://www.w3.org/2000/svg";
+        const create = (tag, attributes = {}, text = null) => {
+          const element = document.createElementNS(namespace, tag);
+          for (const [name, value] of Object.entries(attributes)) element.setAttribute(name, String(value));
+          if (text !== null) element.textContent = text;
+          svg.append(element);
+          return element;
+        };
+        svg.replaceChildren();
+        create("title", { id: "satellite-comparison-svg-title" }, "Sekinchan AOI mean NDVI by calendar-aligned ten-day period, 2023 to 2025");
+        create("desc", { id: "satellite-comparison-svg-description" }, "Three annual lines show direct Sentinel-2 observations, monthly fills are separate hollow markers, and a lower panel shows the paired-pixel mean 2025 minus 2023 NDVI change. Missing observations are gaps. Select a point to load its satellite window and spatial comparison.");
+        svg.setAttribute("aria-labelledby", "satellite-comparison-svg-title satellite-comparison-svg-description");
+        const observations = data.observations || [];
+        const selectablePoints = [];
+        const plotLeft = 62, plotRight = 900, x = slot => plotLeft + slot.period_index / 35 * (plotRight - plotLeft);
+        const yearValues = observations.flatMap(slot => data.years.flatMap(year => {
+          const item = slot.years[String(year)];
+          return [item?.direct_mean, item?.monthly_fill_mean].filter(value => value != null);
+        }));
+        const valueMin = Math.max(-1, Math.floor(Math.min(-0.1, ...yearValues) * 10 - 1) / 10);
+        const valueMax = Math.min(1, Math.ceil(Math.max(0.8, ...yearValues) * 10 + 1) / 10);
+        const top = 50, bottom = 200;
+        const yValue = value => bottom - (value - valueMin) / (valueMax - valueMin) * (bottom - top);
+        const axisText = { fill: "#9daf9f", "font-size": 10 };
+        const grid = "#ffffff1a";
+
+        create("text", { x: plotLeft, y: 28, fill: "#dbe5dc", "font-size": 11, "font-weight": 650 }, "AOI mean NDVI · direct Sentinel-2 10-day observations");
+        for (let tick = Math.ceil(valueMin * 5) / 5; tick <= valueMax + 0.001; tick += 0.2) {
+          const yy = yValue(tick);
+          create("line", { x1: plotLeft, x2: plotRight, y1: yy, y2: yy, stroke: grid });
+          create("text", { x: plotLeft - 9, y: yy + 3, "text-anchor": "end", ...axisText }, tick.toFixed(1));
+        }
+
+        for (const year of data.years) {
+          const color = satelliteComparisonColors[year] || "#dce8d5";
+          let segment = [];
+          const paths = [];
+          for (const slot of observations) {
+            const value = slot.years[String(year)]?.direct_mean;
+            if (value == null) {
+              if (segment.length) paths.push(segment);
+              segment = [];
+            } else {
+              segment.push([x(slot), yValue(value)]);
+            }
+          }
+          if (segment.length) paths.push(segment);
+          for (const points of paths) {
+            const d = points.map(([px, py], index) => (index ? "L" : "M") + px.toFixed(1) + " " + py.toFixed(1)).join(" ");
+            create("path", { d, fill: "none", stroke: color, "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" });
+          }
+          for (const slot of observations) {
+            const item = slot.years[String(year)];
+            if (item?.direct_mean != null) {
+              selectablePoints.push({ x: x(slot), y: yValue(item.direct_mean), windowId: item.window_id, source: "v3_10day", month: slot.month, dekad: slot.dekad });
+              const group = create("g", {
+                class: "comparison-point",
+                tabindex: 0,
+                role: "button",
+                "data-window-id": item.window_id,
+                "data-source": "v3_10day",
+                "data-month": slot.month,
+                "data-dekad": slot.dekad,
+                "aria-label": `${year} ${item.window_start}, direct 10-day mean NDVI ${item.direct_mean.toFixed(3)}, ${item.direct_pixel_count} AOI pixels. Select to load this satellite window.`
+              });
+              const point = document.createElementNS(namespace, "circle");
+              point.setAttribute("cx", x(slot).toFixed(1));
+              point.setAttribute("cy", yValue(item.direct_mean).toFixed(1));
+              point.setAttribute("r", "3.5");
+              point.setAttribute("fill", color);
+              point.setAttribute("stroke", "#09140f");
+              point.setAttribute("stroke-width", "1");
+              const title = document.createElementNS(namespace, "title");
+              title.textContent = `${year} · ${item.window_start} · direct NDVI ${item.direct_mean.toFixed(3)} · ${item.direct_pixel_count} AOI pixels · select to load map`;
+              group.append(point, title);
+              svg.append(group);
+            }
+            if (item?.monthly_fill_mean != null) {
+              selectablePoints.push({ x: x(slot), y: yValue(item.monthly_fill_mean), windowId: item.window_id, source: "v2_monthly_fill", month: slot.month, dekad: slot.dekad });
+              const group = create("g", {
+                class: "comparison-point",
+                tabindex: 0,
+                role: "button",
+                "data-window-id": item.window_id,
+                "data-source": "v2_monthly_fill",
+                "data-month": slot.month,
+                "data-dekad": slot.dekad,
+                "aria-label": `${year} ${item.window_start}, monthly-fill mean NDVI ${item.monthly_fill_mean.toFixed(3)}, ${item.monthly_fill_pixel_count} AOI pixels. Select to load this satellite window.`
+              });
+              const point = document.createElementNS(namespace, "rect");
+              point.setAttribute("x", (x(slot) - 3.2).toFixed(1));
+              point.setAttribute("y", (yValue(item.monthly_fill_mean) - 3.2).toFixed(1));
+              point.setAttribute("width", "6.4");
+              point.setAttribute("height", "6.4");
+              point.setAttribute("transform", `rotate(45 ${x(slot)} ${yValue(item.monthly_fill_mean)})`);
+              point.setAttribute("fill", "#09140f");
+              point.setAttribute("stroke", color);
+              point.setAttribute("stroke-width", "1.5");
+              const title = document.createElementNS(namespace, "title");
+              title.textContent = `${year} · ${item.window_start} · monthly-fill NDVI ${item.monthly_fill_mean.toFixed(3)} · ${item.monthly_fill_pixel_count} AOI pixels · excluded from difference · select to load map`;
+              group.append(point, title);
+              svg.append(group);
+            }
+          }
+        }
+
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        for (let month = 1; month <= 12; month++) {
+          const monthCenter = x({ period_index: (month - 1) * 3 + 1 });
+          create("text", { x: monthCenter, y: 220, "text-anchor": "middle", ...axisText }, months[month - 1]);
+          for (let dekad = 1; dekad <= 3; dekad++) {
+            const position = x({ period_index: (month - 1) * 3 + dekad - 1 });
+            create("line", { x1: position, x2: position, y1: bottom, y2: bottom + 4, stroke: "#829386" });
+            create("text", { x: position, y: 236, "text-anchor": "middle", fill: "#738578", "font-size": 8 }, String(dekad));
+          }
+        }
+
+        const deltaTop = 278, deltaBottom = 360;
+        const maxDelta = Math.max(0.05, Math.ceil(Math.max(0, ...observations.map(slot => Math.abs(slot.change_2025_minus_2023 ?? 0))) * 20) / 20);
+        const yDelta = value => deltaBottom - (value + maxDelta) / (2 * maxDelta) * (deltaBottom - deltaTop);
+        create("text", { x: plotLeft, y: 254, fill: "#dbe5dc", "font-size": 11, "font-weight": 650 }, "Paired-pixel mean NDVI change · 2025 − 2023");
+        for (const tick of [-maxDelta, 0, maxDelta]) {
+          const yy = yDelta(tick);
+          create("line", { x1: plotLeft, x2: plotRight, y1: yy, y2: yy, stroke: tick === 0 ? "#c39af588" : grid, "stroke-dasharray": tick === 0 ? "4 4" : "" });
+          create("text", { x: plotLeft - 9, y: yy + 3, "text-anchor": "end", ...axisText }, tick > 0 ? "+" + tick.toFixed(2) : tick.toFixed(2));
+        }
+        let deltaSegment = [];
+        const deltaPaths = [];
+        for (const slot of observations) {
+          if (slot.change_2025_minus_2023 == null) {
+            if (deltaSegment.length) deltaPaths.push(deltaSegment);
+            deltaSegment = [];
+          } else {
+            deltaSegment.push([x(slot), yDelta(slot.change_2025_minus_2023)]);
+          }
+        }
+        if (deltaSegment.length) deltaPaths.push(deltaSegment);
+        for (const points of deltaPaths) {
+          const d = points.map(([px, py], index) => (index ? "L" : "M") + px.toFixed(1) + " " + py.toFixed(1)).join(" ");
+          create("path", { d, fill: "none", stroke: "#c39af5", "stroke-width": 1.8, "stroke-linejoin": "round" });
+        }
+        for (const slot of observations) {
+          const delta = slot.change_2025_minus_2023;
+          const item = slot.years["2025"];
+          if (delta == null || !item) continue;
+          selectablePoints.push({ x: x(slot), y: yDelta(delta), windowId: item.window_id, source: "v3_10day", month: slot.month, dekad: slot.dekad });
+          const group = create("g", {
+            class: "comparison-point",
+            tabindex: 0,
+            role: "button",
+            "data-window-id": item.window_id,
+            "data-source": "v3_10day",
+            "data-month": slot.month,
+            "data-dekad": slot.dekad,
+            "aria-label": `${item.window_start}, direct 2025 minus 2023 NDVI change ${delta > 0 ? "+" : ""}${delta.toFixed(3)}. Select to load the 2025 satellite window.`
+          });
+          const point = document.createElementNS(namespace, "circle");
+          point.setAttribute("cx", x(slot).toFixed(1));
+          point.setAttribute("cy", yDelta(delta).toFixed(1));
+          point.setAttribute("r", "2.8");
+          point.setAttribute("fill", "#c39af5");
+          const title = document.createElementNS(namespace, "title");
+          title.textContent = `${item.window_start} · direct 2025 − 2023 NDVI change ${delta > 0 ? "+" : ""}${delta.toFixed(3)} · select to load 2025 map`;
+          group.append(point, title);
+          svg.append(group);
+        }
+        $("satellite-comparison-status").textContent = data.years.map(year => {
+          const directCount = observations.filter(slot => slot.years[String(year)]?.direct_mean != null).length;
+          const fillCount = observations.filter(slot => slot.years[String(year)]?.monthly_fill_mean != null).length;
+          return `${year}: ${directCount} direct windows, ${fillCount} monthly-fill windows`;
+        }).join(" · ") + " · AOI-clipped pixel means.";
+
+        svg.addEventListener("click", event => {
+          const cursor = svg.createSVGPoint();
+          cursor.x = event.clientX;
+          cursor.y = event.clientY;
+          const location = cursor.matrixTransform(svg.getScreenCTM().inverse());
+          let nearest = null;
+          let nearestDistance = 100;
+          for (const point of selectablePoints) {
+            const distance = (point.x - location.x) ** 2 + (point.y - location.y) ** 2;
+            if (distance < nearestDistance) {
+              nearest = point;
+              nearestDistance = distance;
+            }
+          }
+          if (nearest) selectSatelliteComparisonWindow(nearest.windowId, nearest.source, nearest.month, nearest.dekad);
         });
-        $("dataset-view-title").textContent = view.title;
-        $("dataset-view-description").textContent = view.description;
-        $("dataset-view-caveat").textContent = view.caveat;
-        $("dataset-preview-pair").hidden = viewKey !== "unet";
-        $("dataset-preview-empty").hidden = viewKey === "unet";
-        $("dataset-preview-empty").textContent = viewKey === "cnn"
-          ? "RiceUAS true-color and false-color test-split images, plus the five-band sample loader, are shown in the CNN panel below."
-          : "The selected station/year weather profile and historical Aman target chart are shown in the Random Forest panel below.";
-        document.querySelectorAll("[data-result-card]").forEach(card => {
-          card.classList.toggle("is-selected", card.dataset.resultCard === view.model);
+        svg.addEventListener("keydown", event => {
+          if ((event.key === "Enter" || event.key === " ") && event.target.closest(".comparison-point")) {
+            event.preventDefault();
+            const point = event.target.closest(".comparison-point");
+            selectSatelliteComparisonWindow(point.dataset.windowId, point.dataset.source, Number(point.dataset.month), Number(point.dataset.dekad));
+          }
         });
       }
-      document.querySelectorAll("[data-twin-view]").forEach(button => {
-        button.addEventListener("click", () => selectTwinDataView(button.dataset.twinView));
-      });
-      document.querySelectorAll("[data-health-zone]").forEach(button => {
-        button.addEventListener("click", () => {
-          const zone = button.dataset.healthZone;
-          const labels = {
-            healthy: "Example healthy zone highlighted · illustrative only.",
-            disease: "Example disease zone highlighted · manually placed demo, not a diagnosis.",
-            warning: "Example inspection area highlighted · condition unconfirmed."
-          };
-          document.querySelectorAll("[data-health-zone]").forEach(item => {
-            item.setAttribute("aria-pressed", String(item === button));
-          });
-          $("health-demo-focus").textContent = labels[zone];
-          window.paddyHealthDemoZone = zone;
-          document.dispatchEvent(new CustomEvent("paddy-health-demo-focus", { detail: { zone } }));
-        });
-      });
-      document.querySelector(".dataset-view-tabs")?.addEventListener("keydown", event => {
-        if (!["ArrowLeft", "ArrowRight"].includes(event.key)) return;
-        const tabs = [...document.querySelectorAll("[data-twin-view]")];
-        const current = tabs.indexOf(document.activeElement);
-        const next = (current + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
-        event.preventDefault();
-        tabs[next].focus();
-        tabs[next].click();
-      });
-      selectTwinDataView("unet");
 
-      const fieldSelect = $("twin-field-select");
-      async function loadTwinFields() {
+      function selectSatelliteComparisonWindow(windowId, source, month, dekad) {
+        if (!satelliteCatalogue) return;
+        const index = satelliteCatalogue.windows.findIndex(item => item.window_id === windowId);
+        if (index < 0) return;
+        satelliteMetricSelect.value = "NDVI";
+        satelliteSourceSelect.value = source;
+        updateSatelliteLegend("NDVI");
+        selectSatelliteWindow(index);
+        if (month && dekad) {
+          $("satellite-difference-period").value = `${month}-${dekad}`;
+          loadSatelliteDifferenceMap();
+        }
+      }
+
+      async function loadSatelliteComparison() {
+        const status = $("satellite-comparison-status");
+        status.textContent = "Loading polygon-clipped satellite comparison…";
         try {
-          const response = await fetch(base + "/digital-twin/fields");
-          if (!response.ok) throw new Error("Field service returned " + response.status + ".");
-          const fields = await response.json();
-          fieldSelect.replaceChildren();
-          if (!Array.isArray(fields) || fields.length === 0) {
-            fieldSelect.add(new Option("No saved fields", ""));
-            $("field-source-status").textContent = "No field records were returned by the database.";
+          const response = await fetch(base + "/digital-twin/satellite/year-comparison");
+          const result = await response.json();
+          if (!response.ok) throw new Error(result.detail || ("Satellite comparison service returned " + response.status + "."));
+          satelliteComparisonData = result;
+          drawSatelliteComparison(result);
+          const periodSelect = $("satellite-difference-period");
+          periodSelect.replaceChildren(...result.observations.map(slot => {
+            const option = new Option(slot.period_label, `${slot.month}-${slot.dekad}`);
+            if (!(slot.paired_pixel_count > 0)) option.textContent += " · no paired direct pixels";
+            return option;
+          }));
+          periodSelect.disabled = false;
+          const initialPeriod = result.observations.find(slot => slot.paired_pixel_count > 0) || result.observations[0];
+          if (initialPeriod) {
+            periodSelect.value = `${initialPeriod.month}-${initialPeriod.dekad}`;
+            await loadSatelliteDifferenceMap();
+          } else {
+            $("satellite-difference-status").textContent = "The satellite package contains no calendar comparison periods.";
+          }
+        } catch (error) {
+          status.textContent = error.message;
+          const svg = $("satellite-comparison-chart");
+          svg.replaceChildren();
+          const message = document.createElementNS("http://www.w3.org/2000/svg", "text");
+          message.setAttribute("x", "460");
+          message.setAttribute("y", "210");
+          message.setAttribute("text-anchor", "middle");
+          message.setAttribute("fill", "#c7d3c8");
+          message.textContent = "Year comparison unavailable";
+          svg.append(message);
+        }
+      }
+
+      function drawSatelliteDifferenceMap(data) {
+        if (data) lastSatelliteDifference = data;
+        const canvas = $("satellite-difference-map");
+        const ctx = canvas.getContext("2d");
+        const width = canvas.clientWidth || 900;
+        const height = canvas.clientHeight || 420;
+        const ratio = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.round(width * ratio);
+        canvas.height = Math.round(height * ratio);
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        ctx.clearRect(0, 0, width, height);
+        ctx.fillStyle = "#08110d";
+        ctx.fillRect(0, 0, width, height);
+        if (!satelliteCatalogue) return;
+
+        const ring = satelliteCatalogue.boundary.coordinates[0];
+        const vertices = ring.slice(0, -1);
+        const meanLatitude = vertices.reduce((sum, point) => sum + point[1], 0) / vertices.length;
+        const centerLongitude = vertices.reduce((sum, point) => sum + point[0], 0) / vertices.length;
+        const cosLatitude = Math.cos(meanLatitude * Math.PI / 180);
+        const project = point => [(point[0] - centerLongitude) * 111320 * cosLatitude, (point[1] - meanLatitude) * 110574];
+        const projectedVertices = vertices.map(project);
+        let majorEdge = null;
+        for (let index = 0; index < projectedVertices.length; index++) {
+          const a = projectedVertices[index], b = projectedVertices[(index + 1) % projectedVertices.length];
+          const dx = b[0] - a[0], dy = b[1] - a[1], length = Math.hypot(dx, dy);
+          if (!majorEdge || length > majorEdge.length) majorEdge = { dx, dy, length };
+        }
+        const ux = majorEdge.dx / majorEdge.length, uy = majorEdge.dy / majorEdge.length;
+        const projectLocal = point => {
+          const [east, north] = project(point);
+          return [east * ux + north * uy, -east * uy + north * ux];
+        };
+        const projectedRing = ring.map(projectLocal);
+        const xs = projectedRing.map(point => point[0]), ys = projectedRing.map(point => point[1]);
+        const minX = Math.min(...xs), maxX = Math.max(...xs), minY = Math.min(...ys), maxY = Math.max(...ys);
+        const padding = 30;
+        const scale = Math.min((width - padding * 2) / (maxX - minX), (height - padding * 2) / (maxY - minY));
+        const originX = (width - (maxX - minX) * scale) / 2;
+        const originY = (height - (maxY - minY) * scale) / 2;
+        const screen = point => {
+          const [xLocal, yLocal] = projectLocal(point);
+          return [originX + (xLocal - minX) * scale, height - originY - (yLocal - minY) * scale];
+        };
+        const traceBoundary = () => {
+          ctx.beginPath();
+          projectedRing.forEach((point, index) => {
+            const px = originX + (point[0] - minX) * scale;
+            const py = height - originY - (point[1] - minY) * scale;
+            if (index === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+          });
+          ctx.closePath();
+        };
+        traceBoundary();
+        ctx.fillStyle = "#10251a";
+        ctx.fill();
+        ctx.save();
+        ctx.clip();
+
+        const differences = (data?.points || []).map(point => Math.abs(point.difference)).sort((a, b) => a - b);
+        const percentile95 = differences.length ? differences[Math.floor((differences.length - 1) * 0.95)] : 0;
+        const maxDifference = Math.max(0.05, Math.ceil(percentile95 * 20) / 20);
+        const negative = [214, 106, 90], neutral = [199, 185, 133], positive = [103, 188, 138];
+        const differenceColor = value => {
+          const amount = Math.max(-1, Math.min(1, value / maxDifference));
+          const from = amount < 0 ? neutral : neutral;
+          const to = amount < 0 ? negative : positive;
+          const fraction = Math.abs(amount);
+          return "rgb(" + from.map((channel, index) => Math.round(channel + (to[index] - channel) * fraction)).join(",") + ")";
+        };
+        const cellSize = Math.max(1, 9.7 * scale);
+        for (const point of data?.points || []) {
+          const [px, py] = screen([point.longitude, point.latitude]);
+          ctx.fillStyle = differenceColor(point.difference);
+          ctx.fillRect(px - cellSize / 2, py - cellSize / 2, cellSize + 0.35, cellSize + 0.35);
+        }
+        ctx.restore();
+        traceBoundary();
+        ctx.strokeStyle = "#e8f3d0";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.fillStyle = "#e5eee3";
+        ctx.font = "11px Inter, system-ui, sans-serif";
+        ctx.fillText(`SEKINCHAN · ${data?.period_label || "NDVI difference"} · 2025 − 2023`, 14, 22);
+        ctx.fillStyle = "#a5b5a8";
+        ctx.font = "10px Inter, system-ui, sans-serif";
+        const compassX = width - 34, compassY = 38;
+        const northX = uy, northY = -ux;
+        const tipX = compassX + northX * 12, tipY = compassY + northY * 12;
+        ctx.strokeStyle = "#dce8d5";
+        ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(compassX, compassY); ctx.lineTo(tipX, tipY); ctx.stroke();
+        ctx.fillText("N", compassX - 3, compassY + 22);
+        $("satellite-difference-min").textContent = "−" + maxDifference.toFixed(2);
+        $("satellite-difference-max").textContent = "+" + maxDifference.toFixed(2);
+        canvas.setAttribute("aria-label", data
+          ? `Paired-pixel NDVI difference map for ${data.period_label}, 2025 minus 2023, ${data.paired_pixel_count} cells`
+          : "Paired-pixel Sentinel-2 NDVI difference map");
+      }
+
+      async function loadSatelliteDifferenceMap() {
+        if (!satelliteComparisonData || !satelliteCatalogue) return;
+        satelliteDifferenceRequest?.abort();
+        satelliteDifferenceRequest = new AbortController();
+        const [month, dekad] = $("satellite-difference-period").value.split("-").map(Number);
+        const status = $("satellite-difference-status");
+        status.textContent = "Calculating same-pixel direct NDVI differences…";
+        try {
+          const query = new URLSearchParams({ month: String(month), dekad: String(dekad) });
+          const response = await fetch(base + "/digital-twin/satellite/year-difference-map?" + query, { signal: satelliteDifferenceRequest.signal });
+          const result = await response.json();
+          if (!response.ok) throw new Error(result.detail || ("Difference map service returned " + response.status + "."));
+          drawSatelliteDifferenceMap(result);
+          $("satellite-difference-window-2023").textContent = `${result.window_2023.window_start} — ${result.window_2023.window_end}`;
+          $("satellite-difference-window-2025").textContent = `${result.window_2025.window_start} — ${result.window_2025.window_end}`;
+          $("satellite-difference-pixels").textContent = result.paired_pixel_count.toLocaleString();
+          if (!result.paired_pixel_count) {
+            status.textContent = `${result.period_label}: no grid cells have direct Sentinel-2 NDVI in both years; monthly fills are not substituted.`;
             return;
           }
-          fields.forEach((field, index) => fieldSelect.add(new Option(field.field_name || ("Field " + field.field_id), String(index))));
-          const showField = () => {
-            const field = fields[Number(fieldSelect.value)];
-            if (!field) return;
-            $("field-crop").textContent = field.crop || "Not recorded";
-            $("field-season").textContent = field.season || "Not recorded";
-            $("field-area").textContent = field.area == null ? "Not recorded" : field.area + " ha";
-            $("field-location").textContent = field.latitude == null || field.longitude == null ? "Not recorded" : field.latitude + ", " + field.longitude;
-            $("field-source-status").textContent = "Field details loaded from PostgreSQL through FastAPI.";
-          };
-          fieldSelect.addEventListener("change", showField);
-          fieldSelect.value = "0";
-          showField();
+          const overlap = result.overlap_percent_of_smaller_direct_coverage;
+          const coverageNote = overlap < 50 ? " Low paired-pixel coverage; interpret the spatial pattern cautiously." : "";
+          status.textContent = `${result.period_label} · paired-pixel mean change ${result.mean_difference > 0 ? "+" : ""}${result.mean_difference.toFixed(3)} NDVI · ${result.paired_pixel_count.toLocaleString()} shared pixels (${overlap.toFixed(1)}% of the smaller direct-observation coverage).${coverageNote}`;
         } catch (error) {
-          fieldSelect.replaceChildren(new Option("Field service unavailable", ""));
-          $("field-source-status").textContent = error.message;
+          if (error.name === "AbortError") return;
+          status.textContent = error.message;
+          drawSatelliteDifferenceMap(null);
+          $("satellite-difference-pixels").textContent = "Unavailable";
         }
       }
-      loadTwinFields();
 
-      async function loadWeatherArchive() {
-        const picker = $("weather-date");
+      function selectSatelliteWindow(index) {
+        if (!satelliteCatalogue) return;
+        const safeIndex = Math.max(0, Math.min(satelliteCatalogue.windows.length - 1, Number(index) || 0));
+        satelliteSlider.value = String(safeIndex);
+        satelliteWindowSelect.value = satelliteCatalogue.windows[safeIndex].window_id;
+        const selected = satelliteCatalogue.windows[safeIndex];
+        $("satellite-window-label").textContent = selected.window_start + " — " + selected.window_end;
+        clearTimeout(satelliteRenderTimer);
+        satelliteRenderTimer = setTimeout(loadSatelliteWindow, 180);
+      }
+
+      let calendarStageNumber = null;
+      let calendarStageLabel = null;
+      let calendarContextRequestId = 0;
+      const applyCalendarStageButton = $("apply-calendar-stage");
+      applyCalendarStageButton?.addEventListener("click", () => {
+        if (!calendarStageNumber) return;
+        $("growth-slider").value = String(calendarStageNumber);
+        $("growth-slider").dispatchEvent(new Event("input"));
+        $("calendar-stage-action-status").textContent = "Applied " + (calendarStageLabel || "calendar reference") + " to the illustrative 3D crop stage.";
+      });
+
+      async function loadSatelliteContext(windowId) {
+        const requestId = ++calendarContextRequestId;
+        calendarStageNumber = null;
+        calendarStageLabel = null;
+        if (applyCalendarStageButton) applyCalendarStageButton.disabled = true;
+        $("calendar-stage-action-status").textContent = "Loading calendar reference for the selected date window…";
         try {
-          const response = await fetch("../data/processed/uav_weather_daily.csv");
-          if (!response.ok) throw new Error("Weather archive request returned " + response.status + ".");
-          const lines = (await response.text()).trim().split(/\r?\n/);
-          const records = new Map();
-          for (const line of lines.slice(3)) {
-            const row = line.split(",");
-            if (row.length > 10 && row[0] && Number.isFinite(Number(row[5]))) records.set(row[0].slice(0, 10), row);
+          const response = await fetch(base + "/digital-twin/context/window/" + encodeURIComponent(windowId));
+          const context = await response.json();
+          if (requestId !== calendarContextRequestId) return;
+          if (!response.ok) throw new Error(context.detail || "Weather/calendar context unavailable.");
+          const weather = context.weather;
+          $("satellite-context-temp").textContent = weather.mean_temperature_c == null ? "No matching weather days" : Number(weather.mean_temperature_c).toFixed(1) + " °C";
+          $("satellite-context-rain").textContent = weather.precipitation_total_mm == null ? "No matching weather days" : Number(weather.precipitation_total_mm).toFixed(1) + " mm";
+          $("satellite-context-wind").textContent = weather.mean_daily_max_wind_kmh == null ? "No matching weather days" : Number(weather.mean_daily_max_wind_kmh).toFixed(1) + " km/h";
+          $("twin-weather-temp").textContent = weather.mean_temperature_c == null ? "No data" : Number(weather.mean_temperature_c).toFixed(1) + " °C";
+          $("twin-weather-rain").textContent = weather.precipitation_total_mm == null ? "No data" : Number(weather.precipitation_total_mm).toFixed(1) + " mm";
+          $("twin-weather-wind").textContent = weather.mean_daily_max_wind_kmh == null ? "No data" : Number(weather.mean_daily_max_wind_kmh).toFixed(1) + " km/h";
+          $("twin-weather-coverage").textContent = context.window_start + " — " + context.window_end + " · " + context.weather_days_available + "/" + context.weather_days_expected + " archive dates · " + context.weather_spatial_support + ".";
+          const calendarRows = context.calendar || [];
+          const stageNames = calendarRows.map(item => item.season.replaceAll("_", " ") + " · " + item.expected_crop_stage.replaceAll("_", " ") + " (" + item.days_in_window + "/" + context.calendar_days_in_window + " days)");
+          $("satellite-context-stage").textContent = stageNames.length ? stageNames.join(" / ") : "No calendar reference";
+          if (context.calendar_stage_kind === "crop_stage" && Number.isInteger(Number(context.calendar_stage_id))) {
+            calendarStageNumber = Number(context.calendar_stage_id);
+            calendarStageLabel = context.calendar_stage_label?.replaceAll("_", " ") || "crop stage";
+            applyCalendarStageButton.disabled = false;
+            $("calendar-stage-action-status").textContent = "Dominant reference: " + calendarStageLabel + " (" + context.calendar_stage_coverage_days + "/" + context.calendar_days_in_window + " days). Apply changes only the illustrative plant geometry.";
+          } else if (context.calendar_stage_kind === "between_seasons") {
+            $("calendar-stage-action-status").textContent = "Calendar indicates field preparation/rest for most of this window; no crop stage will be applied.";
+          } else if (context.calendar_stage_kind === "mixed") {
+            $("calendar-stage-action-status").textContent = "This window is evenly split across calendar intervals; no single stage is selected.";
+          } else {
+            $("calendar-stage-action-status").textContent = "No matching crop-calendar interval is available for this window.";
           }
-          const dates = [...records.keys()].sort();
-          if (!dates.length) throw new Error("No complete daily observations were found.");
-          picker.min = dates[0];
-          picker.max = dates[dates.length - 1];
-          const riceuasSampleDate = "2022-05-27";
-          picker.value = records.has(riceuasSampleDate) ? riceuasSampleDate : dates[dates.length - 1];
-          const numberAt = (row, index) => {
-            const raw = row?.[index]?.trim();
-            return raw ? Number(raw) : NaN;
-          };
-          const renderWeatherContext = date => {
-            $("riceuas-weather-date-label").textContent = date || "—";
-            const row = records.get(date);
-            if (row) {
-              const temp = numberAt(row, 5);
-              const rain = numberAt(row, 2);
-              const humidityMin = numberAt(row, 6);
-              const humidityMax = numberAt(row, 7);
-              const wind = numberAt(row, 10);
-              const values = [];
-              if (Number.isFinite(temp)) values.push(`air ${((temp - 32) * 5 / 9).toFixed(1)} °C`);
-              if (Number.isFinite(rain)) values.push(`rain ${(rain * 25.4).toFixed(1)} mm`);
-              if (Number.isFinite(humidityMin) && Number.isFinite(humidityMax)) values.push(`humidity ${humidityMin.toFixed(0)}–${humidityMax.toFixed(0)}%`);
-              if (Number.isFinite(wind)) values.push(`wind ${(wind * 1.60934).toFixed(1)} km/h`);
-              $("riceuas-weather-day").textContent = values.length
-                ? `Observed that day: ${values.join(" · ")}.`
-                : "No complete measurements are available for this date.";
-            } else {
-              $("riceuas-weather-day").textContent = "No archive observation for this date; no weather values are estimated.";
-            }
-
-            if (!date) {
-              $("riceuas-weather-window").textContent = "Choose a date to see its seven-day historical context.";
-              return;
-            }
-            const end = new Date(`${date}T00:00:00Z`);
-            const temperatures = [];
-            let rainfallInches = 0;
-            let rainDays = 0;
-            for (let daysBack = 6; daysBack >= 0; daysBack--) {
-              const day = new Date(end);
-              day.setUTCDate(day.getUTCDate() - daysBack);
-              const daily = records.get(day.toISOString().slice(0, 10));
-              const dailyTemp = numberAt(daily, 5);
-              const dailyRain = numberAt(daily, 2);
-              if (Number.isFinite(dailyTemp)) temperatures.push(dailyTemp);
-              if (Number.isFinite(dailyRain)) {
-                rainfallInches += dailyRain;
-                rainDays++;
-              }
-            }
-            const coverage = Math.min(temperatures.length, rainDays);
-            if (!coverage) {
-              $("riceuas-weather-window").textContent = "No preceding daily records are available for a seven-day summary.";
-              return;
-            }
-            const meanTempC = temperatures.length
-              ? ((temperatures.reduce((sum, value) => sum + value, 0) / temperatures.length - 32) * 5 / 9).toFixed(1)
-              : "—";
-            $("riceuas-weather-window").textContent = `7-day context through ${date} (${coverage}/7 daily records): rainfall ${(rainfallInches * 25.4).toFixed(1)} mm total · average air temperature ${meanTempC} °C.`;
-          };
-          const renderWeather = () => {
-            const row = records.get(picker.value);
-            if (!row) {
-              $("weather-temp").textContent = "No record";
-              $("weather-rain").textContent = "No record";
-              $("weather-humidity").textContent = "No record";
-              $("weather-wind").textContent = "No record";
-              renderWeatherContext(picker.value);
-              return;
-            }
-            $("weather-temp").textContent = (((Number(row[5]) - 32) * 5) / 9).toFixed(1) + " °C";
-            $("weather-rain").textContent = (Number(row[2]) * 25.4).toFixed(1) + " mm";
-            $("weather-humidity").textContent = Number.isFinite(Number(row[6])) && Number.isFinite(Number(row[7]))
-              ? Number(row[6]).toFixed(0) + "–" + Number(row[7]).toFixed(0) + "%" : "No record";
-            $("weather-wind").textContent = Number.isFinite(Number(row[10]))
-              ? (Number(row[10]) * 1.60934).toFixed(1) + " km/h" : "No record";
-            renderWeatherContext(picker.value);
-          };
-          picker.addEventListener("change", renderWeather);
-          renderWeather();
-          $("weather-source-status").textContent = "RiceUAS site weather archive · 2021–2022 daily observations · historical site context; synced to the included CNN sample date.";
+          $("satellite-context-source").textContent = context.weather_source + " · " + context.weather_spatial_support + " · " + context.weather_days_available + "/" + context.weather_days_expected + " archive dates in this satellite window (" + context.weather_coverage_percent + "% coverage) · " + context.calendar_status + ".";
         } catch (error) {
-          picker.disabled = true;
-          $("weather-source-status").textContent = error.message;
-        }
-      }
-      loadWeatherArchive();
-
-      const agriFeatures = ["LATITUDE", "LONGITUDE", "ALT", "Avg_Max_Temp", "Avg_Min_Temp",
-        "Avg_Rainfall", "Avg_Relative_Humidity", "Avg_Windspeed", "Avg_Cloud_Coverage",
-        "Avg_Bright_Sunshine"
-      ];
-      const yearSelect = $("YEAR"),
-        stationSelect = $("Station"),
-        advancedFields = $("agriAdvanced");
-      let agriRows = [];
-      agriFeatures.forEach(name => {
-        const field = document.createElement("div");
-        field.className = "field";
-        const label = document.createElement("label");
-        label.htmlFor = `feature_${name}`;
-        label.textContent = name;
-        const input = document.createElement("input");
-        input.type = "number";
-        input.step = "any";
-        input.id = `feature_${name}`;
-        input.dataset.feature = name;
-        input.required = true;
-        field.append(label, input);
-        advancedFields.append(field);
-      });
-
-      function parseCsvLine(line) {
-        const out = [];
-        let value = "",
-          quoted = false;
-        for (let i = 0; i < line.length; i++) {
-          const ch = line[i];
-          if (ch === '"') {
-            if (quoted && line[i + 1] === '"') {
-              value += '"';
-              i++;
-            } else quoted = !quoted;
-          } else if (ch === "," && !quoted) {
-            out.push(value);
-            value = "";
-          } else value += ch;
-        }
-        out.push(value);
-        return out;
-      }
-
-      function renderHistoricalYield() {
-        const chart = $("historical-yield-chart");
-        const rows = agriRows.filter(row => row.Station === stationSelect.value && Number.isFinite(row.Aman_Yield))
-          .sort((a, b) => a.YEAR - b.YEAR).slice(-12);
-        chart.replaceChildren();
-        if (!rows.length) {
-          chart.textContent = "No historical Aman target rows for this station.";
-          return;
-        }
-        const maxValue = Math.max(...rows.map(row => row.Aman_Yield)) || 1;
-        for (const row of rows) {
-          const column = document.createElement("span");
-          column.className = "history-bar";
-          const bar = document.createElement("i");
-          bar.style.height = Math.max(4, row.Aman_Yield / maxValue * 100) + "%";
-          bar.title = row.YEAR + ": " + row.Aman_Yield.toFixed(3) + " (normalized target)";
-          const year = document.createElement("small");
-          year.textContent = String(row.YEAR).slice(-2);
-          column.append(bar, year);
-          chart.append(column);
+          if (requestId !== calendarContextRequestId) return;
+          $("satellite-context-stage").textContent = "Context unavailable";
+          $("twin-weather-temp").textContent = $("twin-weather-rain").textContent = $("twin-weather-wind").textContent = "Unavailable";
+          $("twin-weather-coverage").textContent = "Weather archive unavailable for the selected window.";
+          $("calendar-stage-action-status").textContent = "Calendar context unavailable for this date window.";
+          $("satellite-context-temp").textContent = $("satellite-context-rain").textContent = $("satellite-context-wind").textContent = "—";
+          $("satellite-context-source").textContent = error.message + " Weather is regional grid context, not a field sensor reading.";
         }
       }
 
-      function loadAgriProfile() {
-        const row = agriRows.find(r => r.YEAR === Number(yearSelect.value) && r.Station ===
-          stationSelect.value);
-        if (!row) {
-          $("agriRun").disabled = true;
-          $("station-profile-name").textContent = "No matching station/year row";
-          $("weather-feature-grid").replaceChildren();
-          $("station-target-value").textContent = "—";
-          return;
-        }
-        for (const name of agriFeatures) advancedFields.querySelector(`[data-feature="${name}"]`)
-          .value = row[name];
-        renderStationProfile(row);
-        document.querySelectorAll('[data-model-output="agricultural-yield"]').forEach(output => {
-          output.textContent = "Station/year inputs changed. Run the model again for this selection.";
-        });
-        $("agriRun").disabled = false;
-        $("agriResult").className = "result";
-      }
-
-      const stationWeatherFeatures = [
-        ["Avg_Max_Temp", "Average maximum temperature"],
-        ["Avg_Min_Temp", "Average minimum temperature"],
-        ["Avg_Rainfall", "Average rainfall"],
-        ["Avg_Relative_Humidity", "Relative humidity"],
-        ["Avg_Windspeed", "Wind speed"],
-        ["Avg_Cloud_Coverage", "Cloud coverage"],
-        ["Avg_Bright_Sunshine", "Bright sunshine"]
-      ];
-
-      function renderStationProfile(row) {
-        $("station-profile-name").textContent = row.Station;
-        $("station-profile-year").textContent = String(row.YEAR);
-        const grid = $("weather-feature-grid");
-        grid.replaceChildren();
-        for (const [key, label] of stationWeatherFeatures) {
-          const feature = document.createElement("div");
-          feature.className = "weather-feature";
-          const heading = document.createElement("div");
-          heading.className = "weather-feature-label";
-          const name = document.createElement("span");
-          name.textContent = label;
-          const value = Number(row[key]);
-          const number = document.createElement("b");
-          number.textContent = value.toFixed(3);
-          heading.append(name, number);
-          const track = document.createElement("div");
-          track.className = "weather-feature-track";
-          const bar = document.createElement("i");
-          bar.style.width = `${Math.max(0, Math.min(1, value)) * 100}%`;
-          track.append(bar);
-          feature.append(heading, track);
-          grid.append(feature);
-        }
-        $("station-target-value").textContent = Number.isFinite(row.Aman_Yield)
-          ? row.Aman_Yield.toFixed(3) : "No target recorded";
-      }
-
-      async function initAgriDataset() {
+      async function loadSatelliteWindow() {
+        if (!satelliteCatalogue) return;
+        satelliteRequest?.abort();
+        satelliteRequest = new AbortController();
+        const windowId = satelliteWindowSelect.value;
+        const metric = satelliteMetricSelect.value;
+        const source = satelliteSourceSelect.value;
+        const query = new URLSearchParams({ metric, s2_source: source });
+        $("satellite-status").textContent = "Loading " + metric + " pixels for " + windowId + "…";
         try {
-          const response = await fetch("../data/raw/Weather_Factors_And_Yield_Dataset.csv");
-          if (!response.ok) throw new Error(
-            `Dataset request failed (${response.status}). Open this page with Live Server from the PaddyVision-AI project.`
-            );
-          const lines = (await response.text()).trim().split(/\r?\n/);
-          const headers = parseCsvLine(lines.shift());
-          agriRows = lines.filter(Boolean).map(line => {
-            const cells = parseCsvLine(line),
-              row = {};
-            headers.forEach((key, i) => row[key] = key === "Station" ? cells[i] : Number(
-              cells[i]));
-            return row;
-          }).filter(row => Number.isFinite(row.YEAR) && row.Station && agriFeatures.every(key =>
-            Number.isFinite(row[key])));
-          if (!agriRows.length) throw new Error(
-            "No complete agricultural training rows were found in the CSV.");
-          [...new Set(agriRows.map(row => row.YEAR))].sort((a, b) => a - b).forEach(year => {
-            const option = document.createElement("option");
-            option.value = year;
-            option.textContent = year;
-            yearSelect.append(option);
-          });
-          [...new Set(agriRows.map(row => row.Station))].sort().forEach(station => {
-            const option = document.createElement("option");
-            option.value = station;
-            option.textContent = station;
-            stationSelect.append(option);
-          });
-          yearSelect.value = agriRows.some(r => r.YEAR === 2013) ? "2013" : String(Math.max(...
-            agriRows.map(r => r.YEAR)));
-          stationSelect.value = agriRows.some(r => r.YEAR === Number(yearSelect.value) && r
-            .Station === "Dhaka") ? "Dhaka" : agriRows.find(r => r.YEAR === Number(yearSelect
-            .value)).Station;
-          loadAgriProfile();
-          renderHistoricalYield();
+          const response = await fetch(base + "/digital-twin/satellite/window/" + encodeURIComponent(windowId) + "?" + query, { signal: satelliteRequest.signal });
+          const result = await response.json();
+          if (!response.ok) throw new Error(result.detail || ("Satellite service returned " + response.status + "."));
+          drawSatelliteMap(result);
+          window.latestSekinchanSatelliteLayer = result;
+          loadSatelliteContext(windowId);
+          document.dispatchEvent(new CustomEvent("paddy-satellite-layer", { detail: result }));
+          const stats = result.summary;
+          const mean = stats.mean == null ? "no values" : "mean " + Number(stats.mean).toFixed(3);
+          const counts = Object.entries(stats.source_counts).map(([key, value]) => key + ": " + value.toLocaleString()).join(" · ");
+          $("satellite-status").textContent = result.window_start + " to " + result.window_end + " · " + stats.pixel_count.toLocaleString() + " valid pixels · " + mean + (stats.min == null ? "" : " · range " + stats.min.toFixed(3) + " to " + stats.max.toFixed(3));
+          const summary = stats.window_summary;
+          $("satellite-source-note").textContent = metric.startsWith("ND")
+            ? "Sentinel-2 values · " + (counts || "no valid source rows") + " · window fill confidence: " + (summary.fill_confidence || "not applicable") + ". Monthly fills are labelled separately from real 10-day values."
+            : "Sentinel-1 radar values · " + (counts || "no valid source rows") + " · Sentinel-1 gaps are not filled in this dataset.";
+          $("satellite-data-badge").textContent = metric.startsWith("ND") ? "SENTINEL-2 · " + (source === "all" ? "MIXED SOURCES" : source === "v3_10day" ? "10-DAY ONLY" : "MONTHLY FILL") : "SENTINEL-1 RADAR";
         } catch (error) {
-          showResult($("agriResult"), error.message, true);
-          $("agriRun").disabled = true;
+          if (error.name === "AbortError") return;
+          drawSatelliteMap(null);
+          window.latestSekinchanSatelliteLayer = null;
+          document.dispatchEvent(new CustomEvent("paddy-satellite-layer", { detail: null }));
+          $("satellite-status").textContent = error.message;
+          $("satellite-source-note").textContent = "Set PADDYVISION_DATASET_ROOT to the local dataset folder if the API cannot locate the Sekinchan package.";
+          $("satellite-data-badge").textContent = "DATA SERVICE UNAVAILABLE";
         }
       }
-      yearSelect.addEventListener("change", loadAgriProfile);
-      stationSelect.addEventListener("change", () => {
-        loadAgriProfile();
-        renderHistoricalYield();
-      });
-      initAgriDataset();
 
-      $("loadRiceuasSample").addEventListener("click", async event => {
-        const button = event.currentTarget;
-        const status = $("riceuas-sample-status");
-        const bands = ["blue", "green", "red", "red_edge", "nir"];
-        const sampleRoot = "../data/raw/rice-uav/riceUAS/riceUAS/Images/Test/05-27-2022/31760/";
-        setBusy(button, true, "Loading five TIFF bands…");
+      async function loadSatelliteCatalogue() {
         try {
-          const files = await Promise.all(bands.map(async band => {
-            const response = await fetch(sampleRoot + band + ".tiff");
-            if (!response.ok) throw new Error(`Could not load ${band}.tiff (${response.status}).`);
-            return new File([await response.blob()], band + ".tiff", { type: "image/tiff" });
-          }));
-          bands.forEach((band, index) => {
-            const transfer = new DataTransfer();
-            transfer.items.add(files[index]);
-            const input = $(band);
-            input.files = transfer.files;
-            input.dispatchEvent(new Event("change", { bubbles: true }));
+          const response = await fetch(base + "/digital-twin/satellite/windows");
+          const result = await response.json();
+          if (!response.ok) throw new Error(result.detail || ("Satellite service returned " + response.status + "."));
+          if (!Array.isArray(result.windows) || result.windows.length === 0) throw new Error("The satellite package contains no time windows.");
+          satelliteCatalogue = result;
+          satelliteWindowSelect.replaceChildren();
+          result.windows.forEach(windowItem => {
+            const label = windowItem.window_start + " — " + windowItem.window_end + (windowItem.usable_s2_or_s1 ? "" : " · no satellite data");
+            satelliteWindowSelect.add(new Option(label, windowItem.window_id));
           });
-          const weatherPicker = $("weather-date");
-          const sampleDate = "2022-05-27";
-          if (weatherPicker && weatherPicker.min <= sampleDate && weatherPicker.max >= sampleDate) {
-            weatherPicker.value = sampleDate;
-            weatherPicker.dispatchEvent(new Event("change", { bubbles: true }));
-          }
-          status.textContent = "Loaded matching test-split bands: 27 May 2022 · plot 31760. Click Predict multispectral yield below to run the trained CNN.";
-          $("multiCard").scrollIntoView({ behavior: "smooth", block: "center" });
+          satelliteSlider.max = String(result.windows.length - 1);
+          satelliteSlider.disabled = false;
+        const windowsWithDirectS2 = result.windows.map((item, index) => ({ item, index }))
+          .filter(entry => (entry.item.n_s2_v3 || 0) > 0);
+        const windowsWithAnyS2 = result.windows.map((item, index) => ({ item, index }))
+          .filter(entry => (entry.item.n_s2_v3 || 0) + (entry.item.n_s2_fill || 0) > 0);
+        const availableWindows = windowsWithDirectS2.length ? windowsWithDirectS2 : windowsWithAnyS2;
+        const initialIndex = availableWindows.length ? availableWindows[availableWindows.length - 1].index : result.windows.length - 1;
+          updateSatelliteLegend(satelliteMetricSelect.value);
+          selectSatelliteWindow(initialIndex);
+        loadSatelliteComparison();
+        $("satellite-status").textContent = result.windows.length + " ten-day slots available · 2023–2025 · AOI " + Number(result.boundary.area_ha || 66.878).toFixed(3) + " ha.";
         } catch (error) {
-          status.textContent = "Sample could not be loaded: " + error.message;
-        } finally {
-          setBusy(button, false);
+          $("satellite-status").textContent = error.message;
+          $("satellite-source-note").textContent = "The API will show setup guidance if the local dataset path is not configured.";
+          $("satellite-data-badge").textContent = "DATA SERVICE UNAVAILABLE";
+          drawSatelliteMap(null);
         }
+      }
+
+      satelliteSlider.addEventListener("input", () => selectSatelliteWindow(satelliteSlider.value));
+      satelliteWindowSelect.addEventListener("change", () => {
+        const index = satelliteCatalogue?.windows.findIndex(item => item.window_id === satelliteWindowSelect.value) ?? -1;
+        if (index >= 0) selectSatelliteWindow(index);
       });
-      ["blue", "green", "red", "red_edge", "nir"].forEach(id => $(id).addEventListener("change", () => {
-        const allBandsSelected = ["blue", "green", "red", "red_edge", "nir"].every(name => $(name).files.length);
-        $("riceuas-sample-status").textContent = allBandsSelected
-          ? "Five TIFF inputs are selected. Confirm they all belong to the same plot/date. The previews above remain the packaged test sample."
-          : "A TIFF input changed. The previews above remain the packaged test sample; select all five bands from one plot/date.";
-        document.querySelectorAll('[data-model-output="image-yield"]').forEach(output => {
-          output.textContent = "CNN inputs changed. Run the model again for this plot/date.";
-        });
-        $("multiResult").className = "result";
-      }));
+      satelliteMetricSelect.addEventListener("change", () => {
+        updateSatelliteLegend(satelliteMetricSelect.value);
+        loadSatelliteWindow();
+      });
+      satelliteSourceSelect.addEventListener("change", loadSatelliteWindow);
+      $("satellite-difference-period").addEventListener("change", loadSatelliteDifferenceMap);
+      window.addEventListener("resize", () => drawSatelliteMap(lastSatelliteLayer));
+      window.addEventListener("resize", () => {
+        if (satelliteComparisonData) drawSatelliteDifferenceMap(lastSatelliteDifference);
+      });
+      loadSatelliteCatalogue();
 
       function setBusy(button, busy, label) {
         button.disabled = busy;
@@ -1441,7 +1834,7 @@
         const strong = document.createElement("strong");
         strong.textContent = error ? "Request could not be completed" : "Prediction ready";
         el.append(strong, document.createTextNode(message));
-        const outputKey = { segResult: "segmentation", multiResult: "image-yield", agriResult: "agricultural-yield" }[el.id];
+        const outputKey = { segResult: "segmentation" }[el.id];
         const outputs = outputKey && document.querySelectorAll('[data-model-output="' + outputKey + '"]');
         outputs?.forEach(output => output.textContent = (error ? "Unavailable: " : "") + message);
         if (data) {
@@ -1467,8 +1860,7 @@
         if (data == null) return "The API returned an empty response.";
         if (typeof data !== "object") return String(data);
         const id = data.prediction_id ?? data.id;
-        const keys = ["predicted_yield", "yield", "prediction", "aman_yield",
-          "predicted_aman_yield"];
+        const keys = ["predicted_yield", "yield", "prediction"];
         const key = keys.find(k => data[k] !== undefined);
         return `${id ? `Prediction ID: ${id} · ` : ""}${key ? `${key.replaceAll("_", " ")}: ${data[key]}` : "Prediction received from API."}`;
       }
@@ -1533,7 +1925,6 @@
         $("maskPlaceholder").hidden = false;
         $("maskPlaceholder").textContent = "Running the trained U-Net model…";
         $("maskOutputCaption").textContent = "Waiting for a successful model response";
-        $("twin-mask-preview").hidden = true;
         try {
           const body = new FormData();
           body.append("image", file);
@@ -1553,15 +1944,12 @@
             img.hidden = false;
             $("maskPlaceholder").hidden = true;
             $("maskOutputCaption").textContent = "Predicted binary mask · returned by FastAPI U-Net";
-            const twinMask = $("twin-mask-preview");
-            if (twinMask.dataset.url) URL.revokeObjectURL(twinMask.dataset.url);
-            twinMask.dataset.url = url;
-            twinMask.src = url;
-            twinMask.hidden = false;
             $("maskWrap").classList.add("show");
-            await updateTwinMaskProjection(url);
             const coverage = await getMaskCoveragePercent(blob);
-            showResult(result, "Weedy-rice mask: " + coverage.toFixed(1) + "% of pixels marked in the model output. This is image-mask coverage, not disease status or field-area percentage.");
+            const persistence = response.headers.get("X-PaddyVision-Persistence");
+            const persistenceNote = persistence === "failed" ?
+              " The mask was generated, but its history could not be saved to the database." : "";
+            showResult(result, "Weedy-rice mask: " + coverage.toFixed(1) + "% of pixels marked in the model output. This is image-mask coverage, not disease status or field-area percentage." + persistenceNote);
           } else {
             const data = type.includes("json") ? await response.json() : {
               response: await response.text()
@@ -1574,11 +1962,7 @@
               $("maskImage").hidden = false;
               $("maskPlaceholder").hidden = true;
               $("maskOutputCaption").textContent = "Predicted binary mask · returned by FastAPI U-Net";
-              const twinMask = $("twin-mask-preview");
-              twinMask.src = maskSource;
-              twinMask.hidden = false;
               $("maskWrap").classList.add("show");
-              await updateTwinMaskProjection(maskSource);
             }
             showResult(result, predictionSummary(data), false, data);
           }
@@ -1589,69 +1973,10 @@
         }
       });
       $("rgbFile").addEventListener("change", () => {
-        updateTwinMaskProjection(null);
         $("maskImage").hidden = true;
-        $("twin-mask-preview").hidden = true;
         $("maskPlaceholder").hidden = false;
         $("maskPlaceholder").textContent = "New RGB selected. Run segmentation to show its prediction here.";
         $("maskOutputCaption").textContent = "Waiting for a successful model response";
-      });
-      $("multiRun").addEventListener("click", async e => {
-        const button = e.currentTarget,
-          result = $("multiResult"),
-          names = ["blue", "green", "red", "red_edge", "nir"],
-          files = names.map(n => $(n).files[0]);
-        if (files.some(f => !f)) return showResult(result,
-          "Please select all five TIFF band files.", true);
-        setBusy(button, true, "Running CNN…");
-        result.className = "result";
-        try {
-          const body = new FormData();
-          names.forEach(n => body.append(n, $(n).files[0]));
-          const data = await readResponse(await fetch(base + API.imageYield, {
-            method: "POST",
-            body
-          }));
-          const cnnValue = data && data.predicted_yield;
-          const summary = cnnValue === undefined
-            ? predictionSummary(data)
-            : "Predicted plot yield: " + Number(cnnValue).toFixed(3) + " t/ha";
-          showResult(result, summary, false, data);
-        } catch (err) {
-          showResult(result, err.message, true);
-        } finally {
-          setBusy(button, false);
-        }
-      });
-      $("agriForm").addEventListener("submit", async e => {
-        e.preventDefault();
-        const button = $("agriRun"),
-          result = $("agriResult");
-        setBusy(button, true, "Estimating Aman yield…");
-        result.className = "result";
-        try {
-          const payload = {
-            YEAR: Number(yearSelect.value),
-            Station: stationSelect.value
-          };
-          for (const input of advancedFields.querySelectorAll("input[data-feature]")) payload[
-            input.dataset.feature] = Number(input.value);
-          const data = await readResponse(await fetch(base + API.agriculturalYield, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify(payload)
-          }));
-          const score = data.predicted_aman_yield;
-          const message = score === undefined ? predictionSummary(data) :
-            `Aman yield model score: ${Number(score).toFixed(4)} (normalized 0–1) · Prediction ID: ${data.prediction_id}`;
-          showResult(result, message, false, data);
-        } catch (err) {
-          showResult(result, err.message, true);
-        } finally {
-          setBusy(button, false);
-        }
       });
       $("resetAll").addEventListener("click", () => {
         document.querySelectorAll('input[type="file"]').forEach(i => i.value = "");
@@ -1662,22 +1987,12 @@
         $("maskPlaceholder").hidden = false;
         $("maskPlaceholder").textContent = "Prediction will appear here after you choose an RGB image and run segmentation.";
         $("maskOutputCaption").textContent = "Model output · not run yet";
-        updateTwinMaskProjection(null);
-        ["segResult", "multiResult", "agriResult"].forEach(id => $(id).className = "result");
+        $("segResult").className = "result";
         document.querySelectorAll("[data-model-output]").forEach(el => el.textContent = "No prediction run yet.");
-        $("twin-mask-preview").hidden = true;
-        $("riceuas-sample-status").textContent = "Fixed reference preview from the included 38 × 22 pixel test-split plot; stretched for display only. Choosing other files does not update this preview.";
         $("wind-toggle").checked = true;
         $("growth-slider").value = "7";
         $("growth-slider").dispatchEvent(new Event("input"));
-        yearSelect.value = "2013";
-        stationSelect.value = "Dhaka";
-        loadAgriProfile();
-        document.querySelector(".advanced").open = false;
       });
-      document.querySelectorAll("[data-scroll-to]").forEach(button => button.addEventListener("click", () => {
-        $(button.dataset.scrollTo)?.scrollIntoView({ behavior: "smooth", block: "center" });
-      }));
     </script>
     <!-- Three.js -->
     <script type="importmap">
@@ -1716,7 +2031,6 @@
         }, 10000);
       })();
     </script>
-    <script type="module" src="script.js?v=mask-projection-3"></script>
+    <script type="module" src="script.js?v=yield-scenario-1"></script>
   </body>
 </html>
-

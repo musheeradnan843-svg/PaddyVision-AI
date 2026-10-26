@@ -1,0 +1,7 @@
+field_id,plot_id,year,season,synthetic_yield_t_ha,synthetic_harvest_weight_t,area_ha_reference,area_basis,record_status,source_note
+SEKINCHAN-AOI-66.878HA,AOI-AGGREGATE-NOT-SUBPLOT,2023,Season 1,4.320,288.913,66.878,reported GIS AOI area; not measured harvested area,SYNTHETIC,Illustrative generated value; not a local harvest observation.
+SEKINCHAN-AOI-66.878HA,AOI-AGGREGATE-NOT-SUBPLOT,2024,Season 1,4.410,294.932,66.878,reported GIS AOI area; not measured harvested area,SYNTHETIC,Illustrative generated value; not a local harvest observation.
+SEKINCHAN-AOI-66.878HA,AOI-AGGREGATE-NOT-SUBPLOT,2025,Season 1,4.380,292.926,66.878,reported GIS AOI area; not measured harvested area,SYNTHETIC,Illustrative generated value; not a local harvest observation.
+SEKINCHAN-AOI-66.878HA,AOI-AGGREGATE-NOT-SUBPLOT,2023,Season 2,4.550,304.295,66.878,reported GIS AOI area; not measured harvested area,SYNTHETIC,Illustrative generated value; not a local harvest observation.
+SEKINCHAN-AOI-66.878HA,AOI-AGGREGATE-NOT-SUBPLOT,2024,Season 2,4.470,298.945,66.878,reported GIS AOI area; not measured harvested area,SYNTHETIC,Illustrative generated value; not a local harvest observation.
+SEKINCHAN-AOI-66.878HA,AOI-AGGREGATE-NOT-SUBPLOT,2025,Season 2,4.620,308.976,66.878,reported GIS AOI area; not measured harvested area,SYNTHETIC,Illustrative generated value; not a local harvest observation.
