@@ -1,5 +1,6 @@
 import os
 
+import api.config  # Load project-local .env before reading database settings.
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 

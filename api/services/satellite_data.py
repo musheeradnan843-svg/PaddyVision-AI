@@ -8,12 +8,33 @@ from datetime import date, timedelta
 from pathlib import Path
 from typing import Any
 
+import api.config  # Load project-local .env before reading dataset settings.
 from api.runtime_paths import get_runtime_data_dir
 
 
 _BUILD_LOCK = threading.Lock()
-_SCHEMA_VERSION = "2"
+_SCHEMA_VERSION = "3"
 _METRICS = {"NDVI", "NDMI", "NDWI", "S1_VV", "S1_VH"}
+_STATIC_LAYERS = {
+    "elevation_m": {
+        "label": "Elevation",
+        "unit": "m",
+        "source_resolution_m_approx": 30,
+        "scale_note": "Elevation in metres from a coarse ~30 m source model, represented on the 10 m panel grid.",
+    },
+    "gsw_occurrence": {
+        "label": "GSW occurrence",
+        "unit": "source value",
+        "source_resolution_m_approx": None,
+        "scale_note": "Stored values are shown as supplied (observed 0–5); units, native resolution, and time period are not documented in the supplied stack metadata.",
+    },
+    "gsw_seasonality": {
+        "label": "GSW seasonality",
+        "unit": "source value",
+        "source_resolution_m_approx": None,
+        "scale_note": "Stored values are shown as supplied (observed 0–3); units, native resolution, and time period are not documented in the supplied stack metadata.",
+    },
+}
 _COMPARISON_YEARS = (2023, 2024, 2025)
 
 
@@ -72,6 +93,14 @@ def _number(value: str | None) -> float | None:
     except (TypeError, ValueError):
         return None
     return parsed if math.isfinite(parsed) else None
+
+
+def _flag(value: str | None) -> int | None:
+    """Parse nullable 0/1 QA flags without treating a blank as zero."""
+    parsed = _number(value)
+    if parsed in (0.0, 1.0):
+        return int(parsed)
+    return None
 
 
 def get_satellite_catalogue() -> dict[str, Any]:
@@ -172,16 +201,28 @@ def _build_index(index_path: Path, paths: dict[str, Path], signature: str) -> No
             CREATE TABLE pixels (
                 window_id TEXT NOT NULL, latitude REAL NOT NULL, longitude REAL NOT NULL,
                 ndvi REAL, ndmi REAL, ndwi REAL, s1_vv REAL, s1_vh REAL,
-                s2_source TEXT, s2_fill_confidence TEXT
+                s2_source TEXT, s2_fill_confidence TEXT,
+                bright_flag INTEGER, s1_outlier_flag INTEGER
+            );
+            CREATE TABLE static_pixels (
+                latitude REAL NOT NULL, longitude REAL NOT NULL,
+                elevation_m REAL, gsw_occurrence REAL, gsw_seasonality REAL,
+                PRIMARY KEY (latitude, longitude)
             );
         """)
         connection.executemany("INSERT INTO metadata VALUES (?, ?)", [
             ("source_signature", signature), ("schema_version", _SCHEMA_VERSION)
         ])
         batch: list[tuple[Any, ...]] = []
+        static_batch: list[tuple[Any, ...]] = []
+        static_values_by_location: dict[tuple[float, float], tuple[float | None, float | None, float | None]] = {}
         with paths["panel"].open("r", newline="", encoding="utf-8-sig") as source:
             reader = csv.DictReader(source)
-            required = {"window_id", "latitude", "longitude", "NDVI", "NDMI", "NDWI", "S1_VV", "S1_VH"}
+            required = {
+                "window_id", "latitude", "longitude", "NDVI", "NDMI", "NDWI", "S1_VV", "S1_VH",
+                "s2_source", "s2_fill_confidence", "bright_flag", "s1_outlier_flag",
+                "elevation_m", "gsw_occurrence", "gsw_seasonality",
+            }
             if not required.issubset(set(reader.fieldnames or [])):
                 raise SatelliteDataError("The satellite pixel panel is missing required columns.")
             for row in reader:
@@ -189,17 +230,39 @@ def _build_index(index_path: Path, paths: dict[str, Path], signature: str) -> No
                 longitude = _number(row.get("longitude"))
                 if latitude is None or longitude is None or not _inside_polygon(longitude, latitude, ring):
                     continue
+                location = (latitude, longitude)
+                static_values = (
+                    _number(row.get("elevation_m")),
+                    _number(row.get("gsw_occurrence")),
+                    _number(row.get("gsw_seasonality")),
+                )
+                if location not in static_values_by_location:
+                    static_values_by_location[location] = static_values
+                    static_batch.append((
+                        latitude, longitude, *static_values,
+                    ))
+                    if len(static_batch) >= 10000:
+                        connection.executemany("INSERT INTO static_pixels VALUES (?, ?, ?, ?, ?)", static_batch)
+                        static_batch.clear()
+                elif static_values_by_location[location] != static_values:
+                    raise SatelliteDataError(
+                        "Static elevation/water-history values vary across windows for the same coordinate; "
+                        "the static layer cannot be safely separated from the temporal panel."
+                    )
                 batch.append((
                     row["window_id"], latitude, longitude,
                     _number(row.get("NDVI")), _number(row.get("NDMI")), _number(row.get("NDWI")),
                     _number(row.get("S1_VV")), _number(row.get("S1_VH")),
                     row.get("s2_source") or None, row.get("s2_fill_confidence") or None,
+                    _flag(row.get("bright_flag")), _flag(row.get("s1_outlier_flag")),
                 ))
                 if len(batch) >= 10000:
-                    connection.executemany("INSERT INTO pixels VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", batch)
+                    connection.executemany("INSERT INTO pixels VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", batch)
                     batch.clear()
         if batch:
-            connection.executemany("INSERT INTO pixels VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", batch)
+            connection.executemany("INSERT INTO pixels VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", batch)
+        if static_batch:
+            connection.executemany("INSERT INTO static_pixels VALUES (?, ?, ?, ?, ?)", static_batch)
         connection.execute(
             "CREATE INDEX pixels_by_window_location "
             "ON pixels(window_id, s2_source, latitude, longitude)"
@@ -243,7 +306,7 @@ def get_satellite_window(window_id: str, metric: str = "NDVI", s2_source: str = 
     if summary is None:
         raise ValueError("Unknown satellite window_id")
     column = {"NDVI": "ndvi", "NDMI": "ndmi", "NDWI": "ndwi", "S1_VV": "s1_vv", "S1_VH": "s1_vh"}[metric]
-    query = f"SELECT latitude, longitude, {column}, s2_source, s2_fill_confidence FROM pixels WHERE window_id = ? AND {column} IS NOT NULL"
+    query = f"SELECT latitude, longitude, {column}, s2_source, s2_fill_confidence, bright_flag, s1_outlier_flag FROM pixels WHERE window_id = ? AND {column} IS NOT NULL"
     params: list[Any] = [window_id]
     if metric.startswith("ND") and s2_source != "all":
         query += " AND s2_source = ?"
@@ -253,18 +316,31 @@ def get_satellite_window(window_id: str, metric: str = "NDVI", s2_source: str = 
     try:
         with sqlite3.connect(index_path) as connection:
             rows = connection.execute(query, params).fetchall()
+            quality_counts = {}
+            for flag_name, flag_column in (("bright_flag", "bright_flag"), ("s1_outlier_flag", "s1_outlier_flag")):
+                flagged, clear, missing = connection.execute(
+                    f"SELECT SUM(CASE WHEN {flag_column}=1 THEN 1 ELSE 0 END), "
+                    f"SUM(CASE WHEN {flag_column}=0 THEN 1 ELSE 0 END), "
+                    f"SUM(CASE WHEN {flag_column} IS NULL THEN 1 ELSE 0 END) "
+                    "FROM pixels WHERE window_id = ?",
+                    (window_id,),
+                ).fetchone()
+                quality_counts[flag_name] = {
+                    "flagged": int(flagged or 0), "clear": int(clear or 0), "missing": int(missing or 0),
+                }
     except sqlite3.Error as exc:
         raise SatelliteDataError(f"Could not query the satellite pixel cache: {exc}") from exc
 
     values = [row[2] for row in rows]
     source_counts: dict[str, int] = {}
     points = []
-    for latitude, longitude, value, source, confidence in rows:
+    for latitude, longitude, value, source, confidence, bright_flag, s1_outlier_flag in rows:
         key = "Sentinel-1 observation" if metric.startswith("S1_") else (source or "no_s2_value")
         source_counts[key] = source_counts.get(key, 0) + 1
         points.append({
             "latitude": latitude, "longitude": longitude, "value": value,
             "s2_source": source, "s2_fill_confidence": confidence,
+            "bright_flag": bright_flag, "s1_outlier_flag": s1_outlier_flag,
         })
     return {
         "area_id": "sekinchan_67ha",
@@ -282,7 +358,156 @@ def get_satellite_window(window_id: str, metric: str = "NDVI", s2_source: str = 
             "min": min(values) if values else None,
             "max": max(values) if values else None,
             "source_counts": source_counts,
+            "quality_flags": quality_counts,
             "window_summary": summary,
+        },
+        "points": points,
+    }
+
+
+def get_satellite_management_grid(
+    window_id: str,
+    metric: str = "NDVI",
+    s2_source: str = "all",
+    grid_size_m: int = 50,
+) -> dict[str, Any]:
+    """Summarize AOI-clipped satellite pixel centres into derived UTM grid zones."""
+    if grid_size_m not in {50, 100}:
+        raise ValueError("grid_size_m must be 50 or 100 metres")
+
+    layer = get_satellite_window(window_id, metric, s2_source)
+    points = layer["points"]
+    boundary = layer["boundary"]
+    ring = boundary["coordinates"][0]
+    try:
+        from rasterio.warp import transform
+
+        boundary_x, boundary_y = transform(
+            "EPSG:4326", "EPSG:32647",
+            [coordinate[0] for coordinate in ring],
+            [coordinate[1] for coordinate in ring],
+        )
+        point_x, point_y = transform(
+            "EPSG:4326", "EPSG:32647",
+            [point["longitude"] for point in points],
+            [point["latitude"] for point in points],
+        )
+    except (ImportError, ValueError, RuntimeError) as exc:
+        raise SatelliteDataError(f"Could not project satellite coordinates to the AOI metric grid: {exc}") from exc
+
+    origin_x = math.floor(min(boundary_x) / grid_size_m) * grid_size_m
+    origin_y = math.floor(min(boundary_y) / grid_size_m) * grid_size_m
+    groups: dict[tuple[int, int], list[tuple[float, float, float]]] = {}
+    for point, easting, northing in zip(points, point_x, point_y):
+        column = math.floor((easting - origin_x) / grid_size_m)
+        row = math.floor((northing - origin_y) / grid_size_m)
+        groups.setdefault((row, column), []).append((easting, northing, float(point["value"])))
+
+    all_values = [float(point["value"]) for point in points]
+    aoi_mean = sum(all_values) / len(all_values) if all_values else None
+    aoi_std = math.sqrt(sum((value - aoi_mean) ** 2 for value in all_values) / len(all_values)) if all_values else None
+    minimum_support = 5
+    zones = []
+    for (row, column), members in sorted(groups.items()):
+        values = [item[2] for item in members]
+        mean = sum(values) / len(values)
+        z_score = (mean - aoi_mean) / aoi_std if aoi_std and len(values) >= minimum_support else (0.0 if aoi_std == 0 and len(values) >= minimum_support else None)
+        if z_score is None:
+            relative_class = "insufficient_support"
+        elif z_score < -0.75:
+            relative_class = "below_aoi_mean"
+        elif z_score > 0.75:
+            relative_class = "above_aoi_mean"
+        else:
+            relative_class = "near_aoi_mean"
+
+        west = origin_x + column * grid_size_m
+        south = origin_y + row * grid_size_m
+        east, north = west + grid_size_m, south + grid_size_m
+        corner_x = [west, east, east, west, west]
+        corner_y = [south, south, north, north, south]
+        corner_lon, corner_lat = transform("EPSG:32647", "EPSG:4326", corner_x, corner_y)
+        center_lon, center_lat = transform(
+            "EPSG:32647", "EPSG:4326",
+            [west + grid_size_m / 2], [south + grid_size_m / 2],
+        )
+        zones.append({
+            "zone_id": f"MG-r{row:02d}-c{column:02d}",
+            "row": row,
+            "column": column,
+            "center": {"latitude": center_lat[0], "longitude": center_lon[0]},
+            "corners": [{"latitude": lat, "longitude": lon} for lon, lat in zip(corner_lon, corner_lat)],
+            "pixel_count": len(values),
+            "mean": mean,
+            "min": min(values),
+            "max": max(values),
+            "relative_z_score": z_score,
+            "relative_class": relative_class,
+        })
+
+    class_counts = {key: sum(zone["relative_class"] == key for zone in zones) for key in (
+        "below_aoi_mean", "near_aoi_mean", "above_aoi_mean", "insufficient_support",
+    )}
+    return {
+        "area_id": layer["area_id"],
+        "evidence_class": layer["evidence_class"],
+        "source": "PaddyVision v3 merged Sentinel-1/2 pixel panel",
+        "window_id": layer["window_id"],
+        "window_start": layer["window_start"],
+        "window_end": layer["window_end"],
+        "metric": layer["metric"],
+        "unit": layer["unit"],
+        "s2_source_filter": layer["s2_source_filter"],
+        "crs": "EPSG:32647",
+        "grid_size_m": grid_size_m,
+        "minimum_pixels_for_screening": minimum_support,
+        "method": "AOI point-in-polygon-clipped source pixel centres are assigned to a stable 50/100 m UTM grid; zone means are compared with the selected window AOI mean using population standard deviation.",
+        "interpretation": "Relative satellite-metric screening only. Zones are derived grid cells, not cadastral plots, crop-health diagnoses, prescriptions, yield estimates, or field measurements.",
+        "aoi_pixel_count": len(all_values),
+        "aoi_mean": aoi_mean,
+        "aoi_standard_deviation": aoi_std,
+        "zone_count": len(zones),
+        "class_counts": class_counts,
+        "boundary": boundary,
+        "zones": zones,
+    }
+
+
+def get_satellite_static_layer(layer: str) -> dict[str, Any]:
+    """Return an AOI-clipped static layer stored once per panel coordinate."""
+    layer = layer.strip().lower()
+    if layer not in _STATIC_LAYERS:
+        raise ValueError(f"layer must be one of {', '.join(sorted(_STATIC_LAYERS))}")
+    index_path = _ensure_index()
+    metadata = _STATIC_LAYERS[layer]
+    try:
+        with sqlite3.connect(index_path) as connection:
+            rows = connection.execute(
+                f"SELECT latitude, longitude, {layer} FROM static_pixels "
+                f"WHERE {layer} IS NOT NULL ORDER BY latitude, longitude"
+            ).fetchall()
+    except sqlite3.Error as exc:
+        raise SatelliteDataError(f"Could not query the static satellite layer: {exc}") from exc
+    values = [row[2] for row in rows]
+    catalogue = get_satellite_catalogue()
+    points = [{"latitude": lat, "longitude": lon, "value": value} for lat, lon, value in rows]
+    return {
+        "area_id": "sekinchan_67ha",
+        "layer_kind": "satellite_static",
+        "metric": layer,
+        "label": metadata["label"],
+        "unit": metadata["unit"],
+        "source": "PaddyVision v3 merged satellite package; static CSV panel fields",
+        "evidence_class": "LOCAL_REMOTE_SENSING",
+        "source_resolution_m_approx": metadata["source_resolution_m_approx"],
+        "scale_note": metadata["scale_note"],
+        "boundary": catalogue["boundary"],
+        "cell_size_m": {"width": 9.7, "height": 9.7},
+        "summary": {
+            "pixel_count": len(points),
+            "mean": sum(values) / len(values) if values else None,
+            "min": min(values) if values else None,
+            "max": max(values) if values else None,
         },
         "points": points,
     }

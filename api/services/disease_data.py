@@ -4,6 +4,7 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
+import api.config  # Load project-local .env before reading dataset settings.
 from api.services.satellite_data import SatelliteDataError
 
 

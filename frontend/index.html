@@ -762,6 +762,58 @@
       @media(max-width:640px){.comparison-guide{grid-template-columns:1fr}.satellite-difference-controls{align-items:stretch;flex-direction:column}.satellite-difference-controls select{width:100%}#satellite-difference-map{height:340px}.satellite-difference-summary{grid-template-columns:1fr}}
       @media(max-width:640px){.satellite-comparison{padding:11px}.satellite-comparison-head{flex-direction:column}#satellite-comparison-chart{min-height:300px}}
       @media(max-width:640px){.satellite-controls{grid-template-columns:1fr}.satellite-head{flex-direction:column}#satellite-map{height:470px}.satellite-foot{flex-direction:column}}
+      .twin-cell-inspector{position:absolute;left:12px;bottom:12px;z-index:6;width:min(310px,calc(100% - 24px));max-height:48%;overflow:auto;padding:10px 12px;border:1px solid #ffffff38;border-radius:10px;background:#08130ff0;color:#eaf4e7;backdrop-filter:blur(7px);box-shadow:0 8px 28px #0008;pointer-events:auto}
+      .twin-cell-inspector[hidden]{display:none}
+      .twin-cell-inspector-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+      .twin-cell-inspector-head strong{font-size:10px}
+      .twin-cell-inspector-clear{border:1px solid #ffffff30;border-radius:6px;background:#16231b;color:#dfeadd;padding:4px 7px;font:inherit;font-size:8px;cursor:pointer}
+      .twin-cell-inspector-status{margin:6px 0 0;color:#b8c5b9;font-size:8px;line-height:1.45}
+      .twin-cell-inspector-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}
+      .twin-cell-inspector-grid>div{min-width:0;padding:7px;border:1px solid #ffffff16;border-radius:7px;background:#0c1912}
+      .twin-cell-inspector-grid small{display:block;margin-bottom:3px;color:#aebdb0;font-size:7px;text-transform:uppercase;letter-spacing:.04em}
+      .twin-cell-inspector-grid strong{display:block;overflow-wrap:anywhere;color:#eaf4e7;font-size:9px;line-height:1.4;font-variant-numeric:tabular-nums}
+      @media(max-width:520px){.twin-cell-inspector{width:min(280px,calc(100% - 24px));max-height:40%}.twin-cell-inspector-grid{gap:5px}}
+      .management-grid-panel{margin-top:16px;padding:16px;border:1px solid var(--line);border-radius:12px;background:#0c1712}
+      .management-grid-panel[hidden]{display:none}
+      .management-grid-enable{display:flex;align-items:center;gap:7px;margin-top:12px;color:#c6d5c7;font-size:11px;cursor:pointer}
+      .management-grid-enable input{accent-color:#a5dd69}
+      .management-grid-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+      .management-grid-head h3{margin:0;font-size:16px;color:#e7efe5}
+      .management-grid-head p{margin:5px 0 0;color:#b4c2b6;font-size:11px;line-height:1.5}
+      .management-grid-controls{display:flex;align-items:end;gap:9px;margin:12px 0}
+      .management-grid-controls label{display:grid;gap:4px;color:#bdc9bf;font-size:10px}
+      .management-grid-controls select{min-height:34px;border:1px solid #405746;border-radius:7px;background:#09140f;color:#e7efe5;padding:6px;font:inherit}
+      .management-grid-wrap{position:relative;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#08110d}
+      #satellite-management-grid-map{display:block;width:100%;height:380px}
+      .management-grid-legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;color:#c4d0c5;font-size:10px}
+      .management-grid-legend span{display:inline-flex;align-items:center;gap:5px}
+      .management-grid-legend i{width:11px;height:11px;border-radius:3px}
+      .management-grid-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:10px}
+      .management-grid-stats div{padding:9px;border:1px solid #ffffff18;border-radius:8px;background:#101e16}
+      .management-grid-stats small{display:block;color:#aebdb0;font-size:9px}
+      .management-grid-stats strong{display:block;margin-top:4px;color:#eaf4e7;font-size:13px;font-variant-numeric:tabular-nums}
+      .management-grid-status,.management-grid-note{color:#b4c2b6;font-size:10px;line-height:1.5}
+      @media(max-width:640px){.management-grid-head{flex-direction:column}.management-grid-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.management-grid-controls{align-items:stretch;flex-direction:column}#satellite-management-grid-map{height:300px}}
+      .external-uav-lab{margin:20px 0;padding:18px;border:1px solid #536c59;border-radius:14px;background:linear-gradient(145deg,#111f17,#0b1510)}
+      .external-uav-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+      .external-uav-head h2{margin:0;color:#e7efe5;font-size:20px}
+      .external-uav-head p,.external-uav-note{color:#b4c2b6;font-size:11px;line-height:1.55}
+      .external-uav-controls{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:12px 0}
+      .external-uav-controls input[type=file]{max-width:100%;color:#c6d5c7;font-size:11px}
+      .external-uav-files{color:#b4c2b6;font-size:10px;line-height:1.5;overflow-wrap:anywhere}
+      .external-uav-status{color:#d3e1d4;font-size:11px;line-height:1.5}
+      .external-uav-results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px}
+      .external-uav-results[hidden]{display:none}
+      .external-uav-result{min-width:0;padding:11px;border:1px solid #ffffff20;border-radius:10px;background:#0a130f}
+      .external-uav-result h3{margin:0 0 8px;color:#e4eddf;font-size:13px}
+      .external-uav-result img{display:block;width:100%;height:220px;object-fit:contain;border-radius:7px;background:#08110d}
+      .external-uav-result p{margin:8px 0 0;color:#c2d0c3;font-size:9px;line-height:1.5;font-variant-numeric:tabular-nums}
+      .external-uav-index-legend{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:7px;margin-top:7px;color:#b9c7ba;font-size:8px}
+      .external-uav-index-legend i{height:8px;border-radius:5px;background:linear-gradient(90deg,#704637,#dab766,#e1deaa,#71ba6a,#1d703f)}
+      @media(max-width:760px){.external-uav-results{grid-template-columns:1fr}.external-uav-head{flex-direction:column}.external-uav-result img{height:280px}}
+      .twin-mission{grid-column:1/-1;padding:9px;border:1px solid #ffffff20;border-radius:8px;background:#08120de0;color:#e0e9df}.twin-mission-heading{display:flex;justify-content:space-between;gap:8px;font-size:10px}.twin-mission-heading span{color:#edcc7b;font-size:8px;letter-spacing:.08em}.twin-mission p{margin:6px 0;color:#b9c8bb;font-size:9px;line-height:1.4}.twin-mission-inputs{display:grid;grid-template-columns:1fr 1fr;gap:6px}.twin-mission-inputs label{display:grid;gap:3px;color:#cbd7cb;font-size:8px}.twin-mission-inputs input{width:100%;box-sizing:border-box;min-height:28px;border:1px solid #405746;border-radius:6px;background:#09140f;color:#e7efe5;padding:4px;font:inherit;font-size:9px}.twin-mission-actions{display:flex;gap:7px;margin-top:7px}.twin-mission-actions button{border:1px solid #71866b;border-radius:6px;background:#263a2a;color:#eaf4e7;padding:6px 9px;font:inherit;font-size:9px;cursor:pointer}.twin-mission-actions button:disabled{opacity:.45;cursor:default}
+      .seg-history{margin-top:12px;padding:10px;border:1px solid #ffffff1a;border-radius:8px;background:#09120de0;color:#e0e9df}.seg-history>div{display:flex;justify-content:space-between;align-items:center;font-size:10px}.seg-history button{border:1px solid #71866b;border-radius:6px;background:#263a2a;color:#eaf4e7;padding:5px 8px;font:inherit;font-size:9px;cursor:pointer}.seg-history p,.seg-history li{color:#b9c8bb;font-size:9px;line-height:1.4}.seg-history ul{margin:6px 0 0;padding-left:16px}.seg-history li+li{margin-top:4px}
+      .field-agent{margin:0 0 18px;padding:16px 18px;border:1px solid #496751;border-radius:var(--radius);background:linear-gradient(145deg,#14231b,#0d1712);color:#e7efe5}.field-agent-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.field-agent h2{font-size:16px;margin:0}.field-agent p{font-size:10px;color:var(--muted);line-height:1.5;margin:5px 0}.field-agent form{display:grid;gap:7px;margin-top:12px}.field-agent form>label{font-size:10px;color:#cbd7cb}.field-agent textarea{min-height:70px;resize:vertical;border:1px solid #405746;border-radius:7px;background:#09140f;color:#e7efe5;padding:9px;font:inherit;font-size:11px}.field-agent button{justify-self:start;border:1px solid #71866b;border-radius:7px;background:#263a2a;color:#eaf4e7;padding:7px 10px;font:inherit;font-size:10px;cursor:pointer}.field-agent button:disabled{opacity:.55;cursor:wait}.field-agent-examples{display:flex;gap:6px;flex-wrap:wrap}.field-agent .field-agent-examples button{padding:5px 8px;font-size:9px;background:#101d15}.field-agent-result{margin-top:12px;padding:10px;border-radius:8px;background:#09120d;border:1px solid #ffffff16;font-size:11px;line-height:1.55}.field-agent-result p{margin:0}.field-agent-result[data-status="refused"]{border-color:#9b7045}.field-agent-citations{display:grid;gap:6px;margin-top:8px}.field-agent-citation{padding:8px;border:1px solid #ffffff16;border-radius:7px;background:#09120d;font-size:9px;line-height:1.45}.field-agent-citation strong,.field-agent-citation span,.field-agent-citation small{display:block}.field-agent-citation span{margin-top:3px;color:#c4d5c5}.field-agent-citation small{margin-top:3px;color:#aebdb0}.field-agent-uncertainty{margin:7px 0 0;padding-left:17px;color:#c5d0c3;font-size:9px;line-height:1.5}.field-agent-uncertainty:empty{display:none}
     </style>
   </head>
   <body>
@@ -809,7 +861,7 @@
         </div>
         <div class="satellite-controls">
           <label for="satellite-window-select">Ten-day window<select id="satellite-window-select"><option value="">Loading satellite dates…</option></select></label>
-          <label for="satellite-metric">Layer<select id="satellite-metric"><option value="NDVI">NDVI · vegetation index</option><option value="NDMI">NDMI · moisture index</option><option value="NDWI">NDWI · water index</option><option value="S1_VV">Sentinel-1 VV · dB</option><option value="S1_VH">Sentinel-1 VH · dB</option></select></label>
+          <label for="satellite-metric">Layer<select id="satellite-metric"><optgroup label="Time-window observations"><option value="NDVI">NDVI · vegetation index</option><option value="NDMI">NDMI · moisture index</option><option value="NDWI">NDWI · water index</option><option value="S1_VV">Sentinel-1 VV · dB</option><option value="S1_VH">Sentinel-1 VH · dB</option></optgroup><optgroup label="Static satellite context"><option value="elevation_m">Elevation · m · coarse ~30 m source</option><option value="gsw_occurrence">GSW occurrence · source values</option><option value="gsw_seasonality">GSW seasonality · source values</option></optgroup></select></label>
           <label for="satellite-source">Sentinel-2 source<select id="satellite-source"><option value="all">Real + monthly fill</option><option value="v3_10day">Real 10-day only</option><option value="v2_monthly_fill">Monthly fill only</option></select></label>
         </div>
         <div class="satellite-timeline"><label for="satellite-timeline-slider">Time window</label><output id="satellite-window-label" for="satellite-timeline-slider">—</output><input id="satellite-timeline-slider" type="range" min="0" max="0" value="0" step="1" disabled aria-label="Move through the satellite time series"></div>
@@ -817,6 +869,17 @@
         <div class="satellite-context" aria-live="polite"><div><small>Calendar-estimated stage</small><strong id="satellite-context-stage">Loading reference…</strong></div><div><small>Mean temperature</small><strong id="satellite-context-temp">—</strong></div><div><small>Rain total</small><strong id="satellite-context-rain">—</strong></div><div><small>Mean daily max wind</small><strong id="satellite-context-wind">—</strong></div><p id="satellite-context-source">Historical weather · Open-Meteo regional grid; crop stage is a recurring monthly reference, not a verified field date.</p></div>
         <div class="satellite-map-wrap"><canvas id="satellite-map" role="img" aria-label="Satellite index map of the Sekinchan study boundary"></canvas><div class="satellite-map-legend"><strong id="satellite-legend-title">NDVI · unitless</strong><div id="satellite-legend-gradient"></div><div class="satellite-legend-range"><span id="satellite-legend-min">−0.2</span><span id="satellite-legend-max">0.9</span></div></div></div>
         <div class="satellite-foot"><span id="satellite-source-note">Source, pixel count, and fill status will appear here.</span><span>Supplied GeoJSON boundary · 10 m cells · field-aligned view; north arrow shown.</span></div>
+        <label class="management-grid-enable"><input type="checkbox" id="management-grid-toggle"> Show relative management-grid screening</label>
+        <section class="management-grid-panel" id="management-grid-panel" hidden aria-labelledby="management-grid-title">
+          <div class="management-grid-head"><div><h3 id="management-grid-title">Relative management-grid screening</h3><p>AOI-clipped Sentinel pixel centres grouped into derived 50 m or 100 m EPSG:32647 grid zones. Colours compare each zone mean with the selected window’s AOI mean.</p></div><span class="badge">RELATIVE SCREENING · NOT PARCELS</span></div>
+          <div class="management-grid-controls"><label for="management-grid-size">Derived grid size<select id="management-grid-size"><option value="50" selected>50 m</option><option value="100">100 m</option></select></label><button type="button" class="secondary" id="management-grid-refresh">Refresh screening</button></div>
+          <div class="management-grid-wrap"><canvas id="satellite-management-grid-map" role="img" aria-label="Relative satellite metric screening across derived grid zones within the Sekinchan study boundary"></canvas></div>
+          <div class="management-grid-legend" aria-label="Relative grid screening legend"><span><i style="background:#d78368"></i>Below AOI mean</span><span><i style="background:#d9d27c"></i>Near AOI mean</span><span><i style="background:#76bf8a"></i>Above AOI mean</span><span><i style="background:#78867c"></i>Insufficient pixels</span></div>
+          <div class="management-grid-stats" aria-live="polite"><div><small>Derived zones</small><strong id="management-grid-zone-count">—</strong></div><div><small>Below AOI mean</small><strong id="management-grid-below-count">—</strong></div><div><small>Near AOI mean</small><strong id="management-grid-near-count">—</strong></div><div><small>Above AOI mean</small><strong id="management-grid-above-count">—</strong></div></div>
+          <p id="management-grid-zone-detail" class="management-grid-status">Hover over a zone to inspect its mean, valid pixel count, and relative score.</p>
+          <p id="management-grid-status" class="management-grid-status" role="status" aria-live="polite">Enable relative grid screening to calculate zone summaries for the selected satellite window.</p>
+          <p class="management-grid-note">Each source pixel centre is assigned once to a stable projected grid cell; zone averages use only valid, AOI-clipped pixel centres. Screening uses zone mean minus AOI mean in population-standard-deviation units; zones with fewer than five values are not classified. These are derived analysis cells, not cadastral plots, field-health diagnoses, yield estimates, or prescriptions. Sentinel-2 fill provenance follows the selected source filter.</p>
+        </section>
         <section class="satellite-comparison" aria-labelledby="satellite-comparison-title">
           <div class="satellite-comparison-head"><div><h3 id="satellite-comparison-title">Three-year field comparison · NDVI</h3><p>Calendar-aligned ten-day periods for 2023, 2024 and 2025. Each satellite window is assigned to the calendar period it overlaps most; actual dates and available pixel counts are retained.</p></div><span class="badge">AOI · 66.878 ha</span></div>
           <ol class="comparison-guide" aria-label="Three-year comparison walkthrough"><li>Read the annual NDVI lines by matching month and ten-day period.</li><li>Choose a period below to inspect where direct NDVI changed on the field.</li><li>Check actual window dates and paired-pixel coverage before interpreting it.</li></ol>
@@ -830,6 +893,18 @@
           <p id="satellite-difference-status" role="status" aria-live="polite">Choose a calendar period to load its paired-pixel difference map.</p>
           <p class="satellite-difference-note">Only grid cells with direct Sentinel-2 NDVI in both selected windows are compared; monthly fills and unmatched pixels are excluded. The symmetric colour scale uses the 95th percentile, so larger outliers saturate at the legend bounds. Red indicates lower NDVI in 2025, green higher NDVI, and neutral similar values. This describes satellite greenness change only—not yield, disease, a field diagnosis, or a weather-caused effect.</p>
         </section>
+      </section>
+      <section class="external-uav-lab" aria-labelledby="external-uav-title">
+        <div class="external-uav-head"><div><h2 id="external-uav-title">External UAV multispectral index lab</h2><p>Process one aligned RiceUAS plot: select its five single-band TIFFs named blue, green, red, red_edge, and nir. Example test sample: <code>Images/Test/05-27-2022/31760</code> in the local RiceUAS folder. Choose all bands from the same plot folder. Results stay in this external image workspace.</p></div><span class="badge">EXTERNAL MODEL DATA · NOT SEKINCHAN</span></div>
+        <div class="external-uav-controls"><input id="external-uav-files" type="file" accept=".tif,.tiff,image/tiff" multiple aria-label="Select blue, green, red, red-edge, and near-infrared TIFF band files"><button id="external-uav-calculate" type="button" class="secondary" disabled>Calculate NDVI · NDRE · GNDVI</button></div>
+        <p id="external-uav-files-status" class="external-uav-files">Choose all five band TIFFs from the same date and plot folder. Files are processed in memory and are not saved by this feature.</p>
+        <p id="external-uav-status" class="external-uav-status" role="status" aria-live="polite">Waiting for five aligned TIFF band files.</p>
+        <div id="external-uav-results" class="external-uav-results" hidden>
+          <article class="external-uav-result"><h3>NDVI · red and NIR</h3><img id="external-uav-ndvi-image" alt="External UAV NDVI preview; transparent pixels represent nodata"><div class="external-uav-index-legend"><span>−1</span><i></i><span>+1</span></div><p id="external-uav-ndvi-stats">—</p></article>
+          <article class="external-uav-result"><h3>NDRE · red edge and NIR</h3><img id="external-uav-ndre-image" alt="External UAV NDRE preview; transparent pixels represent nodata"><div class="external-uav-index-legend"><span>−1</span><i></i><span>+1</span></div><p id="external-uav-ndre-stats">—</p></article>
+          <article class="external-uav-result"><h3>GNDVI · green and NIR</h3><img id="external-uav-gndvi-image" alt="External UAV GNDVI preview; transparent pixels represent nodata"><div class="external-uav-index-legend"><span>−1</span><i></i><span>+1</span></div><p id="external-uav-gndvi-stats">—</p></article>
+        </div>
+        <p class="external-uav-note">Formulas: NDVI=(NIR−Red)/(NIR+Red), NDRE=(NIR−RedEdge)/(NIR+RedEdge), GNDVI=(NIR−Green)/(NIR+Green). The service checks band dimensions, CRS, and transforms; nodata stays transparent. It cannot prove the files share the same plot/date, so select the five files from one folder. Stored values are used as supplied because reflectance calibration is unverified. These previews are exploratory indices—not calibrated thresholds, disease diagnoses, yield outputs, or a georeferenced Sekinchan layer.</p>
       </section>
       <div class="twin-dashboard">
         <section class="digital-twin-section twin-visual" aria-labelledby="digital-twin-title">
@@ -845,7 +920,18 @@
             <div class="wind-control"><label><input id="wind-toggle" type="checkbox" checked> Wind animation</label></div>
             <button class="secondary camera-reset" id="reset-camera" type="button">Reset camera view</button>
           </div>
-          <div class="twin-stage"><div id="digital-twin-container"><div class="digital-twin-loading">Initializing Digital Twin…</div></div>            <div class="twin-layer-controls twin-screen-controls is-collapsed" id="twin-overlay-controls" aria-label="Select the data layer shown over the 3D field">
+          <div class="twin-stage"><div id="digital-twin-container"><div class="digital-twin-loading">Initializing Digital Twin…</div></div><aside class="twin-cell-inspector" id="twin-cell-inspector" aria-labelledby="twin-cell-inspector-title" aria-live="polite">
+              <div class="twin-cell-inspector-head"><strong id="twin-cell-inspector-title">3D Cell Inspector</strong><button class="twin-cell-inspector-clear" id="twin-cell-inspector-clear" type="button">Clear</button></div>
+              <p class="twin-cell-inspector-status" id="twin-cell-inspector-status">Hover over or click a coloured satellite/soil cell to inspect it. Coordinates come from the nearest source cell.</p>
+              <div class="twin-cell-inspector-grid" id="twin-cell-inspector-grid" hidden>
+                <div><small>Cell centre · latitude, longitude</small><strong id="twin-cell-coordinates">—</strong></div>
+                <div><small>Metric · value</small><strong id="twin-cell-value">—</strong></div>
+                <div><small>Source · date/depth</small><strong id="twin-cell-source">—</strong></div>
+                <div><small>Fill confidence</small><strong id="twin-cell-fill-confidence">—</strong></div>
+                <div><small>Quality flags</small><strong id="twin-cell-quality">—</strong></div>
+                <div><small>Evidence class</small><strong id="twin-cell-evidence">—</strong></div>
+              </div>
+            </aside><div class="twin-layer-controls twin-screen-controls is-collapsed" id="twin-overlay-controls" aria-label="Select the data layer shown over the 3D field">
               <div class="twin-layer-heading"><span>3D field overlay</span><small>Choose one layer</small><button class="twin-panel-toggle" id="twin-overlay-toggle" type="button" aria-expanded="false" aria-controls="twin-overlay-controls">Expand</button></div>
               <label class="twin-layer-option"><input id="satellite-3d-toggle" type="checkbox" checked><span><strong>Satellite history</strong><small>10 m Sentinel pixels · follows selected date, metric and source</small></span></label>
               <div class="twin-soil-option">
@@ -855,6 +941,18 @@
                   <label for="soil-depth-select">Depth<select id="soil-depth-select"><option value="0-5">0–5 cm</option><option value="5-15">5–15 cm</option></select></label>
                 </div>
               </div>
+              <section class="twin-mission" aria-labelledby="twin-mission-title">
+                <div class="twin-mission-heading"><strong id="twin-mission-title">UAV mission · illustrative</strong><span>SYNTHETIC</span></div>
+                <p>Assumed camera and flight settings create a schematic route and AOI-clipped footprint. Not a flyable plan.</p>
+                <div class="twin-mission-inputs">
+                  <label>Altitude (m)<input id="mission-altitude" type="number" min="30" max="120" step="5" value="60"></label>
+                  <label>Camera FOV (°)<input id="mission-fov" type="number" min="45" max="80" step="5" value="60"></label>
+                  <label>Side overlap (%)<input id="mission-overlap" type="number" min="50" max="85" step="5" value="70"></label>
+                  <label>Speed (m/s)<input id="mission-speed" type="number" min="2" max="10" step="1" value="5"></label>
+                </div>
+                <div class="twin-mission-actions"><button id="mission-generate" type="button">Generate scenario</button><button id="mission-play" type="button" disabled>Play route</button><button id="mission-clear" type="button" disabled>Clear</button></div>
+                <p id="mission-status" role="status" aria-live="polite">Illustrative only · assumes flat ground and omits operational constraints.</p>
+              </section>
               <p class="growth-note" id="satellite-3d-status" role="status">Waiting for the selected Sekinchan satellite window…</p>
               <p class="growth-note" id="soil-3d-status" role="status">SoilGrids reference; not local lab measurements.</p>
               <div class="twin-opacity-control"><label class="twin-opacity-heading" for="twin-overlay-opacity"><span>Active overlay opacity</span><output id="twin-overlay-opacity-value" for="twin-overlay-opacity">82%</output></label><input id="twin-overlay-opacity" type="range" min="20" max="100" step="1" value="82" aria-label="Adjust active 3D satellite or soil overlay opacity"></div>
@@ -871,6 +969,12 @@
         <p class="yield-provenance" id="yield-scenario-caveat">Synthetic example values are being loaded.</p>
       </section>
       <section class="soil-reference" aria-labelledby="soil-reference-title"><div class="soil-reference-head"><div><h2 id="soil-reference-title">Sekinchan · Soil reference estimate</h2><p>SoilGrids reference value and source details for the property and depth selected in the 3D field panel.</p></div><span class="badge">REFERENCE · NOT LAB MEASURED</span></div><div class="soil-reference-value" id="soil-reference-value">Loading…</div><p id="soil-reference-detail">Loading source and resolution details…</p><p class="soil-reference-note" id="soil-reference-caveat">SoilGrids values are reference estimates. SOC and nitrogen are low confidence; do not use them for recommendations without local lab validation.</p></section>
+      <section class="field-agent" aria-labelledby="field-agent-title">
+        <div class="field-agent-head"><div><h2 id="field-agent-title">PaddyVision Field Intelligence Agent</h2><p>Ask about connected satellite, weather/calendar, and soil reference data. Read-only tools · no web browsing · no operational recommendations.</p></div><span class="badge">BOUNDED · READ-ONLY</span></div>
+        <form id="field-agent-form"><label for="field-agent-question">Question</label><textarea id="field-agent-question" maxlength="500" minlength="3" placeholder="e.g. Summarize latest NDVI and weather" required></textarea><div class="field-agent-examples"><button type="button" data-agent-example="Summarize latest NDVI and weather">Latest NDVI + weather</button><button type="button" data-agent-example="What are the soil reference clay values?">Soil clay reference</button><button type="button" data-agent-example="Should I spray for disease?">Try a refused advice request</button></div><button id="field-agent-submit" type="submit">Ask agent</button></form>
+        <div id="field-agent-result" class="field-agent-result" role="status" aria-live="polite"><p>The agent only calls approved internal read functions. Answers include their source, evidence class, and limitations.</p></div>
+        <div id="field-agent-citations" class="field-agent-citations" aria-label="Agent source citations"></div><ul id="field-agent-uncertainty" class="field-agent-uncertainty" aria-label="Agent uncertainty and limitations"></ul>
+      </section>
       <section class="water-demo" aria-labelledby="water-demo-title"><div class="water-demo-head"><div><h2 id="water-demo-title">Water & irrigation · synthetic demo</h2><p>Explore simulated water-depth observations and irrigation/drainage events. This example campaign is separate from the Sekinchan AOI, its satellite timeline, and its weather archive.</p></div><span class="badge" style="border-color:#b38b3c;color:#e4c673">SYNTHETIC · NOT FIELD DATA</span></div><label for="water-campaign-select" class="data-label">Simulated field-season</label><select id="water-campaign-select"><option>Loading demo campaigns…</option></select><div class="water-demo-chart-wrap"><canvas id="water-demo-chart" class="water-demo-chart" role="img" aria-label="Synthetic simulated water depth timeline with irrigation and drainage event markers"></canvas></div><p id="water-demo-status" role="status" aria-live="polite">Loading synthetic example…</p><p class="water-demo-meta" id="water-demo-provenance">Synthetic demo · not a real Sekinchan field record.</p></section>
       <section class="paddy-doctor" aria-labelledby="paddy-doctor-title"><div class="paddy-doctor-head"><div><h2 id="paddy-doctor-title">Paddy Doctor · external image dataset</h2><p>Training class balance from labelled image metadata. This describes the dataset, not disease prevalence in Sekinchan.</p></div><span class="badge" style="border-color:#9d625e;color:#e5a294">EXTERNAL MODEL DATA</span></div><div id="paddy-doctor-classes" class="paddy-doctor-classes" aria-live="polite">Loading class counts…</div><div class="paddy-doctor-controls"><input type="file" id="paddy-doctor-image" accept="image/*" aria-label="Choose rice-leaf image for external Paddy Doctor classifier"><button type="button" id="paddy-doctor-predict" disabled>Classify uploaded image</button><span id="paddy-doctor-prediction" aria-live="polite">External classifier waiting for a trained model.</span></div><p class="paddy-doctor-note" id="paddy-doctor-status">No Sekinchan disease classifier result or field outbreak record is connected.</p></section>
       <div class="section-head">
@@ -894,6 +998,7 @@
           <div class="mask-wrap" id="maskWrap"><strong>U-Net prediction mask</strong><div class="mask-placeholder" id="maskPlaceholder">Prediction will appear here after you choose an RGB image and run segmentation.</div><img id="maskImage"
               alt="Predicted segmentation mask" hidden><span id="maskOutputCaption">Model output · not run yet</span></div>
           <div class="result" id="segResult" role="status"></div>
+          <section class="seg-history" aria-labelledby="seg-history-title"><div><strong id="seg-history-title">Recent U-Net runs</strong><button id="seg-history-refresh" type="button">Refresh</button></div><p id="seg-history-scope">External image-model history · not Sekinchan field inspections.</p><ul id="seg-history-list" aria-live="polite"><li>Loading saved runs…</li></ul></section>
         </section>
         <p class="model-scope-note">U-Net is an external UAV image-mask demo from a different study location. Its mask is shown in the image workspace only and is not projected onto the Sekinchan field.</p>
       </main>
@@ -913,6 +1018,112 @@
       const API = { segmentation: "/predict/segmentation" };
       const $ = (id) => document.getElementById(id);
       const base = API_BASE_URL.replace(/\/$/, "");      const overlayPanel = $("twin-overlay-controls");
+      async function refreshSegmentationHistory() {
+        const list = $("seg-history-list");
+        if (!list) return;
+        list.replaceChildren();
+        const loading = document.createElement("li");
+        loading.textContent = "Loading saved runs…";
+        list.append(loading);
+        try {
+          const response = await fetch(`${base}/history/segmentation?limit=10`);
+          const data = await response.json();
+          if (!response.ok) throw new Error(data.detail || "History unavailable.");
+          $("seg-history-scope").textContent = `${data.evidence_class} · ${data.model_domain}. ${data.scope_note}`;
+          list.replaceChildren();
+          if (!data.items.length) {
+            const empty = document.createElement("li");
+            empty.textContent = "No saved runs yet. A successful U-Net prediction is recorded when database persistence is available.";
+            list.append(empty);
+            return;
+          }
+          for (const item of data.items) {
+            const entry = document.createElement("li");
+            const timestamp = item.created_at ? new Date(item.created_at).toLocaleString() : "Time unavailable";
+            entry.textContent = `Run #${item.segmentation_id} · ${item.model_name || "U-Net"} · ${timestamp}`;
+            list.append(entry);
+          }
+        } catch (error) {
+          list.replaceChildren();
+          const unavailable = document.createElement("li");
+          unavailable.textContent = error.message + " Run python -m api.setup_db after configuring PostgreSQL.";
+          list.append(unavailable);
+        }
+      }
+      $("seg-history-refresh")?.addEventListener("click", refreshSegmentationHistory);
+      void refreshSegmentationHistory();
+      document.querySelectorAll("[data-agent-example]").forEach(button => {
+        button.addEventListener("click", () => { $("field-agent-question").value = button.dataset.agentExample || ""; });
+      });
+      $("field-agent-form")?.addEventListener("submit", async event => {
+        event.preventDefault();
+        const submit = $("field-agent-submit");
+        const resultPanel = $("field-agent-result");
+        const citationsPanel = $("field-agent-citations");
+        const uncertaintyPanel = $("field-agent-uncertainty");
+        submit.disabled = true;
+        resultPanel.dataset.status = "loading";
+        resultPanel.replaceChildren(Object.assign(document.createElement("p"), { textContent: "Checking approved internal data sources…" }));
+        citationsPanel.replaceChildren();
+        uncertaintyPanel.replaceChildren();
+        try {
+          const response = await fetch(`${base}/digital-twin/agent/ask`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ question: $("field-agent-question").value })
+          });
+          const data = await response.json();
+          if (!response.ok) throw new Error(data.detail || "Agent request could not be completed.");
+          resultPanel.dataset.status = data.status;
+          resultPanel.replaceChildren(Object.assign(document.createElement("p"), { textContent: data.answer }));
+          for (const citation of data.citations || []) {
+            const card = document.createElement("div");
+            card.className = "field-agent-citation";
+            const title = document.createElement("strong");
+            title.textContent = `${citation.id} · ${citation.tool} · ${citation.evidence_class}`;
+            const source = document.createElement("span");
+            source.textContent = citation.source;
+            const detail = document.createElement("small");
+            detail.textContent = JSON.stringify(citation.detail);
+            card.append(title, source, detail);
+            citationsPanel.append(card);
+          }
+          for (const note of data.uncertainty || []) {
+            const item = document.createElement("li");
+            item.textContent = note;
+            uncertaintyPanel.append(item);
+          }
+        } catch (error) {
+          resultPanel.dataset.status = "unavailable";
+          resultPanel.replaceChildren(Object.assign(document.createElement("p"), { textContent: error.message }));
+        } finally {
+          submit.disabled = false;
+        }
+      });
+      const missionStatus = $("mission-status");
+      $("mission-generate")?.addEventListener("click", async () => {
+        const button = $("mission-generate");
+        button.disabled = true;
+        if (missionStatus) missionStatus.textContent = "Building an illustrative route from the supplied AOI boundary…";
+        const params = new URLSearchParams({
+          altitude_m: $("mission-altitude").value,
+          camera_fov_deg: $("mission-fov").value,
+          side_overlap_percent: $("mission-overlap").value,
+          cruise_speed_mps: $("mission-speed").value,
+        });
+        try {
+          const response = await fetch(`${base}/digital-twin/mission/illustrative?${params}`);
+          const result = await response.json();
+          if (!response.ok) throw new Error(result.detail || "Illustrative mission could not be generated.");
+          document.dispatchEvent(new CustomEvent("paddy-illustrative-mission", { detail: result }));
+          const summary = result.summary;
+          if (missionStatus) missionStatus.textContent = `SYNTHETIC scenario · ${summary.transect_count} transects · approx. ${summary.estimated_path_length_m.toFixed(0)} m route / ${summary.estimated_air_time_minutes.toFixed(1)} min at assumed speed. Visual scale is schematic; turns, wind, battery, obstacles, airspace and legal checks are excluded.`;
+        } catch (error) {
+          if (missionStatus) missionStatus.textContent = error.message;
+        } finally {
+          button.disabled = false;
+        }
+      });
       const studyImageDialog = $("study-image-dialog");
       document.querySelectorAll(".study-image-open").forEach((button) => {
         button.addEventListener("click", () => {
@@ -1145,14 +1356,21 @@
 
       const satelliteCanvas = $("satellite-map");
       const satelliteContext = satelliteCanvas.getContext("2d");
+      const managementGridCanvas = $("satellite-management-grid-map");
+      const managementGridContext = managementGridCanvas.getContext("2d");
+      const managementGridToggle = $("management-grid-toggle");
+      const managementGridPanel = $("management-grid-panel");
       const satelliteWindowSelect = $("satellite-window-select");
       const satelliteMetricSelect = $("satellite-metric");
       const satelliteSourceSelect = $("satellite-source");
       const satelliteSlider = $("satellite-timeline-slider");
       let satelliteCatalogue = null;
       let satelliteRequest = null;
+      let managementGridRequest = null;
       let satelliteRenderTimer = null;
       let lastSatelliteLayer = null;
+      let lastManagementGrid = null;
+      let managementGridHitRegions = [];
       let satelliteComparisonData = null;
       let lastSatelliteDifference = null;
       let satelliteDifferenceRequest = null;
@@ -1162,16 +1380,23 @@
         NDMI: { title: "NDMI · unitless", min: -1, max: 1, minLabel: "−1", maxLabel: "1", gradient: "linear-gradient(90deg,#9d5547,#e1c774,#67a7c4,#356fa1)" },
         NDWI: { title: "NDWI · unitless", min: -1, max: 1, minLabel: "−1", maxLabel: "1", gradient: "linear-gradient(90deg,#9d5547,#e1c774,#67a7c4,#356fa1)" },
         S1_VV: { title: "Sentinel-1 VV · dB", min: -30, max: 0, minLabel: "−30", maxLabel: "0", gradient: "linear-gradient(90deg,#392d69,#417da5,#78c8b5,#e6d876)" },
-        S1_VH: { title: "Sentinel-1 VH · dB", min: -35, max: -5, minLabel: "−35", maxLabel: "−5", gradient: "linear-gradient(90deg,#392d69,#417da5,#78c8b5,#e6d876)" }
+        S1_VH: { title: "Sentinel-1 VH · dB", min: -35, max: -5, minLabel: "−35", maxLabel: "−5", gradient: "linear-gradient(90deg,#392d69,#417da5,#78c8b5,#e6d876)" },
+        elevation_m: { title: "Elevation · metres", min: 1.5, max: 4, minLabel: "1.5", maxLabel: "4.0", gradient: "linear-gradient(90deg,#315f72,#71a780,#d7c77a,#9a6b43)" },
+        gsw_occurrence: { title: "GSW occurrence · source value", min: 0, max: 5, minLabel: "0", maxLabel: "5", gradient: "linear-gradient(90deg,#f0e6b2,#94c9c2,#438ca3,#234a75)" },
+        gsw_seasonality: { title: "GSW seasonality · source value", min: 0, max: 3, minLabel: "0", maxLabel: "3", gradient: "linear-gradient(90deg,#f0e6b2,#94c9c2,#438ca3,#234a75)" }
       };
 
-      function satelliteColor(value, metric) {
+      function satelliteColor(value, metric, data) {
         const style = satelliteMetricStyle[metric];
-        const t = Math.max(0, Math.min(1, (value - style.min) / (style.max - style.min)));
+        const min = data?.layer_kind === "satellite_static" ? (data.summary?.min ?? style.min) : style.min;
+        const max = data?.layer_kind === "satellite_static" ? (data.summary?.max ?? style.max) : style.max;
+        const t = Math.max(0, Math.min(1, (value - min) / (max - min || 1)));
         const palettes = metric === "NDVI"
           ? [[117,70,56],[198,139,76],[226,208,107],[141,208,104],[24,119,68]]
           : metric.startsWith("S1_")
             ? [[57,45,105],[65,125,165],[120,200,181],[230,216,118]]
+            : metric === "elevation_m"
+              ? [[49,95,114],[113,167,128],[215,199,122],[154,107,67]]
             : [[157,85,71],[225,199,116],[103,167,196],[53,111,161]];
         const scaled = t * (palettes.length - 1);
         const index = Math.min(palettes.length - 2, Math.floor(scaled));
@@ -1241,7 +1466,7 @@
         const cellSize = Math.max(1, 9.7 * scale);
         for (const point of data?.points ?? []) {
           const [x, y] = screen([point.longitude, point.latitude]);
-          ctx.fillStyle = satelliteColor(point.value, data.metric);
+          ctx.fillStyle = satelliteColor(point.value, data.metric, data);
           ctx.fillRect(x - cellSize / 2, y - cellSize / 2, cellSize + 0.35, cellSize + 0.35);
         }
         ctx.restore();
@@ -1270,21 +1495,226 @@
         if (!data?.points?.length) {
           ctx.fillStyle = "#d4ddd5";
           ctx.textAlign = "center";
-          ctx.fillText("No valid pixel values in this window", width / 2, height / 2);
+          ctx.fillText(data?.layer_kind === "satellite_static" ? "No valid values for this static layer" : "No valid pixel values in this window", width / 2, height / 2);
           ctx.textAlign = "start";
         }
         satelliteCanvas.setAttribute("aria-label", data
-          ? data.metric + " satellite layer for Sekinchan, " + data.window_id + ", " + data.points.length + " valid pixels"
+          ? data.layer_kind === "satellite_static"
+            ? data.label + " static satellite layer for Sekinchan, " + data.points.length + " valid grid locations"
+            : data.metric + " satellite layer for Sekinchan, " + data.window_id + ", " + data.points.length + " valid pixels"
           : "Satellite map of the Sekinchan study boundary");
       }
 
-      function updateSatelliteLegend(metric) {
+      function drawManagementGrid(data) {
+        if (!satelliteCatalogue || !managementGridContext) return;
+        lastManagementGrid = data;
+        const width = managementGridCanvas.clientWidth || 900;
+        const height = managementGridCanvas.clientHeight || 380;
+        const ratio = Math.min(window.devicePixelRatio || 1, 2);
+        managementGridCanvas.width = Math.round(width * ratio);
+        managementGridCanvas.height = Math.round(height * ratio);
+        const ctx = managementGridContext;
+        managementGridHitRegions = [];
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        ctx.clearRect(0, 0, width, height);
+        ctx.fillStyle = "#08110d";
+        ctx.fillRect(0, 0, width, height);
+        if (!data?.zones?.length) {
+          ctx.fillStyle = "#d4ddd5";
+          ctx.textAlign = "center";
+          ctx.font = "12px Inter, system-ui, sans-serif";
+          ctx.fillText("No valid satellite pixels for this grid screening", width / 2, height / 2);
+          ctx.textAlign = "start";
+          return;
+        }
+        const ring = data.boundary.coordinates[0];
+        const vertices = ring.slice(0, -1);
+        const meanLatitude = vertices.reduce((sum, point) => sum + point[1], 0) / vertices.length;
+        const centerLongitude = vertices.reduce((sum, point) => sum + point[0], 0) / vertices.length;
+        const cosLatitude = Math.cos(meanLatitude * Math.PI / 180);
+        const project = point => [(point[0] - centerLongitude) * 111320 * cosLatitude, (point[1] - meanLatitude) * 110574];
+        const projectedVertices = vertices.map(project);
+        let majorEdge = null;
+        for (let index = 0; index < projectedVertices.length; index++) {
+          const a = projectedVertices[index], b = projectedVertices[(index + 1) % projectedVertices.length];
+          const dx = b[0] - a[0], dy = b[1] - a[1], length = Math.hypot(dx, dy);
+          if (!majorEdge || length > majorEdge.length) majorEdge = { dx, dy, length };
+        }
+        const ux = majorEdge.dx / majorEdge.length, uy = majorEdge.dy / majorEdge.length;
+        const projectLocal = point => {
+          const [east, north] = project(point);
+          return [east * ux + north * uy, -east * uy + north * ux];
+        };
+        const projectedRing = ring.map(projectLocal);
+        const xs = projectedRing.map(point => point[0]), ys = projectedRing.map(point => point[1]);
+        const minX = Math.min(...xs), maxX = Math.max(...xs), minY = Math.min(...ys), maxY = Math.max(...ys);
+        const padding = 28;
+        const scale = Math.min((width - padding * 2) / (maxX - minX), (height - padding * 2) / (maxY - minY));
+        const originX = (width - (maxX - minX) * scale) / 2, originY = (height - (maxY - minY) * scale) / 2;
+        const screen = point => {
+          const [x, y] = projectLocal(point);
+          return [originX + (x - minX) * scale, height - originY - (y - minY) * scale];
+        };
+        const traceBoundary = () => {
+          ctx.beginPath();
+          projectedRing.forEach((point, index) => {
+            const x = originX + (point[0] - minX) * scale, y = height - originY - (point[1] - minY) * scale;
+            if (index === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+          });
+          ctx.closePath();
+        };
+        traceBoundary();
+        ctx.fillStyle = "#10251a";
+        ctx.fill();
+        ctx.save();
+        ctx.clip();
+        const fills = { below_aoi_mean: "#d78368", near_aoi_mean: "#d9d27c", above_aoi_mean: "#76bf8a", insufficient_support: "#78867c" };
+        for (const zone of data.zones) {
+          const corners = zone.corners.map(point => screen([point.longitude, point.latitude]));
+          const zonePath = new Path2D();
+          corners.forEach(([x, y], index) => { if (index === 0) zonePath.moveTo(x, y); else zonePath.lineTo(x, y); });
+          zonePath.closePath();
+          ctx.fillStyle = fills[zone.relative_class] || fills.insufficient_support;
+          ctx.globalAlpha = zone.relative_class === "insufficient_support" ? 0.42 : 0.78;
+          ctx.fill(zonePath);
+          ctx.globalAlpha = 1;
+          ctx.strokeStyle = "#15251dcc";
+          ctx.lineWidth = 1;
+          ctx.stroke(zonePath);
+          managementGridHitRegions.push({ zone, path: zonePath });
+        }
+        ctx.restore();
+        traceBoundary();
+        ctx.strokeStyle = "#e8f3d0";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.fillStyle = "#e5eee3";
+        ctx.font = "11px Inter, system-ui, sans-serif";
+        ctx.fillText(`SEKINCHAN · 66.878 ha · ${data.grid_size_m} m derived grid`, 14, 22);
+        managementGridCanvas.setAttribute("aria-label", `${data.metric} relative screening for ${data.window_start} to ${data.window_end}, ${data.zone_count} derived grid zones; not cadastral plots`);
+      }
+
+      function showManagementGridZone(event) {
+        if (!lastManagementGrid || !managementGridHitRegions.length) return;
+        const bounds = managementGridCanvas.getBoundingClientRect();
+        const x = event.clientX - bounds.left, y = event.clientY - bounds.top;
+        const region = managementGridHitRegions.find(item => managementGridContext.isPointInPath(item.path, x, y));
+        const host = $("management-grid-zone-detail");
+        if (!region) {
+          host.textContent = "Hover over a coloured zone to inspect its summary.";
+          return;
+        }
+        const zone = region.zone;
+        const score = zone.relative_z_score == null ? "insufficient pixel support" : `relative score ${Number(zone.relative_z_score).toFixed(2)} SD from AOI mean`;
+        host.textContent = `${zone.zone_id} · ${zone.pixel_count} valid pixel centres · mean ${Number(zone.mean).toFixed(3)} ${lastManagementGrid.unit} · range ${Number(zone.min).toFixed(3)} to ${Number(zone.max).toFixed(3)} · ${score}. Derived zone only.`;
+      }
+      managementGridCanvas.addEventListener("pointermove", showManagementGridZone);
+      managementGridCanvas.addEventListener("pointerleave", () => {
+        $("management-grid-zone-detail").textContent = "Hover over a coloured zone to inspect its summary.";
+      });
+
+      async function loadManagementGrid() {
+        if (!managementGridToggle.checked) return;
+        const windowId = satelliteWindowSelect.value;
+        const metric = satelliteMetricSelect.value;
+        if (["elevation_m", "gsw_occurrence", "gsw_seasonality"].includes(metric)) {
+          managementGridRequest?.abort();
+          lastManagementGrid = null;
+          drawManagementGrid(null);
+          $("management-grid-status").textContent = "Relative grid screening requires a time-window Sentinel-1 or Sentinel-2 metric; static context layers are not screened here.";
+          return;
+        }
+        managementGridRequest?.abort();
+        const controller = new AbortController();
+        managementGridRequest = controller;
+        const size = $("management-grid-size").value;
+        const query = new URLSearchParams({ metric, s2_source: satelliteSourceSelect.value, grid_size_m: size });
+        $("management-grid-status").textContent = `Calculating AOI-clipped ${size} m zones for ${windowId}…`;
+        try {
+          const response = await fetch(base + "/digital-twin/satellite/management-grid/" + encodeURIComponent(windowId) + "?" + query, { signal: controller.signal });
+          const result = await response.json();
+          if (!response.ok) throw new Error(result.detail || `Grid service returned ${response.status}.`);
+          if (managementGridRequest !== controller) return;
+          lastManagementGrid = result;
+          drawManagementGrid(result);
+          const counts = result.class_counts;
+          $("management-grid-zone-count").textContent = result.zone_count.toLocaleString();
+          $("management-grid-below-count").textContent = counts.below_aoi_mean.toLocaleString();
+          $("management-grid-near-count").textContent = counts.near_aoi_mean.toLocaleString();
+          $("management-grid-above-count").textContent = counts.above_aoi_mean.toLocaleString();
+          const meanText = result.aoi_mean == null ? "AOI mean unavailable" : `AOI mean ${Number(result.aoi_mean).toFixed(3)} ${result.unit}`;
+          const stdText = result.aoi_standard_deviation == null ? "spread unavailable" : `population SD ${Number(result.aoi_standard_deviation).toFixed(3)}`;
+          $("management-grid-status").textContent = `${result.window_start} — ${result.window_end} · ${result.metric} · ${result.aoi_pixel_count.toLocaleString()} valid AOI source pixels · ${meanText} · ${stdText} · ${counts.insufficient_support} zones below the five-pixel support minimum. Source: ${result.source}; evidence: ${result.evidence_class}.`;
+        } catch (error) {
+          if (error.name === "AbortError") return;
+          lastManagementGrid = null;
+          drawManagementGrid(null);
+          $("management-grid-zone-count").textContent = $("management-grid-below-count").textContent = $("management-grid-near-count").textContent = $("management-grid-above-count").textContent = "—";
+          $("management-grid-status").textContent = error.message;
+        }
+      }
+
+      managementGridToggle.addEventListener("change", () => {
+        managementGridPanel.hidden = !managementGridToggle.checked;
+        if (managementGridToggle.checked) loadManagementGrid();
+        else {
+          managementGridRequest?.abort();
+          lastManagementGrid = null;
+          $("management-grid-status").textContent = "Enable relative grid screening to calculate zone summaries for the selected satellite window.";
+        }
+      });
+      $("management-grid-refresh").addEventListener("click", loadManagementGrid);
+      $("management-grid-size").addEventListener("change", loadManagementGrid);
+
+      const externalUavFiles = $("external-uav-files");
+      const externalUavCalculate = $("external-uav-calculate");
+      const externalUavRequired = ["blue", "green", "red", "red_edge", "nir"];
+      externalUavFiles.addEventListener("change", () => {
+        const selected = Array.from(externalUavFiles.files || []);
+        const bands = selected.map(file => file.name.toLowerCase().replace(/\.tiff?$/, ""));
+        const complete = selected.length === 5 && new Set(bands).size === 5 && externalUavRequired.every(name => bands.includes(name));
+        externalUavCalculate.disabled = !complete;
+        $("external-uav-files-status").textContent = complete
+          ? "Ready · " + externalUavRequired.map(name => selected.find(file => file.name.toLowerCase().replace(/\.tiff?$/, "") === name).name).join(" · ")
+          : `Select exactly one file named for each band: ${externalUavRequired.map(name => name + ".tiff").join(", ")}. Current selection: ${selected.length} file(s).`;
+      });
+      externalUavCalculate.addEventListener("click", async () => {
+        const selected = Array.from(externalUavFiles.files || []);
+        const form = new FormData();
+        selected.forEach(file => form.append("files", file, file.name));
+        externalUavCalculate.disabled = true;
+        $("external-uav-status").textContent = "Checking band alignment and calculating index previews…";
+        try {
+          const response = await fetch(base + "/digital-twin/external-uav/indices", { method: "POST", body: form });
+          const result = await response.json();
+          if (!response.ok) throw new Error(result.detail || `Index service returned ${response.status}.`);
+          for (const metric of ["NDVI", "NDRE", "GNDVI"]) {
+            const item = result.results[metric];
+            const slug = metric.toLowerCase();
+            const image = $("external-uav-" + slug + "-image");
+            image.src = item.preview_png_base64 ? "data:image/png;base64," + item.preview_png_base64 : "";
+            image.hidden = !item.preview_png_base64;
+            $("external-uav-" + slug + "-stats").textContent = item.valid_pixel_count
+              ? `${item.valid_pixel_count.toLocaleString()} valid pixels · min ${item.min.toFixed(3)} · mean ${item.mean.toFixed(3)} · max ${item.max.toFixed(3)} ${item.unit}`
+              : "No valid pixels after nodata and denominator checks.";
+          }
+          $("external-uav-results").hidden = false;
+          $("external-uav-status").textContent = `${result.dimensions.width} × ${result.dimensions.height} pixels · ${result.evidence_class} · ${result.spatial_alignment} ${result.plot_identity_limit} ${result.spatial_use} ${result.reflectance_note}`;
+        } catch (error) {
+          $("external-uav-results").hidden = true;
+          $("external-uav-status").textContent = error.message;
+        } finally {
+          externalUavCalculate.disabled = false;
+        }
+      });
+
+      function updateSatelliteLegend(metric, data) {
         const style = satelliteMetricStyle[metric];
         $("satellite-legend-title").textContent = style.title;
-        $("satellite-legend-min").textContent = style.minLabel;
-        $("satellite-legend-max").textContent = style.maxLabel;
+        $("satellite-legend-min").textContent = data?.layer_kind === "satellite_static" && data.summary?.min != null ? Number(data.summary.min).toFixed(2) : style.minLabel;
+        $("satellite-legend-max").textContent = data?.layer_kind === "satellite_static" && data.summary?.max != null ? Number(data.summary.max).toFixed(2) : style.maxLabel;
         $("satellite-legend-gradient").style.background = style.gradient;
-        satelliteSourceSelect.disabled = metric.startsWith("S1_");
+        satelliteSourceSelect.disabled = metric.startsWith("S1_") || ["elevation_m", "gsw_occurrence", "gsw_seasonality"].includes(metric);
       }
 
       function drawSatelliteComparison(data) {
@@ -1743,30 +2173,53 @@
         const windowId = satelliteWindowSelect.value;
         const metric = satelliteMetricSelect.value;
         const source = satelliteSourceSelect.value;
-        const query = new URLSearchParams({ metric, s2_source: source });
-        $("satellite-status").textContent = "Loading " + metric + " pixels for " + windowId + "…";
+        const staticLayer = ["elevation_m", "gsw_occurrence", "gsw_seasonality"].includes(metric);
+        const query = staticLayer
+          ? new URLSearchParams({ layer: metric })
+          : new URLSearchParams({ metric, s2_source: source });
+        const url = staticLayer
+          ? base + "/digital-twin/satellite/static-layer?" + query
+          : base + "/digital-twin/satellite/window/" + encodeURIComponent(windowId) + "?" + query;
+        $("satellite-status").textContent = staticLayer ? "Loading static " + metric + " layer…" : "Loading " + metric + " pixels for " + windowId + "…";
         try {
-          const response = await fetch(base + "/digital-twin/satellite/window/" + encodeURIComponent(windowId) + "?" + query, { signal: satelliteRequest.signal });
+          const response = await fetch(url, { signal: satelliteRequest.signal });
           const result = await response.json();
           if (!response.ok) throw new Error(result.detail || ("Satellite service returned " + response.status + "."));
           drawSatelliteMap(result);
           window.latestSekinchanSatelliteLayer = result;
           loadSatelliteContext(windowId);
           document.dispatchEvent(new CustomEvent("paddy-satellite-layer", { detail: result }));
+          if (managementGridToggle.checked) loadManagementGrid();
           const stats = result.summary;
+          updateSatelliteLegend(metric, result);
+          if (staticLayer) {
+            const range = stats.min == null || stats.max == null ? "range unavailable" : "range " + Number(stats.min).toFixed(3) + " to " + Number(stats.max).toFixed(3) + " " + result.unit;
+            $("satellite-status").textContent = result.label + " · " + stats.pixel_count.toLocaleString() + " AOI grid locations · " + range;
+            $("satellite-source-note").textContent = result.source + " · " + result.evidence_class + " · " + result.scale_note + " This is a static context layer, not current water level or surveyed microtopography.";
+            $("satellite-data-badge").textContent = "STATIC SATELLITE CONTEXT · " + result.evidence_class;
+            return;
+          }
           const mean = stats.mean == null ? "no values" : "mean " + Number(stats.mean).toFixed(3);
           const counts = Object.entries(stats.source_counts).map(([key, value]) => key + ": " + value.toLocaleString()).join(" · ");
-          $("satellite-status").textContent = result.window_start + " to " + result.window_end + " · " + stats.pixel_count.toLocaleString() + " valid pixels · " + mean + (stats.min == null ? "" : " · range " + stats.min.toFixed(3) + " to " + stats.max.toFixed(3));
           const summary = stats.window_summary;
+          const sourceFlagConflict = summary?.usable_s2_or_s1 === false && stats.pixel_count > 0;
+          $("satellite-status").textContent = result.window_start + " to " + result.window_end + " · " + stats.pixel_count.toLocaleString() + " pixels with this metric · " + mean + (stats.min == null ? "" : " · range " + stats.min.toFixed(3) + " to " + stats.max.toFixed(3)) + (sourceFlagConflict ? " · SOURCE FLAG REVIEW: summary marks this slot unusable despite metric values" : "");
+          const quality = stats.quality_flags || {};
+          const qualityCounts = ["bright_flag", "s1_outlier_flag"].map(key => {
+            const item = quality[key];
+            return item ? key + ": flagged " + item.flagged + ", clear " + item.clear + ", missing " + item.missing : null;
+          }).filter(Boolean).join(" · ");
+          const qualityNote = qualityCounts ? "QA counts across all panel rows for this window (not only the selected metric): " + qualityCounts + ". Flag meaning: bright_flag=1 marks possible haze; s1_outlier_flag=1 follows the package threshold VV>5 dB or VH>-5 dB. Missing is not clear/zero." : "";
           $("satellite-source-note").textContent = metric.startsWith("ND")
-            ? "Sentinel-2 values · " + (counts || "no valid source rows") + " · window fill confidence: " + (summary.fill_confidence || "not applicable") + ". Monthly fills are labelled separately from real 10-day values."
-            : "Sentinel-1 radar values · " + (counts || "no valid source rows") + " · Sentinel-1 gaps are not filled in this dataset.";
-          $("satellite-data-badge").textContent = metric.startsWith("ND") ? "SENTINEL-2 · " + (source === "all" ? "MIXED SOURCES" : source === "v3_10day" ? "10-DAY ONLY" : "MONTHLY FILL") : "SENTINEL-1 RADAR";
+            ? "Sentinel-2 values · " + (counts || "no values for this source filter") + " · window fill confidence: " + (summary.fill_confidence || "not applicable") + ". Monthly fills are labelled separately from real 10-day values. " + qualityNote
+            : "Sentinel-1 radar values · " + (counts || "no values for this source filter") + " · Sentinel-1 gaps are not filled in this dataset. " + qualityNote;
+          $("satellite-data-badge").textContent = sourceFlagConflict ? "SOURCE AVAILABILITY FLAG NEEDS REVIEW" : metric.startsWith("ND") ? "SENTINEL-2 · " + (source === "all" ? "MIXED SOURCES" : source === "v3_10day" ? "10-DAY ONLY" : "MONTHLY FILL") : "SENTINEL-1 RADAR";
         } catch (error) {
           if (error.name === "AbortError") return;
           drawSatelliteMap(null);
           window.latestSekinchanSatelliteLayer = null;
           document.dispatchEvent(new CustomEvent("paddy-satellite-layer", { detail: null }));
+          if (managementGridToggle.checked) loadManagementGrid();
           $("satellite-status").textContent = error.message;
           $("satellite-source-note").textContent = "Set PADDYVISION_DATASET_ROOT to the local dataset folder if the API cannot locate the Sekinchan package.";
           $("satellite-data-badge").textContent = "DATA SERVICE UNAVAILABLE";
@@ -1782,7 +2235,11 @@
           satelliteCatalogue = result;
           satelliteWindowSelect.replaceChildren();
           result.windows.forEach(windowItem => {
-            const label = windowItem.window_start + " — " + windowItem.window_end + (windowItem.usable_s2_or_s1 ? "" : " · no satellite data");
+            const panelCount = (windowItem.n_s2_v3 || 0) + (windowItem.n_s2_fill || 0) + (windowItem.n_s1 || 0);
+            const unavailableLabel = windowItem.usable_s2_or_s1
+              ? ""
+              : panelCount > 0 ? " · source says unusable; counts present" : " · source says unusable; no counts";
+            const label = windowItem.window_start + " — " + windowItem.window_end + unavailableLabel;
             satelliteWindowSelect.add(new Option(label, windowItem.window_id));
           });
           satelliteSlider.max = String(result.windows.length - 1);
@@ -1816,7 +2273,10 @@
       });
       satelliteSourceSelect.addEventListener("change", loadSatelliteWindow);
       $("satellite-difference-period").addEventListener("change", loadSatelliteDifferenceMap);
-      window.addEventListener("resize", () => drawSatelliteMap(lastSatelliteLayer));
+      window.addEventListener("resize", () => {
+        drawSatelliteMap(lastSatelliteLayer);
+        drawManagementGrid(lastManagementGrid);
+      });
       window.addEventListener("resize", () => {
         if (satelliteComparisonData) drawSatelliteDifferenceMap(lastSatelliteDifference);
       });
@@ -1950,6 +2410,7 @@
             const persistenceNote = persistence === "failed" ?
               " The mask was generated, but its history could not be saved to the database." : "";
             showResult(result, "Weedy-rice mask: " + coverage.toFixed(1) + "% of pixels marked in the model output. This is image-mask coverage, not disease status or field-area percentage." + persistenceNote);
+            void refreshSegmentationHistory();
           } else {
             const data = type.includes("json") ? await response.json() : {
               response: await response.text()

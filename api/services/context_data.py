@@ -4,6 +4,7 @@ from datetime import date, timedelta
 from pathlib import Path
 from typing import Any
 
+import api.config  # Load project-local .env before reading dataset settings.
 from api.services.satellite_data import SatelliteDataError, get_satellite_catalogue
 
 

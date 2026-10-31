@@ -1,0 +1,12 @@
+# Minimal API runtime dependencies derived from active API imports.
+# Install PyTorch using the official selector if a CUDA-specific build is needed.
+fastapi
+uvicorn[standard]
+python-multipart
+SQLAlchemy
+psycopg2-binary
+python-dotenv
+numpy
+Pillow
+rasterio
+torch

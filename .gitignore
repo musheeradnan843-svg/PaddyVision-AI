@@ -1,2 +1,6 @@
 /data/raw/
 /data/processed/
+.env
+.env.*
+!.env.example
+.venv-api/

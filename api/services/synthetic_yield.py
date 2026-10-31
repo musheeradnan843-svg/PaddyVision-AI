@@ -6,6 +6,7 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
+import api.config  # Load project-local .env before reading dataset settings.
 from api.services.satellite_data import SatelliteDataError, get_satellite_catalogue, get_satellite_window_statistics
 
 DATA_FILE = Path(__file__).resolve().parents[2] / "data" / "demo" / "sekinchan_yield_synthetic.csv"

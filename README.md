@@ -31,9 +31,9 @@ diagnostic system, irrigation record, or field-management recommendation tool.
 | Component | Purpose |
 |---|---|
 | Interactive dashboard | Browse study-area context, satellite time windows, weather/calendar context, soil references, synthetic yield/water examples, and image-model demos. |
-| 2D satellite views | Explore Sentinel-1/2-derived metrics, observation/fill sources, yearly comparisons, and paired-pixel differences. |
+| 2D satellite views | Explore Sentinel-1/2-derived metrics, observation/fill sources, yearly comparisons, paired-pixel differences, and AOI-clipped relative grid screening. |
 | 3D field scene | Explore an illustrative crop scene with satellite and soil-reference overlays. |
-| FastAPI service | Serves digital-twin data and the external Paddy Doctor and U-Net image demos. |
+| FastAPI service | Serves digital-twin data, the bounded read-only Field Intelligence Agent, and external Paddy Doctor/U-Net image demos. |
 | Research notebooks | Inspect datasets and reproduce exploratory/training workflows for segmentation, image classification, and historical yield experiments. |
 | Data contract | Records provenance, evidence classes, known data-quality issues, and permitted interpretation. |
 
@@ -50,11 +50,44 @@ in [`frontend/script.js`](frontend/script.js).
 - Select a satellite window and inspect NDVI, NDMI, NDWI, Sentinel-1 VV, or
   Sentinel-1 VH. Sentinel-2 source selection distinguishes direct observations
   from monthly fills.
+- Select the static `elevation_m`, `gsw_occurrence`, or `gsw_seasonality`
+  layers independently of the time window. Elevation is shown in metres from
+  an approximately 30 m source model; GSW values retain their stored scale
+  because the supplied metadata does not specify units, native resolution, or
+  time period. These
+  are AOI-clipped map/texture overlays, not current water measurements or a
+  surveyed terrain model.
+- Temporal layer responses expose `bright_flag` and `s1_outlier_flag` counts;
+  `bright_flag=1` marks possible haze and `s1_outlier_flag=1` follows the
+  package threshold (VV > 5 dB or VH > -5 dB). Missing flag values remain
+  distinct from zero. Some source summary rows mark a window unusable despite
+  nonzero S2 counts, so the dashboard surfaces those cases for review rather
+  than relabelling the source flag.
 - Compare annual NDVI summaries for 2023–2025 and view a paired-pixel
   2025-minus-2023 difference map.
+- Enable **Relative management-grid screening** to summarize selected
+  time-window satellite values in stable 50 m or 100 m EPSG:32647 zones. Hover
+  over a zone for its mean, range, valid source-pixel count, and standardized
+  difference from the selected window's AOI mean. The map is clipped to the
+  study boundary; pixel centres are assigned once, zones with fewer than five
+  values are left unclassified, and the labels describe relative metric
+  differences only. These derived cells are not cadastral plots, field-health
+  diagnoses, yield predictions, or management prescriptions.
 - Satellite and soil layers can be displayed over the 3D scene with an opacity
   control. The satellite geometry/data is separate from the decorative crop
-  meshes.
+  meshes. Hover over or click an overlay cell to inspect its nearest source
+  cell centre, value, date or depth, source/fill information, quality flags,
+  and evidence class. The inspector reverses the same local projected map
+  transform used to draw the texture; it reports the nearest supplied source
+  coordinate, not a field-surveyed location or a value interpolated at the
+  pointer. Empty raster areas remain unreported rather than being treated as
+  zero.
+- The **External UAV multispectral index lab** accepts five aligned single-band
+  TIFFs from one external plot and calculates NDVI, NDRE, and GNDVI. It checks
+  dimensions/CRS/transforms, keeps nodata transparent, and returns in-memory
+  previews plus full-resolution summaries. The RiceUAS sample is from Arkansas;
+  reflectance calibration is unverified, and these values are never projected
+  onto the Sekinchan AOI.
 
 ### Other dashboard panels
 
@@ -69,6 +102,12 @@ in [`frontend/script.js`](frontend/script.js).
   metadata.
 - **U-Net segmentation:** upload an RGB image and display a returned binary
   mask, with the percentage of mask pixels marked positive.
+- **Field Intelligence Agent:** ask for selected/latest satellite summaries,
+  regional weather/calendar context, or coarse soil references. It is a
+  deterministic read-only tool router, not an LLM; each answer cites tool,
+  source, and evidence class. It refuses local yield claims, disease diagnosis,
+  and field-action or chemical advice. Synthetic yield/water records are only
+  returned when explicitly requested as demos.
 
 The dashboard calls the API at `http://localhost:8000` by default. Serve it
 through VS Code Live Server at `http://127.0.0.1:5500` or
@@ -122,6 +161,8 @@ services in `api/services/`. The documented API includes:
 
 - Health status and PostgreSQL-backed field lookup.
 - Satellite catalogue, per-window layers, year comparison, and difference map.
+- AOI-clipped satellite summaries for derived relative grid zones.
+- External UAV NDVI/NDRE/GNDVI calculation from aligned single-band TIFFs.
 - Weather/calendar context for a satellite window.
 - Soil reference properties and spatial layers.
 - Synthetic yield outlook and synthetic water campaign browser.
@@ -214,40 +255,68 @@ source folders described in [Configuration](#configuration).
 ### Prerequisites
 
 - Windows or another Python-capable environment.
-- A Python environment with the project dependencies installed. Core runtime
-  packages include FastAPI, Uvicorn, SQLAlchemy, a PostgreSQL driver, PyTorch,
-  Pillow, NumPy, and Rasterio. Some data/notebook workflows may require
-  additional packages.
+- A Python environment compatible with the packages in `requirements.txt`.
+  That file contains the minimal API runtime dependency set; notebook training
+  and exploration may require additional packages.
 - The required model checkpoints under `models/`.
 - The local source dataset package for satellite/context endpoints.
-- PostgreSQL and the required tables for DB-backed field/history functionality.
+- PostgreSQL for DB-backed field and inference-history functionality; run the
+  explicit schema setup described below before using those features.
 - VS Code Live Server for the dashboard; internet access for the Three.js CDN.
 
-There is currently no dependency manifest, so use the prepared project
-environment or install dependencies in a project-specific virtual environment.
-Do not assume a generic `pip install` list replaces the notebook's complete
-environment.
+The checked-in manifest is intentionally limited to API imports and is not a
+lockfile: package versions are not pinned. The repository's current `.venv` is
+Python 3.14.7 and does not contain the core API packages, so its installed
+packages do not verify API compatibility. Install into a project-specific
+environment and confirm that PyTorch and Rasterio wheels are available for
+your Python version. For CUDA inference, use the matching PyTorch command from
+the official PyTorch installer; the manifest's `torch` entry alone does not
+select a CUDA build.
+
+From PowerShell at the repository root:
+
+```powershell
+py -m venv .venv-api
+.\.venv-api\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+Copy-Item .env.example .env
+```
 
 ### Configure environment variables
 
-In PowerShell, from the project root:
+Edit `.env` with your local paths and PostgreSQL URL. Environment variables
+already set in the process take precedence over `.env`:
 
-```powershell
-$env:PADDYVISION_DATASET_ROOT = 'C:\Paddyvision_AI_Dataset'
-$env:PADDYVISION_DATABASE_URL = 'postgresql://USER:PASSWORD@localhost:5432/paddyvision_db'
-# Optional: choose a different location for generated files and the SQLite cache.
-$env:PADDYVISION_RUNTIME_DIR = 'C:\PaddyVisionRuntime'
+```dotenv
+PADDYVISION_DATASET_ROOT=C:\Paddyvision_AI_Dataset
+PADDYVISION_DATABASE_URL=postgresql+psycopg2://paddyvision_user:CHANGE_ME@localhost:5432/paddyvision_db
+PADDYVISION_RUNTIME_DIR=C:\PaddyVisionRuntime
 ```
 
-Replace the example database username/password and paths with your own. Never
-commit credentials. `PADDYVISION_DATABASE_URL` defaults to
-`postgresql://postgres@localhost:5432/paddyvision_db`; set it explicitly for
-your local PostgreSQL installation.
+Replace the sample database username/password and paths with your own. Never
+commit `.env` or real credentials. `.env` is loaded by the API without
+overriding environment variables already supplied by the shell.
 
 The satellite service also checks `C:\Paddyvision_AI_Dataset` and
 `data/external/sekinchan-67ha` as fallback roots. The dataset root must contain
 the expected numbered folders; see the
 [satellite package details](#satellite-package-details).
+
+### Set up the database
+
+Create the PostgreSQL database itself first, then run the explicit, versioned
+schema setup from the repository root:
+
+```powershell
+python -m api.setup_db
+```
+
+This applies pending entries in `api/setup_db.py`, creates missing ORM tables,
+and records applied versions in `schema_migrations`. It does not drop tables
+or alter existing columns. If an existing database is missing model columns,
+the command stops with an explanation; add a new migration before changing
+that schema. Do not delete an existing database to resolve a schema mismatch.
 
 ### Start the API
 
@@ -281,15 +350,19 @@ the PostgreSQL field-record tables. `/digital-twin/fields` requires a working
 PostgreSQL connection and schema. Segmentation inference can return the mask if
 history persistence fails, but saving the image/history requires PostgreSQL;
 the API response includes `X-PaddyVision-Persistence` to indicate persistence
-status.
+status. Recent saved U-Net run metadata is available at `/history/segmentation`
+and shown below the mask workspace. This history represents external WeedyRice
+image-model runs, not Sekinchan inspections or disease observations; stored
+file paths are never returned by the history endpoint.
 
 ## Configuration
 
 | Variable | Default | Description |
 |---|---|---|
 | `PADDYVISION_DATASET_ROOT` | `C:\Paddyvision_AI_Dataset` fallback | Root of the local Sekinchan source data package. |
-| `PADDYVISION_DATABASE_URL` | `postgresql://postgres@localhost:5432/paddyvision_db` | SQLAlchemy PostgreSQL connection URL. |
+| `PADDYVISION_DATABASE_URL` | `postgresql://postgres@localhost:5432/paddyvision_db` | SQLAlchemy PostgreSQL connection URL; set in `.env` or the process environment. |
 | `PADDYVISION_RUNTIME_DIR` | `%LOCALAPPDATA%\PaddyVisionAI` on Windows | Runtime artifacts, generated images, and satellite SQLite index. |
+| `.env` file | None | Project-local configuration loaded with process environment variables taking precedence; `.env.example` is safe to copy and customize. |
 | `window.PADDYVISION_API_BASE_URL` | `http://localhost:8000` | Browser-side API origin override. Set before app script execution. |
 
 ## API reference
@@ -300,6 +373,8 @@ status.
 |---|---|---|
 | `GET` | `/health` | API status. |
 | `GET` | `/digital-twin/fields` | PostgreSQL-backed field list. |
+| `GET` | `/history/segmentation` | Optional `limit` (1–100, default 20); external U-Net run metadata only, without filesystem paths. |
+| `POST` | `/digital-twin/agent/ask` | JSON `question` (3–500 characters); bounded read-only internal summaries with source/evidence citations and uncertainty. |
 
 ### Satellite, weather, and soil
 
@@ -307,8 +382,12 @@ status.
 |---|---|---|
 | `GET` | `/digital-twin/satellite/windows` | Catalogue and study boundary. |
 | `GET` | `/digital-twin/satellite/window/{window_id}` | `metric` (default `NDVI`), `s2_source` (default `all`). |
+| `GET` | `/digital-twin/satellite/management-grid/{window_id}` | `metric`, `s2_source`, `grid_size_m` (`50` or `100`); center-assigned AOI satellite summaries and relative screening classes. |
+| `GET` | `/digital-twin/satellite/static-layer` | Required: `layer` (`elevation_m`, `gsw_occurrence`, or `gsw_seasonality`); AOI-clipped static layer. |
 | `GET` | `/digital-twin/satellite/year-comparison` | Yearly comparison data. |
 | `GET` | `/digital-twin/satellite/year-difference-map` | Required: `month`, `dekad`. |
+| `POST` | `/digital-twin/external-uav/indices` | Multipart `files`: exactly one each of `blue.tiff`, `green.tiff`, `red.tiff`, `red_edge.tiff`, and `nir.tiff` from one plot. Returns index summaries/previews as `MODELLED_EXTERNAL`; never places them on Sekinchan. |
+| `GET` | `/digital-twin/mission/illustrative` | Optional `altitude_m`, `camera_fov_deg`, `side_overlap_percent`, `cruise_speed_mps`; returns a `SYNTHETIC` AOI-clipped scenario, not a flight plan. |
 | `GET` | `/digital-twin/context/window/{window_id}` | Regional weather and crop-calendar context. |
 | `GET` | `/digital-twin/soil/reference` | Soil reference summary. |
 | `GET` | `/digital-twin/soil/spatial-layer` | `property` (default `phh2o`), `depth_cm` (default `0-5`). |
@@ -321,8 +400,13 @@ status.
 | `GET` | `/digital-twin/water/synthetic/options` | Available simulated campaigns. |
 | `GET` | `/digital-twin/water/synthetic/campaign` | Required: `field_id`, `year`, `season`. |
 | `GET` | `/digital-twin/disease/external-dataset` | External image-dataset profile. |
-| `POST` | `/predict/paddy-doctor` | Multipart image field named `file`; up to 12 MB. |
-| `POST` | `/predict/segmentation` | Multipart image field named `image`; returns PNG mask. |
+| `POST` | `/predict/paddy-doctor` | Multipart image field named `file`; image uploads are limited to 12 MiB. |
+| `POST` | `/predict/segmentation` | Multipart image field named `image`; image uploads are limited to 12 MiB and return a PNG mask. |
+
+Both image endpoints reject non-image content types and oversized uploads
+before inference. Empty or unreadable image files receive a client error;
+unexpected inference failures are logged by the API and returned without
+exposing internal exception details.
 
 The older RiceUAS yield and weather/year Random Forest models do not have
 active API endpoints.
@@ -368,3 +452,18 @@ repository review. Confirm the licensing and redistribution terms of all
 bundled imagery, external datasets, model checkpoints, and third-party
 libraries before redistribution or deployment. Cite the original providers
 when distributing derived work.
+
+## Illustrative UAV mission scenario
+
+The 3D field overlay includes an optional synthetic lawnmower-route scenario for
+the supplied Sekinchan AOI. It accepts assumed altitude, camera field of view,
+side overlap, and cruise speed, then draws AOI-clipped footprint shapes and a
+schematic route. A route marker can be played or paused. The service is exposed
+at `GET /digital-twin/mission/illustrative`.
+
+This is a visualization aid only. It assumes a flat surface, constant altitude,
+a nadir camera, and straight connectors; the displayed 3D scale is schematic.
+The time estimate is route length divided by assumed cruise speed and excludes
+turns, climb/descent, wind, battery reserve, obstacles, airspace, permissions,
+and operational checks. It is not a flyable plan or a coverage guarantee. See
+the `Illustrative UAV mission scenario (Phase 5)` data-contract entry for scope.

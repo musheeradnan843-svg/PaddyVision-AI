@@ -1,7 +1,7 @@
 import torch
 import numpy as np
 
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
 from io import BytesIO
 from uuid import uuid4
 from api.runtime_paths import get_runtime_data_dir
@@ -22,10 +22,11 @@ OUTPUT_DIR.mkdir(
 
 
 def predict_segmentation(image_bytes: bytes):
-
-    image = Image.open(
-        BytesIO(image_bytes)
-    ).convert("RGB")
+    try:
+        with Image.open(BytesIO(image_bytes)) as source:
+            image = source.convert("RGB")
+    except (UnidentifiedImageError, OSError) as exc:
+        raise ValueError("The uploaded file is not a readable image.") from exc
 
     image = image.resize(
         IMAGE_SIZE,

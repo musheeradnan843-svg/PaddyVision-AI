@@ -166,15 +166,52 @@ let satelliteLayerMesh = null;
 let currentSatelliteLayer = null;
 let soilLayerMesh = null;
 let currentSoilLayer = null;
+let missionOverlay = null;
+let missionRouteLocal = [];
+let missionSegmentLengths = [];
+let missionRouteTotal = 0;
+let missionAnimationStartedAt = 0;
+let missionAnimationPlaying = false;
 const satellite3dToggle = document.getElementById("satellite-3d-toggle");
 const satellite3dStatus = document.getElementById("satellite-3d-status");
 const soil3dToggle = document.getElementById("soil-3d-toggle");
 const soil3dStatus = document.getElementById("soil-3d-status");
 const twinLayerPill = document.getElementById("twin-layer-pill");
+const cellInspector = document.getElementById("twin-cell-inspector");
+const cellInspectorStatus = document.getElementById("twin-cell-inspector-status");
+const cellInspectorGrid = document.getElementById("twin-cell-inspector-grid");
+const cellInspectorClear = document.getElementById("twin-cell-inspector-clear");
+let inspectorPinned = false;
+const inspectorMarker = new THREE.Group();
+inspectorMarker.visible = false;
+const inspectorRing = new THREE.Mesh(
+    new THREE.RingGeometry(0.22, 0.32, 36),
+    new THREE.MeshBasicMaterial({ color: 0xffe17a, side: THREE.DoubleSide, transparent: true, opacity: 0.98, depthTest: false })
+);
+inspectorRing.rotation.x = -Math.PI / 2;
+inspectorRing.renderOrder = 30;
+inspectorMarker.add(inspectorRing);
+const inspectorCenter = new THREE.Mesh(
+    new THREE.CircleGeometry(0.095, 24),
+    new THREE.MeshBasicMaterial({ color: 0xfff5c2, side: THREE.DoubleSide, depthTest: false })
+);
+inspectorCenter.rotation.x = -Math.PI / 2;
+inspectorCenter.renderOrder = 31;
+inspectorMarker.add(inspectorCenter);
+fieldRoot.add(inspectorMarker);
 
 function setTwinLayerPill(text) {
     if (twinLayerPill) twinLayerPill.textContent = text;
 }
+
+function clearCellInspector(message = "Hover over or click a coloured satellite/soil cell to inspect it. Coordinates come from the nearest source cell.") {
+    inspectorPinned = false;
+    if (cellInspectorGrid) cellInspectorGrid.hidden = true;
+    if (cellInspectorStatus) cellInspectorStatus.textContent = message;
+    if (inspectorMarker) inspectorMarker.visible = false;
+}
+
+cellInspectorClear?.addEventListener("click", () => clearCellInspector());
 
 const twinLayerLegend = document.getElementById("twin-layer-legend");
 const twinOverlayOpacity = document.getElementById("twin-overlay-opacity");
@@ -184,7 +221,10 @@ const SATELLITE_COLOR_SCALES = {
     NDMI: { min: -1, max: 1, unit: "unitless", colors: [[157, 85, 71], [225, 199, 116], [103, 167, 196], [53, 111, 161]] },
     NDWI: { min: -1, max: 1, unit: "unitless", colors: [[157, 85, 71], [225, 199, 116], [103, 167, 196], [53, 111, 161]] },
     S1_VV: { min: -30, max: 0, unit: "dB", colors: [[57, 45, 105], [65, 125, 165], [120, 200, 181], [230, 216, 118]] },
-    S1_VH: { min: -35, max: -5, unit: "dB", colors: [[57, 45, 105], [65, 125, 165], [120, 200, 181], [230, 216, 118]] }
+    S1_VH: { min: -35, max: -5, unit: "dB", colors: [[57, 45, 105], [65, 125, 165], [120, 200, 181], [230, 216, 118]] },
+    elevation_m: { min: 1.5, max: 4, unit: "m", colors: [[49, 95, 114], [113, 167, 128], [215, 199, 122], [154, 107, 67]] },
+    gsw_occurrence: { min: 0, max: 5, unit: "source value", colors: [[240, 230, 178], [148, 201, 194], [67, 140, 163], [35, 74, 117]] },
+    gsw_seasonality: { min: 0, max: 3, unit: "source value", colors: [[240, 230, 178], [148, 201, 194], [67, 140, 163], [35, 74, 117]] }
 };
 const SOIL_COLOR_SCALE = [[64, 93, 122], [199, 181, 121], [112, 151, 91]];
 
@@ -207,8 +247,15 @@ function renderTwinSatelliteLegend(data) {
     const observedMin = data.summary?.min ?? scale.min;
     const observedMax = data.summary?.max ?? scale.max;
     const count = data.points?.length ?? 0;
-    setTwinLayerLegend(data.metric + " satellite layer", "SATELLITE · " + scale.unit, scale.min, scale.max, scale.unit, scale.colors,
-        "Observed " + Number(observedMin).toFixed(3) + " to " + Number(observedMax).toFixed(3) + "; " + count + " valid cells, " + data.window_start + " to " + data.window_end + ". Colors use the fixed display scale.");
+    const isStatic = data.layer_kind === "satellite_static";
+    const unit = data.unit || scale.unit;
+    const displayMin = isStatic ? observedMin : scale.min;
+    const displayMax = isStatic ? observedMax : scale.max;
+    const period = isStatic ? "Static layer" : data.window_start + " to " + data.window_end;
+    const detail = isStatic
+        ? data.scale_note + " " + count + " AOI grid locations; displayed range " + Number(observedMin).toFixed(3) + " to " + Number(observedMax).toFixed(3) + "."
+        : "Observed " + Number(observedMin).toFixed(3) + " to " + Number(observedMax).toFixed(3) + "; " + count + " valid cells, " + period + ". Colors use the fixed display scale.";
+    setTwinLayerLegend((data.label || data.metric) + " satellite layer", isStatic ? "STATIC SATELLITE · " + unit : "SATELLITE · " + unit, displayMin, displayMax, unit, scale.colors, detail);
 }
 
 function renderTwinSoilLegend(data) {
@@ -230,9 +277,11 @@ function applyTwinOverlayOpacity(value) {
 twinOverlayOpacity?.addEventListener("input", () => applyTwinOverlayOpacity(twinOverlayOpacity.value));
 applyTwinOverlayOpacity(twinOverlayOpacity?.value ?? 82);
 
-function satelliteRamp(value, metric) {
+function satelliteRamp(value, metric, data) {
     const scale = SATELLITE_COLOR_SCALES[metric] || SATELLITE_COLOR_SCALES.NDVI;
-    const t = THREE.MathUtils.clamp((value - scale.min) / (scale.max - scale.min), 0, 1);
+    const min = data?.layer_kind === "satellite_static" ? (data.summary?.min ?? scale.min) : scale.min;
+    const max = data?.layer_kind === "satellite_static" ? (data.summary?.max ?? scale.max) : scale.max;
+    const t = THREE.MathUtils.clamp((value - min) / (max - min || 1), 0, 1);
     const position = t * (scale.colors.length - 1);
     const index = Math.min(scale.colors.length - 2, Math.floor(position));
     const mix = position - index;
@@ -297,6 +346,30 @@ function makeSatelliteTexture(data) {
         return [padding + (x - minX) / spanX * (size - 2 * padding),
             size - padding - (y - minY) / spanY * (size - 2 * padding)];
     };
+    const projection = {
+        lonLatToLocal: point => local(point),
+        spanX,
+        spanY,
+        localToPlane: point => {
+            const u = (padding + (point[0] - minX) / spanX * (size - 2 * padding)) / size;
+            const v = (padding + (point[1] - minY) / spanY * (size - 2 * padding)) / size;
+            return [
+                (u - 0.5) * (FIELD_WIDTH - 0.12),
+                (0.5 - v) * (FIELD_DEPTH - 0.12)
+            ];
+        },
+        uvToLocal: uv => {
+            // CanvasTexture flips the canvas vertically for WebGL. Reverse the same
+            // padding/normalization used by px() to recover the map-local metres.
+            const canvasX = uv.x * size;
+            const canvasY = (1 - uv.y) * size;
+            return [
+                minX + ((canvasX - padding) / (size - 2 * padding)) * spanX,
+                minY + ((size - padding - canvasY) / (size - 2 * padding)) * spanY
+            ];
+        },
+        cellSizeMeters: data.cell_size_m ?? { width: 9.7, height: 9.7 }
+    };
 
     ctx.clearRect(0, 0, size, size);
     ctx.beginPath();
@@ -315,7 +388,7 @@ function makeSatelliteTexture(data) {
         const [x, y] = px([point.longitude, point.latitude]);
         const [r, g, b] = data.layer_kind === "soil_reference"
             ? soilRamp(point.value, data)
-            : satelliteRamp(point.value, data.metric);
+            : satelliteRamp(point.value, data.metric, data);
         ctx.fillStyle = `rgb(${r},${g},${b})`;
         ctx.fillRect(x - cellWidth / 2, y - cellHeight / 2, cellWidth + 0.5, cellHeight + 0.5);
     }
@@ -332,10 +405,170 @@ function makeSatelliteTexture(data) {
     const texture = new THREE.CanvasTexture(canvas);
     texture.colorSpace = THREE.SRGBColorSpace;
     texture.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 8);
-    return { texture, angle };
+    return { texture, angle, projection };
 }
 
+function prepareInspectorPoints(data, projection) {
+    return (data?.points ?? []).map(point => ({
+        point,
+        local: projection.lonLatToLocal([point.longitude, point.latitude])
+    }));
+}
+
+function activeInspectorTarget() {
+    if (soil3dToggle?.checked && soilLayerMesh?.visible && currentSoilLayer) {
+        return { mesh: soilLayerMesh, data: currentSoilLayer, kind: "soil_reference" };
+    }
+    if (satellite3dToggle?.checked && satelliteLayerMesh?.visible && currentSatelliteLayer) {
+        return { mesh: satelliteLayerMesh, data: currentSatelliteLayer, kind: currentSatelliteLayer.layer_kind || "satellite" };
+    }
+    return null;
+}
+
+function flagDescription(value, flag) {
+    if (value == null) return `${flag}: missing / not applicable`;
+    return `${flag}: ${Number(value) === 0 ? "0 (clear in source flag)" : Number(value) === 1 ? "1 (flagged in source)" : value}`;
+}
+
+function inspectCell(event, pinned = false) {
+    if (pinned) inspectorPinned = false;
+    const target = activeInspectorTarget();
+    if (!target) {
+        inspectorPinned = false;
+        if (cellInspectorGrid) cellInspectorGrid.hidden = true;
+        if (cellInspectorStatus) cellInspectorStatus.textContent = "Turn on the satellite history or soil reference overlay to inspect its cells.";
+        inspectorMarker.visible = false;
+        return false;
+    }
+    const bounds = renderer.domElement.getBoundingClientRect();
+    if (!bounds.width || !bounds.height) return false;
+    const pointer = new THREE.Vector2(
+        ((event.clientX - bounds.left) / bounds.width) * 2 - 1,
+        -((event.clientY - bounds.top) / bounds.height) * 2 + 1
+    );
+    const raycaster = inspectCell.raycaster || (inspectCell.raycaster = new THREE.Raycaster());
+    raycaster.setFromCamera(pointer, camera);
+    const hit = raycaster.intersectObject(target.mesh, false)[0];
+    if (!hit?.uv) {
+        if (cellInspectorGrid) cellInspectorGrid.hidden = true;
+        if (cellInspectorStatus) cellInspectorStatus.textContent = "No mapped surface under the pointer.";
+        inspectorMarker.visible = false;
+        return false;
+    }
+    const clickedLocal = target.mesh.userData.projection.uvToLocal(hit.uv);
+    const indexedPoints = target.mesh.userData.inspectorPoints || [];
+    let nearest = null;
+    for (const candidate of indexedPoints) {
+        const distance = Math.hypot(candidate.local[0] - clickedLocal[0], candidate.local[1] - clickedLocal[1]);
+        if (!nearest || distance < nearest.distance) nearest = { ...candidate, distance };
+    }
+    const cellSize = target.mesh.userData.projection.cellSizeMeters;
+    const maxDistance = Math.hypot(cellSize.width, cellSize.height) * 0.55;
+    if (!nearest || nearest.distance > maxDistance) {
+        if (cellInspectorGrid) cellInspectorGrid.hidden = true;
+        if (cellInspectorStatus) cellInspectorStatus.textContent = "No valid source cell within this pixel footprint; this location may be nodata or outside mapped coverage.";
+        inspectorMarker.visible = false;
+        return false;
+    }
+
+    const point = nearest.point;
+    const data = target.data;
+    const soilReference = target.kind === "soil_reference";
+    const isStatic = data.layer_kind === "satellite_static";
+    const metric = soilReference ? `${data.property} · ${data.depth_cm} cm` : (data.metric || data.label || "Satellite layer");
+    const numericValue = Number(point.value);
+    const valueText = `${metric} · ${Number.isFinite(numericValue) ? numericValue.toFixed(4) : "unavailable"} ${data.unit || ""}`.trim();
+    let sourceText;
+    let fillText;
+    let qualityText;
+    if (soilReference) {
+        sourceText = `${data.source} · approx. ${data.resolution_m_approx} m source cell`;
+        fillText = "Not applicable · soil reference raster";
+        qualityText = `${data.confidence || "Confidence not specified"} · coarse reference cell; not a local lab result`;
+    } else if (isStatic) {
+        sourceText = `${data.source} · static layer; period not documented`;
+        fillText = "Not applicable · static layer";
+        qualityText = data.scale_note || "Static source values; consult the source scale note.";
+    } else {
+        const dateRange = `${data.window_start} to ${data.window_end}`;
+        if (String(data.metric).startsWith("S1_")) {
+            sourceText = `Sentinel-1 observation · ${dateRange} · radar gaps are not filled`;
+            fillText = "Not applicable · Sentinel-1 is not monthly-filled";
+        } else {
+            const source = point.s2_source;
+            const sourceLabel = source === "v3_10day"
+                ? "v3_10day · direct 10-day Sentinel-2"
+                : source === "v2_monthly_fill"
+                    ? "v2_monthly_fill · same-month value reused in a ten-day slot"
+                    : "Sentinel-2 source unavailable";
+            sourceText = `${sourceLabel} · ${dateRange}`;
+            fillText = source === "v2_monthly_fill"
+                ? `Monthly-fill confidence: ${point.s2_fill_confidence || "not specified"}`
+                : "No monthly fill for this selected cell";
+        }
+        qualityText = `${flagDescription(point.bright_flag, "bright_flag")} · ${flagDescription(point.s1_outlier_flag, "s1_outlier_flag")}`;
+        if (data.summary?.window_summary?.usable_s2_or_s1 === false) {
+            qualityText += " · source window summary marks this slot unusable; inspect the availability warning";
+        }
+    }
+
+    const setValue = (id, value) => {
+        const element = document.getElementById(id);
+        if (element) element.textContent = value;
+    };
+    setValue("twin-cell-coordinates", `${Number(point.latitude).toFixed(6)}, ${Number(point.longitude).toFixed(6)} · EPSG:4326`);
+    setValue("twin-cell-value", valueText);
+    setValue("twin-cell-source", sourceText);
+    setValue("twin-cell-fill-confidence", fillText);
+    setValue("twin-cell-quality", qualityText);
+    setValue("twin-cell-evidence", data.evidence_class || "Evidence class unavailable");
+    if (cellInspectorGrid) cellInspectorGrid.hidden = false;
+    if (cellInspectorStatus) {
+        cellInspectorStatus.textContent = `Nearest source-cell centre · ${nearest.distance.toFixed(1)} m from the picked surface point${pinned ? " · pinned by click" : " · preview"}.`;
+    }
+
+    const projection = target.mesh.userData.projection;
+    const markerPlanePosition = projection.localToPlane(nearest.local);
+    inspectorMarker.position.set(markerPlanePosition[0], target.mesh.position.y + 0.045, markerPlanePosition[1]);
+    const paddedWidth = FIELD_WIDTH - 0.12;
+    const paddedDepth = FIELD_DEPTH - 0.12;
+    const mapFraction = (1024 - 16) / 1024;
+    const worldCellWidth = (cellSize.width / projection.spanX) * paddedWidth * mapFraction;
+    const worldCellDepth = (cellSize.height / projection.spanY) * paddedDepth * mapFraction;
+    const markerRadius = Math.max(0.22, Math.min(0.9, Math.min(worldCellWidth, worldCellDepth) * 0.42));
+    inspectorMarker.scale.setScalar(markerRadius / 0.32);
+    inspectorMarker.visible = true;
+    inspectorPinned = pinned;
+    return true;
+}
+
+let inspectorPointerDown = null;
+renderer.domElement.addEventListener("pointerdown", event => {
+    if (event.button !== 0) return;
+    inspectorPointerDown = { id: event.pointerId, x: event.clientX, y: event.clientY, dragged: false };
+});
+renderer.domElement.addEventListener("pointermove", event => {
+    if (inspectorPointerDown?.id === event.pointerId) {
+        const deltaX = event.clientX - inspectorPointerDown.x;
+        const deltaY = event.clientY - inspectorPointerDown.y;
+        if (Math.hypot(deltaX, deltaY) > 5) inspectorPointerDown.dragged = true;
+        return;
+    }
+    if (event.pointerType === "mouse" && !inspectorPinned) inspectCell(event, false);
+});
+renderer.domElement.addEventListener("pointerup", event => {
+    if (!inspectorPointerDown || inspectorPointerDown.id !== event.pointerId) return;
+    const isClick = !inspectorPointerDown.dragged;
+    inspectorPointerDown = null;
+    if (isClick) inspectCell(event, true);
+});
+renderer.domElement.addEventListener("pointercancel", () => { inspectorPointerDown = null; });
+renderer.domElement.addEventListener("pointerleave", () => {
+    if (!inspectorPinned) clearCellInspector("Hover over or click a coloured satellite/soil cell to inspect it.");
+});
+
 function updateSatelliteLayer(data) {
+    clearCellInspector("Satellite overlay updated. Hover over or click a coloured satellite/soil cell to inspect it.");
     currentSatelliteLayer = data;
     if (satelliteLayerMesh) {
         fieldRoot.remove(satelliteLayerMesh);
@@ -365,14 +598,22 @@ function updateSatelliteLayer(data) {
     satelliteLayerMesh.position.y = 0.235;
     satelliteLayerMesh.renderOrder = 5;
     satelliteLayerMesh.visible = satellite3dToggle?.checked ?? true;
+    satelliteLayerMesh.userData.projection = result.projection;
+    satelliteLayerMesh.userData.inspectorPoints = prepareInspectorPoints(data, result.projection);
     fieldRoot.add(satelliteLayerMesh);
-    const label = `${data.metric} · ${data.window_start} to ${data.window_end} · ${data.points?.length ?? 0} valid pixels`;
-    if (satellite3dStatus) satellite3dStatus.textContent = `${label} · boundary shape and satellite grid aligned to the same AOI frame; crop growth is illustrative.`;
-    setTwinLayerPill(`SATELLITE · ${data.metric} · ${data.window_start} — ${data.window_end} · ${data.points?.length ?? 0} pixels`);
+    const isStatic = data.layer_kind === "satellite_static";
+    const label = isStatic
+        ? `${data.label} · static layer · ${data.points?.length ?? 0} AOI grid locations`
+        : `${data.metric} · ${data.window_start} to ${data.window_end} · ${data.points?.length ?? 0} valid pixels`;
+    if (satellite3dStatus) satellite3dStatus.textContent = `${label} · AOI-clipped texture overlay; crop growth is illustrative.${isStatic ? " " + data.scale_note : ""}`;
+    setTwinLayerPill(isStatic
+        ? `STATIC SATELLITE · ${data.label} · ${data.points?.length ?? 0} locations`
+        : `SATELLITE · ${data.metric} · ${data.window_start} — ${data.window_end} · ${data.points?.length ?? 0} pixels`);
     if (satellite3dToggle?.checked) renderTwinSatelliteLegend(data);
 }
 
 function updateSoilLayer(data) {
+    clearCellInspector("Soil reference updated. Hover over or click a coloured satellite/soil cell to inspect it.");
     currentSoilLayer = data;
     if (soilLayerMesh) {
         fieldRoot.remove(soilLayerMesh);
@@ -396,6 +637,8 @@ function updateSoilLayer(data) {
     soilLayerMesh.position.y = 0.236;
     soilLayerMesh.renderOrder = 6;
     soilLayerMesh.visible = soil3dToggle?.checked ?? false;
+    soilLayerMesh.userData.projection = result.projection;
+    soilLayerMesh.userData.inspectorPoints = prepareInspectorPoints(data, result.projection);
     fieldRoot.add(soilLayerMesh);
     const range = data.min == null || data.max == null ? "range unavailable" : `${Number(data.min).toFixed(2)}–${Number(data.max).toFixed(2)} ${data.unit}`;
     if (soil3dStatus) soil3dStatus.textContent = `${data.property.replaceAll("_", " ")} · ${data.depth_cm} cm · ${range} · ${data.pixel_count} coarse cells · ${data.resolution_m_approx} m · ${data.source} · reference only.`;
@@ -403,9 +646,99 @@ function updateSoilLayer(data) {
     if (soil3dToggle?.checked) renderTwinSoilLegend(data);
 }
 
+function clearIllustrativeMission() {
+    missionAnimationPlaying = false;
+    if (missionOverlay) {
+        fieldRoot.remove(missionOverlay);
+        missionOverlay.traverse(object => {
+            object.geometry?.dispose();
+            if (Array.isArray(object.material)) object.material.forEach(material => material.dispose());
+            else object.material?.dispose();
+        });
+        missionOverlay = null;
+    }
+    missionRouteLocal = [];
+    missionSegmentLengths = [];
+    missionRouteTotal = 0;
+}
+
+function showIllustrativeMission(plan) {
+    clearIllustrativeMission();
+    const projection = satelliteLayerMesh?.userData?.projection || soilLayerMesh?.userData?.projection;
+    if (!projection || !plan?.route?.length) throw new Error("Load the satellite boundary before drawing the illustrative route.");
+    missionOverlay = new THREE.Group();
+    missionOverlay.name = "Synthetic illustrative UAV mission";
+    missionOverlay.userData.evidenceClass = "SYNTHETIC";
+
+    for (const footprint of plan.footprints || []) {
+        const planePoints = footprint.corners.map(corner => projection.localToPlane(
+            projection.lonLatToLocal([corner.longitude, corner.latitude])
+        ));
+        if (planePoints.length < 3) continue;
+        const shape = new THREE.Shape();
+        shape.moveTo(planePoints[0][0], -planePoints[0][1]);
+        planePoints.slice(1).forEach(point => shape.lineTo(point[0], -point[1]));
+        shape.closePath();
+        const fill = new THREE.Mesh(new THREE.ShapeGeometry(shape), new THREE.MeshBasicMaterial({
+            color: 0x70d8a0, transparent: true, opacity: 0.32, depthWrite: false, side: THREE.DoubleSide
+        }));
+        fill.rotation.x = -Math.PI / 2;
+        fill.position.y = 0.248;
+        fill.renderOrder = 12;
+        missionOverlay.add(fill);
+        const outlinePoints = planePoints.map(point => new THREE.Vector3(point[0], 0.27, point[1]));
+        outlinePoints.push(outlinePoints[0].clone());
+        const outline = new THREE.Line(new THREE.BufferGeometry().setFromPoints(outlinePoints), new THREE.LineBasicMaterial({ color: 0x9af0c0, transparent: true, opacity: 0.95, depthTest: false }));
+        outline.renderOrder = 13;
+        missionOverlay.add(outline);
+    }
+
+    missionRouteLocal = plan.route.map(point => projection.localToPlane(
+        projection.lonLatToLocal([point.longitude, point.latitude])
+    ));
+    missionSegmentLengths = missionRouteLocal.slice(1).map((point, index) => Math.hypot(
+        point[0] - missionRouteLocal[index][0], point[1] - missionRouteLocal[index][1]
+    ));
+    missionRouteTotal = missionSegmentLengths.reduce((sum, length) => sum + length, 0);
+    const routePoints = missionRouteLocal.map(point => new THREE.Vector3(point[0], 0.29, point[1]));
+    const routeLine = new THREE.Line(new THREE.BufferGeometry().setFromPoints(routePoints), new THREE.LineBasicMaterial({ color: 0xffd36d, depthTest: false }));
+    routeLine.renderOrder = 14;
+    missionOverlay.add(routeLine);
+
+    const marker = new THREE.Mesh(new THREE.SphereGeometry(0.16, 14, 10), new THREE.MeshBasicMaterial({ color: 0xff6d48, depthTest: false }));
+    marker.name = "Illustrative UAV marker";
+    marker.position.set(routePoints[0].x, 0.43, routePoints[0].z);
+    marker.renderOrder = 15;
+    missionOverlay.add(marker);
+    missionOverlay.userData.marker = marker;
+    fieldRoot.add(missionOverlay);
+    missionAnimationPlaying = false;
+    const clearButton = document.getElementById("mission-clear");
+    const playButton = document.getElementById("mission-play");
+    if (clearButton) clearButton.disabled = false;
+    if (playButton) { playButton.disabled = missionRouteLocal.length < 2; playButton.textContent = "Play route"; }
+}
+
 document.addEventListener("paddy-satellite-layer", event => updateSatelliteLayer(event.detail));
 document.addEventListener("paddy-soil-layer", event => updateSoilLayer(event.detail));
+document.addEventListener("paddy-illustrative-mission", event => {
+    try { showIllustrativeMission(event.detail); }
+    catch (error) { document.getElementById("mission-status").textContent = error.message; }
+});
+document.getElementById("mission-clear")?.addEventListener("click", () => {
+    clearIllustrativeMission();
+    document.getElementById("mission-clear").disabled = true;
+    document.getElementById("mission-play").disabled = true;
+    document.getElementById("mission-play").textContent = "Play route";
+    document.getElementById("mission-status").textContent = "Illustrative mission cleared from the 3D view.";
+});
+document.getElementById("mission-play")?.addEventListener("click", event => {
+    missionAnimationPlaying = !missionAnimationPlaying;
+    if (missionAnimationPlaying) missionAnimationStartedAt = clock.getElapsedTime();
+    event.currentTarget.textContent = missionAnimationPlaying ? "Pause route" : "Play route";
+});
 satellite3dToggle?.addEventListener("change", () => {
+    clearCellInspector("Overlay selection changed. Hover over or click a coloured satellite/soil cell to inspect it.");
     if (satellite3dToggle.checked && soilLayerMesh) {
         if (soil3dToggle) soil3dToggle.checked = false;
         soilLayerMesh.visible = false;
@@ -415,13 +748,18 @@ satellite3dToggle?.addEventListener("change", () => {
     else if (!soil3dToggle?.checked) setTwinLayerLegend("", "", 0, 0, "", [], "");
     if (satellite3dStatus && currentSatelliteLayer) {
         satellite3dStatus.textContent = satellite3dToggle.checked
-            ? `${currentSatelliteLayer.metric} · ${currentSatelliteLayer.window_start} to ${currentSatelliteLayer.window_end} · satellite layer shown on AOI; crop geometry remains illustrative.`
+            ? currentSatelliteLayer.layer_kind === "satellite_static"
+                ? `${currentSatelliteLayer.label} · static AOI layer shown; crop geometry remains illustrative. ${currentSatelliteLayer.scale_note}`
+                : `${currentSatelliteLayer.metric} · ${currentSatelliteLayer.window_start} to ${currentSatelliteLayer.window_end} · satellite layer shown on AOI; crop geometry remains illustrative.`
             : "Satellite layer hidden · illustrative 3D crop scene shown.";
     }
     if (!satellite3dToggle.checked && !soil3dToggle?.checked) setTwinLayerPill("NO DATA OVERLAY · illustrative 3D field only");
-    else if (satellite3dToggle.checked && currentSatelliteLayer) setTwinLayerPill(`SATELLITE · ${currentSatelliteLayer.metric} · ${currentSatelliteLayer.window_start} — ${currentSatelliteLayer.window_end} · ${currentSatelliteLayer.points?.length ?? 0} pixels`);
+    else if (satellite3dToggle.checked && currentSatelliteLayer) setTwinLayerPill(currentSatelliteLayer.layer_kind === "satellite_static"
+        ? `STATIC SATELLITE · ${currentSatelliteLayer.label} · ${currentSatelliteLayer.points?.length ?? 0} locations`
+        : `SATELLITE · ${currentSatelliteLayer.metric} · ${currentSatelliteLayer.window_start} — ${currentSatelliteLayer.window_end} · ${currentSatelliteLayer.points?.length ?? 0} pixels`);
 });
 soil3dToggle?.addEventListener("change", () => {
+    clearCellInspector("Overlay selection changed. Hover over or click a coloured satellite/soil cell to inspect it.");
     if (soil3dToggle.checked) {
         if (satellite3dToggle) satellite3dToggle.checked = false;
         if (satelliteLayerMesh) satelliteLayerMesh.visible = false;
@@ -433,7 +771,9 @@ soil3dToggle?.addEventListener("change", () => {
         if (!satellite3dToggle?.checked) setTwinLayerLegend("", "", 0, 0, "", [], "");
     }
     if (!soil3dToggle.checked && !satellite3dToggle?.checked) setTwinLayerPill("NO DATA OVERLAY · illustrative 3D field only");
-    else if (!soil3dToggle.checked && satellite3dToggle?.checked && currentSatelliteLayer) setTwinLayerPill(`SATELLITE · ${currentSatelliteLayer.metric} · ${currentSatelliteLayer.window_start} — ${currentSatelliteLayer.window_end} · ${currentSatelliteLayer.points?.length ?? 0} pixels`);
+    else if (!soil3dToggle.checked && satellite3dToggle?.checked && currentSatelliteLayer) setTwinLayerPill(currentSatelliteLayer.layer_kind === "satellite_static"
+        ? `STATIC SATELLITE · ${currentSatelliteLayer.label} · ${currentSatelliteLayer.points?.length ?? 0} locations`
+        : `SATELLITE · ${currentSatelliteLayer.metric} · ${currentSatelliteLayer.window_start} — ${currentSatelliteLayer.window_end} · ${currentSatelliteLayer.points?.length ?? 0} pixels`);
 });
 
 // Soil
@@ -803,6 +1143,21 @@ const clock = new THREE.Clock();
 renderer.setAnimationLoop(() => {
     const time = clock.getElapsedTime();
     const windEnabled = windToggle?.checked ?? true;
+
+    if (missionAnimationPlaying && missionOverlay?.userData?.marker && missionRouteTotal > 0) {
+        const progressDistance = ((time - missionAnimationStartedAt) % 24) / 24 * missionRouteTotal;
+        let remaining = progressDistance;
+        let segment = 0;
+        while (segment < missionSegmentLengths.length - 1 && remaining > missionSegmentLengths[segment]) {
+            remaining -= missionSegmentLengths[segment];
+            segment += 1;
+        }
+        const start = missionRouteLocal[segment];
+        const end = missionRouteLocal[segment + 1];
+        const fraction = missionSegmentLengths[segment] ? remaining / missionSegmentLengths[segment] : 0;
+        const marker = missionOverlay.userData.marker;
+        marker.position.set(start[0] + (end[0] - start[0]) * fraction, 0.43, start[1] + (end[1] - start[1]) * fraction);
+    }
 
     for (const plant of plants) {
         plant.rotation.z = windEnabled

@@ -3,6 +3,8 @@
 import os
 from pathlib import Path
 
+import api.config  # Load project-local .env before reading runtime settings.
+
 
 def get_runtime_data_dir() -> Path:
     override = os.getenv("PADDYVISION_RUNTIME_DIR")
